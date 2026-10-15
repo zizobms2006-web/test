@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Cairo;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-900-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-latin-700-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-latin-900-normal.woff2)}
+:root{--y:#ffd23f;--teal:#19b5a5}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+body{font-family:CairoL,Cairo,sans-serif;color:#fff}
+#stage{position:absolute;inset:0;overflow:hidden;background:#000}
+#cam{position:absolute;inset:0}
+#main{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:30;mix-blend-mode:screen}
+#rgb{position:absolute;inset:0;z-index:5;pointer-events:none}
+.vf{position:absolute;inset:40px;z-index:20;pointer-events:none}
+.vf i{position:absolute;width:90px;height:90px;border-color:rgba(255,255,255,.85);border-style:solid}
+.vf .a1{top:0;left:0;border-width:6px 0 0 6px}.vf .a2{top:0;right:0;border-width:6px 6px 0 0}.vf .a3{bottom:0;left:0;border-width:0 0 6px 6px}.vf .a4{bottom:0;right:0;border-width:0 6px 6px 0}
+#rec{position:absolute;top:150px;right:80px;z-index:21;display:flex;align-items:center;gap:14px;font-family:CairoL;font-weight:900;font-size:38px;direction:ltr;text-shadow:0 2px 10px #000}
+#rec b{width:28px;height:28px;border-radius:50%;background:#ff2a2a;box-shadow:0 0 20px #ff2a2a}
+#tc{position:absolute;top:150px;left:80px;z-index:21;font-family:CairoL;font-weight:700;font-size:34px;direction:ltr;text-shadow:0 2px 10px #000;opacity:.9}
+#bts{position:absolute;bottom:90px;left:80px;z-index:21;font-family:CairoL;font-weight:900;font-size:30px;letter-spacing:4px;direction:ltr;padding:8px 18px;border:3px solid #fff;border-radius:10px;text-shadow:0 2px 10px #000}
+#cap{position:absolute;left:50px;right:50px;top:1300px;z-index:25;text-align:center;font-weight:900;font-size:76px;line-height:1.25}
+#cap span{display:inline-block;margin:0 8px;-webkit-text-stroke:3px #000;paint-order:stroke fill;text-shadow:0 8px 0 rgba(0,0,0,.55),0 0 40px rgba(0,0,0,.6)}
+#cap span.k{color:var(--y)}
+.big{position:absolute;left:0;right:0;text-align:center;z-index:26;font-weight:900;-webkit-text-stroke:4px #000;paint-order:stroke fill;text-shadow:0 10px 0 rgba(0,0,0,.5)}
+.sticker{position:absolute;z-index:26;padding:18px 34px;border-radius:24px;font-weight:900;font-size:50px;background:var(--y);color:#111;box-shadow:0 14px 0 rgba(0,0,0,.35);white-space:nowrap}
+.phone{position:absolute;z-index:24;width:430px;height:880px;border-radius:60px;background:#05080f;padding:14px;box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 4px var(--y)}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:48px;overflow:hidden;background:#000}
+.phone video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.18)}
+.phone .notch{position:absolute;top:26px;left:50%;width:130px;height:34px;margin-left:-65px;background:#05080f;border-radius:30px;z-index:9}
+#full2{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;opacity:0;transform:scale(1.14)}
+.tag{position:absolute;z-index:26;padding:12px 28px;border-radius:99px;font-weight:900;font-size:40px;background:#111;color:var(--y);border:3px solid var(--y)}
+#end{position:absolute;left:0;right:0;top:1330px;z-index:26;text-align:center;opacity:0}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="cam"><video id="main" src="v1g.webm" muted preload="auto"></video><video id="full2" src="v2g.webm" muted preload="auto"></video></div>
+  <div class="vf" id="vf"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i></div>
+  <div id="rec"><b></b>REC</div><div id="tc">00:00:00:00</div><div id="bts">BEHIND THE SCENES</div>
+  <div class="big" id="hook" style="top:1280px;font-size:118px;line-height:1.15">ورا<br><span style="color:var(--y)">الكاميرا</span> 🎬</div>
+  <div class="sticker" data-s="10.83" data-e="13.15" style="top:420px;right:80px;transform:rotate(-6deg)">مود التصوير 😎🔥</div>
+  <div class="sticker" data-s="20.43" data-e="22.75" style="top:420px;left:80px;transform:rotate(5deg);background:#19b5a5;color:#fff">فاصل طاقة ⚡</div>
+  <div class="phone" id="ph" style="left:560px;top:330px"><div class="notch"></div><div class="scr"><video id="pv" src="v2g.webm" muted preload="auto"></video></div></div>
+  <div class="tag" id="tagR" style="left:600px;top:250px">النتيجة ✨</div>
+  <div class="tag" id="tagF" style="right:80px;top:250px">النتيجة النهائية ✨</div>
+  <div id="cap"></div>
+  <div id="end"><div class="big" style="position:static;font-size:84px">عايز محتوى <span style="color:var(--y)">بالطاقة دي؟</span></div>
+    <div style="display:inline-block;margin-top:30px;padding:26px 70px;border-radius:99px;background:var(--y);color:#111;font-weight:900;font-size:60px;box-shadow:0 14px 0 rgba(0,0,0,.35)" id="cta">كلّم المطحون 📲</div></div>
+  <div id="flash"></div>
+</div>
+<script>
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-clamp(x),3);
+const back=x=>{x=clamp(x);const c=1.8;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const TOTALLEN=37.8;
+const CUTS=[3.633,6.033,8.433,10.833,13.233,15.633,20.433,22.833,25.233,30.033,32.433,34.9];
+const BEAT=0.4876, B0=0.67;
+// captions: [start,end,text, keywords]
+const CAPS=[[3.75,8.1,'قعدات، بوفيه، إضاءة… وكل تفصيلة مستنية لقطتها',['بوفيه،','لقطتها']],
+[8.55,10.8,'وأيوه… الشغل عندنا بمزاج!',['بمزاج!']],
+[13.25,17.6,'كل طبق بيتصوّر كأنه بطل الفيلم! زاوية، نور، وحركة',['بطل','الفيلم!']],
+[17.65,20.45,'ورا كل ريل حلو… فريق شغّال بطاقة!',['بطاقة!']],
+[22.9,24.95,'بنلقط الإحساس، قبل الصورة',['الإحساس،']],
+[25.3,27.55,'من إيد الشيف… لعين اللي بيتفرج!',['الشيف…','بيتفرج!']],
+[30.1,33.65,'والنتيجة؟ محتوى يخليك تقول: لازم أروح!',['والنتيجة؟','أروح!']]];
+const cap=document.getElementById('cap');
+function caption(t){
+  const c=CAPS.find(c=>t>=c[0]&&t<c[1]+0.15);
+  if(!c){cap.innerHTML='';return}
+  const words=c[2].split(' ');const per=(c[1]-c[0])/words.length;
+  // show chunk of up to 4 words at a time
+  const idx=Math.min(words.length-1,Math.floor((t-c[0])/per));const chunk=Math.floor(idx/4)*4;
+  const html=words.slice(chunk,chunk+4).map((w,i)=>{const wi=chunk+i;const p=(t-(c[0]+wi*per))/0.18;if(p<0)return '';
+    const s=0.6+0.4*back(p);return `<span class="${c[3].includes(w)?'k':''}" style="transform:scale(${s}) rotate(${(wi%2?2:-2)*(1-clamp(p))}deg)">${w}</span>`}).join(' ');
+  cap.innerHTML=html;
+}
+window.render=async function(t){
+  const seeks=[];
+  const seek=(v,want)=>{want=Math.max(0,Math.min((v.duration||999)-0.05,want));if(Math.abs(v.currentTime-want)>0.001)seeks.push(new Promise(r=>{v.addEventListener('seeked',r,{once:true});v.currentTime=want;}))};
+  const main=document.getElementById('main');seek(main,t);
+  // cut punch / flash / shake
+  let dc=99;for(const c of CUTS){const d=t-c;if(d>=-0.06&&d<dc)dc=d;}
+  const punch=dc<0.35?Math.exp(-dc*9):0;
+  const beatPh=((t-B0)%BEAT+BEAT)%BEAT;const pulse=Math.exp(-beatPh*14)*0.022;
+  const shake=punch>0.05?punch*16:0;
+  const cam=document.getElementById('cam');
+  cam.style.transform=`scale(${1.02+pulse+0.12*punch}) translate(${Math.sin(t*90)*shake}px,${Math.cos(t*77)*shake}px) rotate(${Math.sin(t*50)*punch*1.2}deg)`;
+  cam.style.filter=punch>0.05?`blur(${punch*6}px) saturate(${1+punch*0.6}) contrast(${1+punch*0.2})`:'none';
+  document.getElementById('flash').style.opacity=dc<0.2?Math.max(0,0.55-dc*3):0;
+  // REC + timecode
+  document.getElementById('rec').style.opacity=(Math.floor(t*2)%2)?1:0.25;
+  const fr=Math.floor(t*30);const ss=Math.floor(t);document.getElementById('tc').textContent=`00:00:${String(ss).padStart(2,'0')}:${String(fr%30).padStart(2,'0')}`;
+  const ui=t<34.6?1:clamp(1-(t-34.6)/0.3);['rec','tc','bts','vf'].forEach(id=>document.getElementById(id).style.opacity=id=='rec'?document.getElementById('rec').style.opacity*ui:ui);
+  // hook
+  const h=document.getElementById('hook');const hp=(t-0.15)/0.3;h.style.opacity=t<3.4?eo(hp):clamp(1-(t-3.4)/0.2);h.style.transform=`scale(${0.5+0.5*back(hp)+0.02*Math.sin(t*12)})`;
+  // stickers
+  document.querySelectorAll('.sticker').forEach(s=>{const a=+s.dataset.s,e=+s.dataset.e;const p=(t-a-0.1)/0.3;const vis=t>a&&t<e;s.style.display=vis?'block':'none';
+    if(vis){const base=s.style.transform.replace(/ scale\([^)]*\)/,'');s.style.transform=base+` scale(${0.4+0.6*back(p)+0.04*Math.sin(t*16)})`}});
+  // result phone (13.25-15.6) showing v2 food
+  const ph=document.getElementById('ph'),pv=document.getElementById('pv'),tr=document.getElementById('tagR');
+  const pin=t>13.35&&t<15.55;ph.style.display=tr.style.display=pin?'block':'none';
+  if(pin){const p=(t-13.35)/0.35,q=clamp((15.55-t)/0.2);ph.style.transform=`scale(${(0.5+0.5*back(p))*q}) rotate(${4*(1-clamp(p))+2}deg)`;tr.style.transform=`scale(${back((t-13.6)/0.3)})`;seek(pv,22.4+(t-13.35));}
+  // full-frame result (30.03-32.43) v2 buffet
+  const f2=document.getElementById('full2'),tf=document.getElementById('tagF');const fin=t>30.03&&t<32.43;
+  f2.style.opacity=fin?1:0;tf.style.display=fin?'block':'none';if(fin){seek(f2,38.0+(t-30.03));tf.style.transform=`scale(${back((t-30.15)/0.3)})`;}
+  // end card
+  const en=document.getElementById('end');const ep=(t-34.95)/0.35;en.style.opacity=eo(ep);en.style.transform=`scale(${0.6+0.4*back(ep)})`;
+  document.getElementById('cta').style.transform=`scale(${1+0.05*Math.abs(Math.sin((t-B0)/BEAT*Math.PI))})`;
+  cap.style.display=t<34.8?'block':'none';caption(t);
+  await Promise.all(seeks);
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+};
+window.TOTAL=()=>TOTALLEN;
+</script>
+</body>
+</html>
