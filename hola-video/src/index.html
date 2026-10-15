@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Cairo;font-weight:400;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-900-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:400;src:url(node_modules/@fontsource/cairo/files/cairo-latin-400-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-latin-700-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-latin-900-normal.woff2)}
+:root{--navy:#0a1428;--gold:#d8a64a;--gold2:#f3d38a;--green:#0f3b34;--green2:#1d5a4f;--cream:#f6f0e4;--ink:#eef3ff;--mut:#9fb2d4;--warn:#ff6b5b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--navy)}
+body{font-family:CairoL,Cairo,sans-serif;color:var(--ink)}
+#stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 0%,#13264a 0%,#0a1428 55%,#060b17 100%)}
+.grid{position:absolute;inset:-200px;background-image:linear-gradient(rgba(120,160,230,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,230,.05) 1px,transparent 1px);background-size:90px 90px}
+.glow{position:absolute;border-radius:50%;filter:blur(130px)}
+.scene{position:absolute;inset:0;display:none}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:50}
+h1{font-size:108px;line-height:1.2;font-weight:900}
+h2{font-size:80px;line-height:1.25;font-weight:900}
+.gold{background:linear-gradient(90deg,var(--gold2),var(--gold));-webkit-background-clip:text;color:transparent}
+.mint{color:#7fe0c4}
+.warn{color:var(--warn)}
+.sub{font-size:46px;line-height:1.5;color:var(--mut)}
+.center{position:absolute;left:0;right:0;text-align:center;padding:0 60px}
+.kicker{display:inline-flex;align-items:center;gap:14px;padding:12px 30px;border:2px solid rgba(216,166,74,.5);border-radius:99px;font-size:34px;font-weight:700;color:var(--gold2);background:rgba(216,166,74,.08)}
+.kicker i{width:14px;height:14px;border-radius:50%;background:#7fe0c4;display:block;box-shadow:0 0 14px #7fe0c4}
+.phone{position:absolute;width:480px;height:1000px;border-radius:66px;background:#05080f;padding:16px;box-shadow:0 60px 120px rgba(0,0,0,.6),0 0 0 3px rgba(255,255,255,.08)}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:52px;overflow:hidden;background:var(--cream)}
+.phone .scr img{position:absolute;top:0;left:0;width:100%}
+.phone .notch{position:absolute;top:28px;left:50%;width:140px;height:38px;margin-left:-70px;background:#05080f;border-radius:30px;z-index:9}
+.chip{display:inline-flex;align-items:center;gap:20px;padding:22px 36px;border-radius:30px;font-size:42px;font-weight:700;background:rgba(14,24,46,.92);border:2px solid rgba(216,166,74,.4);box-shadow:0 20px 50px rgba(0,0,0,.45);white-space:nowrap}
+.ico{width:70px;height:70px;border-radius:20px;display:grid;place-items:center;font-size:38px;background:linear-gradient(135deg,var(--green2),var(--green));flex:none}
+.ico.g{background:linear-gradient(135deg,var(--gold),#a5772a)}
+.cup{position:absolute;width:250px;height:250px;border-radius:50%;background:var(--cream) center/cover;box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 0 6px rgba(246,240,228,.12)}
+.mj{width:200px;height:200px;border-radius:50px;background:#0b1424;display:grid;place-items:center;box-shadow:0 30px 80px rgba(216,166,74,.25),0 0 0 2px rgba(216,166,74,.45)}
+.mj b{font-family:CairoL;font-weight:900;font-size:110px;color:var(--gold);letter-spacing:-6px}
+.hola{display:inline-block;background:var(--cream);border-radius:36px;padding:16px 40px}
+.hola img{height:150px;display:block}
+.person{position:absolute;width:110px;height:300px}
+.person .hd{width:86px;height:86px;border-radius:50%;margin:0 auto;background:#5b6b86}
+.person .bd{width:110px;height:200px;border-radius:55px 55px 18px 18px;margin-top:12px;background:#3d4a62}
+.panel{position:absolute;border-radius:44px;overflow:hidden}
+.ticket{position:absolute;left:150px;right:150px;background:var(--cream);color:var(--green);border-radius:40px;padding:44px;text-align:center;box-shadow:0 50px 110px rgba(0,0,0,.6)}
+.code{font-family:CairoL;font-weight:900;font-size:96px;letter-spacing:6px;direction:ltr}
+.steps{display:flex;justify-content:space-between;margin-top:34px;direction:rtl}
+.st{flex:1;text-align:center;font-size:30px;font-weight:700;color:#8a9a94}
+.st .d{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;background:#e2dccf;display:grid;place-items:center;font-size:32px;color:#fff}
+.st.on{color:var(--green)} .st.on .d{background:var(--green2)}
+.edit{position:absolute;left:120px;right:120px;background:#fff;color:#1b2a27;border-radius:36px;padding:34px 40px;box-shadow:0 40px 100px rgba(0,0,0,.55)}
+.edit .r{display:flex;align-items:center;gap:22px;font-size:36px;padding:14px 0;border-bottom:2px solid #eee8dc}
+.price{font-family:CairoL;font-weight:900;min-width:160px;text-align:center;padding:8px 18px;border-radius:16px;background:#f3efe6}
+.tog{display:inline-flex;border-radius:99px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);padding:8px;font-size:44px;font-weight:900}
+.tog span{padding:14px 44px;border-radius:99px}
+.tog span.on{background:var(--cream);color:var(--green)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="grid" id="grid"></div>
+  <div class="glow" id="g1" style="width:900px;height:900px;background:#1e5fc0;left:-320px;top:-220px;opacity:.4"></div>
+  <div class="glow" id="g2" style="width:760px;height:760px;background:#d8a64a;right:-360px;bottom:-260px;opacity:.22"></div>
+  <div class="glow" id="g3" style="width:640px;height:640px;background:#1d7a66;right:-220px;top:600px;opacity:.28"></div>
+
+  <!-- S1 BEFORE: queue -->
+  <div class="scene" id="s1">
+    <div class="center a" data-in="0.05" style="top:150px"><span class="kicker" style="border-color:rgba(255,107,91,.5);color:#ffb3a9"><i style="background:var(--warn);box-shadow:0 0 14px var(--warn)"></i>قبل</span></div>
+    <div class="center a" data-in="0.15" style="top:260px"><h1>واقف في<br><span class="warn">الطابور؟</span></h1></div>
+    <div id="queue" style="position:absolute;left:0;right:0;top:820px;height:330px"></div>
+    <div style="position:absolute;left:0;right:0;top:1150px;height:8px;background:rgba(255,255,255,.08)"></div>
+    <div class="a" data-in="0.4" style="position:absolute;left:390px;top:1230px;width:300px;height:300px">
+      <svg viewBox="0 0 100 100" width="300" height="300"><circle cx="50" cy="50" r="44" fill="rgba(255,107,91,.08)" stroke="#ff6b5b" stroke-width="5"/><line id="hm" x1="50" y1="50" x2="50" y2="28" stroke="#fff" stroke-width="6" stroke-linecap="round"/><line id="mm" x1="50" y1="50" x2="50" y2="14" stroke="#ff6b5b" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="50" r="5" fill="#fff"/></svg>
+    </div>
+    <div class="center a" data-in="1.6" style="top:1600px"><div class="sub" style="color:#fff;font-weight:900;font-size:56px">وانت أصلاً <span class="warn" id="rush">مستعجل؟!</span></div></div>
+  </div>
+
+  <!-- S2 AFTER: order ahead -->
+  <div class="scene" id="s2">
+    <div class="center a" data-in="0.05" style="top:120px"><span class="hola"><img src="hola-dark.png"></span></div>
+    <div class="center a" data-in="0.25" style="top:340px"><div style="font-size:40px;color:var(--mut);font-weight:700">في إسكندرية · بنينا</div><h2>منصة <span class="gold" style="font-family:CairoL">Order Ahead</span></h2></div>
+    <div class="phone a" id="s2p" data-in="0.5" style="left:300px;top:640px"><div class="notch"></div><div class="scr" id="s2scr"><img src="ar_00.png"><img src="ar_01.png"><img src="ar_02.png"></div></div>
+    <div class="a pop" data-in="4.4" style="position:absolute;right:40px;top:760px"><div class="chip"><span class="ico">📱</span>اطلب قبل ما توصل</div></div>
+    <div class="a pop" data-in="5.4" style="position:absolute;left:40px;top:1110px"><div class="chip"><span class="ico g">🚶</span>في الطريق…</div></div>
+    <div class="a pop" data-in="6.4" style="position:absolute;right:30px;top:1440px"><div class="chip" style="border-color:#7fe0c4"><span class="ico">☕</span>قهوتك <span class="mint">جاهزة!</span></div></div>
+    <div class="cup a pop" data-in="6.6" style="left:60px;top:1500px;background-image:url(cups/c2.png)"></div>
+  </div>
+
+  <!-- S3 menu -->
+  <div class="scene" id="s3">
+    <div class="center a" data-in="0.05" style="top:130px"><span class="kicker"><i></i>المنيو</span></div>
+    <div class="a" data-in="0.15" style="position:absolute;left:0;right:0;top:240px;display:flex;justify-content:center;gap:70px;text-align:center">
+      <div><div style="font-family:CairoL;font-size:200px;font-weight:900;line-height:1" class="gold" id="n97">0</div><div style="font-size:46px;font-weight:700">صنف</div></div>
+      <div><div style="font-family:CairoL;font-size:200px;font-weight:900;line-height:1;color:#7fe0c4" id="n6">0</div><div style="font-size:46px;font-weight:700">تصنيفات</div></div>
+    </div>
+    <div id="cupgrid" style="position:absolute;left:0;right:0;top:640px;height:560px"></div>
+    <div class="edit a" data-in="4.3" style="top:1230px">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:32px;font-weight:900;color:var(--green)"><span>⚙️ لوحة الكاونتر</span><span style="font-size:26px;color:#7a8a84">من غير برمجة</span></div>
+      <div class="r"><img src="cups/c2.png" style="width:80px;height:80px;border-radius:50%;object-fit:cover">كابتشينو<span style="flex:1"></span><span class="price" id="pe">65 ج.م</span></div>
+      <div class="r"><img src="cups/c6.png" style="width:80px;height:80px;border-radius:50%;object-fit:cover">آيس لاتيه<span style="flex:1"></span><span class="price">65 ج.م</span></div>
+      <div id="saved" style="margin-top:18px;text-align:center;font-size:32px;font-weight:900;color:#16a35c">✓ اتحفظ… والمنيو اتحدّث فوراً</div>
+    </div>
+  </div>
+
+  <!-- S4 order code + tracking -->
+  <div class="scene" id="s4">
+    <div class="center a" data-in="0.05" style="top:120px"><div style="display:flex;justify-content:center;gap:18px;font-size:50px;font-weight:900"><span id="w1">يختار</span><span style="color:var(--mut)">←</span><span id="w2">يدفع</span><span style="color:var(--mut)">←</span><span id="w3" class="gold">ياخد كود</span></div></div>
+    <div class="phone a" id="s4p" data-in="0.15" style="left:300px;top:270px;height:820px"><div class="notch"></div><div class="scr"><img src="prod_ar_0.png" id="s4a"><img src="prod_ar_1.png" id="s4b"></div></div>
+    <div class="ticket" id="tk" style="top:1060px">
+      <div style="font-size:34px;font-weight:700">كود طلبك</div>
+      <div class="code" id="code">HOLA-4821</div>
+      <div class="steps">
+        <div class="st" id="t1"><div class="d">✓</div>اتسجّل</div>
+        <div class="st" id="t2"><div class="d">☕</div>بيتحضّر</div>
+        <div class="st" id="t3"><div class="d">🎉</div>جاهز</div>
+      </div>
+    </div>
+    <div class="center a" data-in="4.6" style="top:1690px"><div class="chip" style="font-size:40px"><span class="ico g">🔓</span>من غير ما تعمل حساب</div></div>
+  </div>
+
+  <!-- S5 bilingual -->
+  <div class="scene" id="s5">
+    <div class="center a" data-in="0.05" style="top:150px"><h2>عربي <span class="gold">و</span> English</h2></div>
+    <div class="center a" data-in="0.2" style="top:320px"><div class="tog"><span id="ta" class="on">عربي</span><span id="te" style="font-family:CairoL">EN</span></div></div>
+    <div class="phone a" data-in="0.3" style="left:300px;top:520px"><div class="notch"></div><div class="scr"><img src="ar_00.png" id="l1"><img src="en_0.png" id="l2"></div></div>
+    <div class="center a" data-in="1.4" style="top:1620px"><div class="sub" style="color:#fff;font-weight:700">العميل يختار <span class="gold">اللغة اللي بيفضّلها</span></div></div>
+  </div>
+
+  <!-- S6 payoff -->
+  <div class="scene" id="s6">
+    <div class="center a" data-in="0.05" style="top:150px"><span class="kicker"><i></i>بعد</span></div>
+    <div class="a" data-in="0.1" style="position:absolute;left:0;right:0;top:300px;display:flex;justify-content:center;gap:24px;font-size:76px;font-weight:900">
+      <span id="v1">يدخل</span><span id="v2" class="gold">ياخد</span><span id="v3">ويمشي</span>
+    </div>
+    <div class="cup" id="bigcup" style="left:290px;top:560px;width:500px;height:500px;background-image:url(cups/c1.png)"></div>
+    <div class="center" id="zero" style="top:1170px"><div style="font-family:CairoL;font-size:220px;font-weight:900;line-height:1;color:#7fe0c4">0<span style="font-size:90px">s</span></div><div style="font-size:52px;font-weight:900">انتظار</div></div>
+  </div>
+
+  <!-- S7 CTA -->
+  <div class="scene" id="s7">
+    <div class="cup a" data-in="0.1" style="left:-40px;top:200px;width:300px;height:300px;background-image:url(cups/c6.png)"></div>
+    <div class="cup a" data-in="0.2" style="right:-40px;top:260px;width:280px;height:280px;background-image:url(cups/c3.png)"></div>
+    <div class="center a" data-in="0.15" style="top:560px"><h2 style="font-size:74px">عندك <span class="gold">كافيه</span> أو <span class="gold">مطعم؟</span></h2></div>
+    <div class="center a" data-in="0.6" style="top:780px"><div class="sub" style="color:#fff">وعايز نظام مريح زي كده؟</div></div>
+    <div class="center a" data-in="1.4" style="top:960px"><div id="cta" style="display:inline-block;padding:38px 90px;border-radius:99px;font-size:66px;font-weight:900;background:linear-gradient(90deg,var(--gold2),var(--gold));color:#0a1428;box-shadow:0 30px 90px rgba(216,166,74,.45)">كلّمنا دلوقتي</div></div>
+    <div class="a" data-in="1.8" style="position:absolute;left:440px;top:1200px"><div class="mj" dir="ltr"><b>MJ.</b></div></div>
+    <div class="center a" data-in="2.0" style="top:1440px"><div style="font-family:CairoL;font-size:54px;font-weight:700;color:var(--gold2)">mubarmijonline.com</div></div>
+    <div class="center a" data-in="2.2" style="top:1540px"><div style="font-family:CairoL;font-size:44px;color:#fff;direction:ltr">WhatsApp · +20 120 058 8803</div></div>
+  </div>
+  <div id="flash"></div>
+</div>
+
+<script>
+window.SCENES = window.SCENES || [3.13,8.34,7.53,6.5,4.0,3.86,6.14];
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-clamp(x),3);
+const eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const back=x=>{x=clamp(x);const c=1.9;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+// queue people
+const q=document.getElementById('queue');
+for(let i=0;i<7;i++){q.insertAdjacentHTML('beforeend',`<div class="person" data-i="${i}" style="left:${70+i*135}px;top:${20+(i%2)*10}px"><div class="hd" style="background:${i==3?'#ff8a7d':'#5b6b86'}"></div><div class="bd" style="background:${i==3?'#c9564a':'#3d4a62'}"></div></div>`)}
+// cup grid
+const cg=document.getElementById('cupgrid');
+const pos=[[60,0],[400,10],[740,0],[230,290],[570,290],[-60,300],[900,300]];
+pos.forEach(([x,y],i)=>cg.insertAdjacentHTML('beforeend',`<div class="cup" data-i="${i}" style="left:${x}px;top:${y}px;width:240px;height:240px;background-image:url(cups/c${(i%8)+1}.png)"></div>`));
+const scenes=[...document.querySelectorAll('.scene')];
+const baseT={};document.querySelectorAll('.a').forEach((el,i)=>{el.dataset.i=i;baseT[i]=el.style.transform||''});
+const T=0.32; // fast whip transition
+window.render=function(t){
+  const S=window.SCENES;let acc=0,flash=0;
+  g1.style.transform=`translate(${Math.sin(t*.4)*120}px,${Math.cos(t*.33)*90}px)`;
+  g2.style.transform=`translate(${Math.cos(t*.35)*110}px,${Math.sin(t*.3)*120}px)`;
+  g3.style.transform=`translate(${Math.sin(t*.5)*90}px,${Math.cos(t*.42)*150}px)`;
+  grid.style.transform=`translateY(${(t*22)%90}px)`;
+  scenes.forEach((sc,k)=>{
+    const st=acc,d=S[k];acc+=d;const lt=t-st;
+    const inP=k==0?1:clamp((lt+T/2)/T), outP=k<scenes.length-1?clamp((lt-(d-T/2))/T):0;
+    if(inP<=0||outP>=1){sc.style.display='none';return}
+    sc.style.display='block';
+    // whip: alternate direction per scene
+    const dir=k%2?1:-1;
+    const xi=(1-eio(inP))*1100*dir, xo=-eio(outP)*1100*dir;
+    const blur=(inP<1?(1-inP):0)*30+outP*30;
+    const punch=1+0.06*Math.exp(-Math.max(0,lt)*6)*(k?1:0);
+    sc.style.transform=`translateX(${xi+xo}px) scale(${punch+0.02*clamp(lt/d)})`;
+    sc.style.filter=blur>0.5?`blur(${blur}px)`:'none';
+    if(k>0) flash=Math.max(flash,Math.max(0,1-Math.abs(lt)/0.18)*0.35);
+    sc.querySelectorAll('.a[data-in]').forEach(el=>{
+      const p0=(lt-parseFloat(el.dataset.in))/0.45, p=eo(p0), s=el.classList.contains('pop')?back(p0):1;
+      el.style.opacity=p;el.style.filter=p<1?`blur(${(1-p)*10}px)`:'none';
+      el.style.transform=`${baseT[el.dataset.i]} translateY(${(1-p)*60}px) scale(${el.classList.contains('pop')?(0.6+0.4*s):1})`;
+    });
+    fx[k]&&fx[k](sc,lt,d);
+  });
+  document.getElementById('flash').style.opacity=flash;
+};
+const fx={
+  0:(sc,lt)=>{
+    sc.querySelectorAll('.person').forEach(p=>{const i=+p.dataset.i;const p0=eo((lt-0.1-i*0.07)/0.4);p.style.opacity=p0;
+      p.style.transform=`translateY(${(1-p0)*120+Math.sin(lt*3+i)*4}px)`;
+      if(i==3) p.style.transform+=` translateX(${Math.sin(lt*40)*(lt>1.7?6:0)}px)`});
+    document.getElementById('mm').setAttribute('transform',`rotate(${lt*720} 50 50)`);document.getElementById('hm').setAttribute('transform',`rotate(${lt*60} 50 50)`);
+    sc.style.filter=(sc.style.filter==='none'?'':sc.style.filter)+' saturate(.6)';
+    const r=document.getElementById('rush');r.style.display='inline-block';r.style.transform=`translateX(${lt>1.8?Math.sin(lt*50)*5:0}px)`;
+  },
+  1:(sc,lt,d)=>{const ims=[...document.querySelectorAll('#s2scr img')];const f=clamp((lt-1.5)/(d-2.2))*(ims.length-1);
+    ims.forEach((im,i)=>{const x=i-f;im.style.zIndex=i;im.style.transform=`translateY(${(1-eio(clamp(1-x)))*100}%)`});},
+  2:(sc,lt)=>{
+    document.getElementById('n97').textContent=Math.round(97*eio((lt-0.2)/1.4));
+    document.getElementById('n6').textContent=Math.round(6*eio((lt-0.6)/1.0));
+    sc.querySelectorAll('#cupgrid .cup').forEach(c=>{const i=+c.dataset.i;const p0=(lt-1.0-i*0.12)/0.45;c.style.opacity=eo(p0);
+      c.style.transform=`scale(${0.3+0.7*back(p0)}) translateY(${Math.sin(lt*2+i)*8}px) rotate(${(1-eo(p0))*-30}deg)`});
+    const pe=document.getElementById('pe');const ch=lt>5.6;pe.textContent=ch?'70 ج.م':'65 ج.م';pe.style.background=ch?'#e3f6ec':'#f3efe6';pe.style.color=ch?'#16a35c':'#1b2a27';
+    pe.style.transform=`scale(${ch?1+0.2*Math.max(0,1-(lt-5.6)/0.3):1})`;
+    const sv=document.getElementById('saved');sv.style.opacity=eo((lt-6.0)/0.3);
+  },
+  3:(sc,lt)=>{
+    ['w1','w2','w3'].forEach((id,i)=>{const e=document.getElementById(id);const on=lt>0.2+i*0.55;e.style.opacity=on?1:.3;e.style.transform=`scale(${on?1+0.15*Math.max(0,1-(lt-0.2-i*0.55)/0.3):1})`});
+    const b=document.getElementById('s4b');b.style.opacity=eo((lt-0.8)/0.3);
+    const tk=document.getElementById('tk');const p0=(lt-1.5)/0.5;tk.style.opacity=eo(p0);tk.style.transform=`translateY(${(1-eo(p0))*200}px) scale(${0.7+0.3*back(p0)})`;
+    const chars='HOLA-4821';const n=Math.floor(clamp((lt-1.6)/0.6)*chars.length);document.getElementById('code').textContent=chars.slice(0,n).padEnd(chars.length,'·');
+    ['t1','t2','t3'].forEach((id,i)=>document.getElementById(id).classList.toggle('on',lt>2.4+i*0.6));
+  },
+  4:(sc,lt)=>{const e=Math.floor(Math.max(0,lt-0.9)/1.1)%2==1;
+    document.getElementById('l2').style.opacity=e?1:0;document.getElementById('ta').classList.toggle('on',!e);document.getElementById('te').classList.toggle('on',e);},
+  5:(sc,lt)=>{
+    ['v1','v2','v3'].forEach((id,i)=>{const p0=(lt-0.15-i*0.45)/0.35;const e=document.getElementById(id);e.style.opacity=eo(p0);e.style.display='inline-block';e.style.transform=`scale(${0.5+0.5*back(p0)})`});
+    const c=document.getElementById('bigcup');const p0=(lt-0.3)/0.5;c.style.opacity=eo(p0);c.style.transform=`scale(${0.4+0.6*back(p0)}) rotate(${Math.sin(lt*2)*3}deg)`;
+    const z=document.getElementById('zero');const p1=(lt-2.2)/0.4;z.style.opacity=eo(p1);z.style.transform=`scale(${0.5+0.5*back(p1)})`;
+  },
+  6:(sc,lt)=>{cta.style.transform=`scale(${1+0.04*Math.sin(Math.max(0,lt-1.4)*6)})`}
+};
+window.TOTAL=()=>window.SCENES.reduce((a,b)=>a+b,0);
+render(0);
+</script>
+</body>
+</html>
