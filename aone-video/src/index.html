@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Cairo;font-weight:400;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-900-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:400;src:url(node_modules/@fontsource/cairo/files/cairo-latin-400-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-latin-700-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-latin-900-normal.woff2)}
+:root{--navy:#0a1428;--gold:#d8a64a;--gold2:#f3d38a;--red:#a3141b;--red2:#e0453f;--ink:#eef3ff;--mut:#9fb2d4;--wa:#25d366}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--navy)}
+body{font-family:CairoL,Cairo,sans-serif;color:var(--ink)}
+#stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 0%,#13264a 0%,#0a1428 55%,#060b17 100%)}
+.grid{position:absolute;inset:-200px;background-image:linear-gradient(rgba(120,160,230,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,230,.05) 1px,transparent 1px);background-size:90px 90px}
+.glow{position:absolute;border-radius:50%;filter:blur(130px)}
+.scene{position:absolute;inset:0;display:none}
+h1{font-size:104px;line-height:1.2;font-weight:900}
+h2{font-size:78px;line-height:1.25;font-weight:900}
+.gold{background:linear-gradient(90deg,var(--gold2),var(--gold));-webkit-background-clip:text;color:transparent}
+.red{color:var(--red2)}
+.sub{font-size:46px;line-height:1.5;color:var(--mut)}
+.center{position:absolute;left:0;right:0;text-align:center;padding:0 60px}
+.kicker{display:inline-flex;align-items:center;gap:14px;padding:12px 30px;border:2px solid rgba(216,166,74,.5);border-radius:99px;font-size:34px;font-weight:700;color:var(--gold2);background:rgba(216,166,74,.08)}
+.kicker i{width:14px;height:14px;border-radius:50%;background:var(--red2);display:block;box-shadow:0 0 14px var(--red2)}
+.chip{display:inline-flex;align-items:center;gap:18px;padding:20px 34px;border-radius:30px;font-size:42px;font-weight:700;background:rgba(14,24,46,.92);border:2px solid rgba(216,166,74,.4);box-shadow:0 20px 50px rgba(0,0,0,.45);white-space:nowrap}
+.ico{width:70px;height:70px;border-radius:20px;display:grid;place-items:center;font-size:38px;background:linear-gradient(135deg,var(--red2),var(--red));flex:none}
+.ico.g{background:linear-gradient(135deg,var(--gold),#a5772a)}
+.sheet{position:absolute;width:300px;height:220px;border-radius:20px;background:#f4f6f9;color:#1d2b44;box-shadow:0 25px 60px rgba(0,0,0,.5);overflow:hidden}
+.sheet .hd{height:54px;background:#1f7a46;color:#fff;font-size:28px;font-weight:900;display:flex;align-items:center;padding:0 18px;gap:10px}
+.sheet .gr{position:absolute;inset:54px 0 0 0;background-image:linear-gradient(#d5dbe5 1px,transparent 1px),linear-gradient(90deg,#d5dbe5 1px,transparent 1px);background-size:60px 33px}
+.laptop{position:absolute;left:40px;right:40px}
+.laptop .sc{position:relative;background:#04070d;border-radius:28px 28px 8px 8px;padding:16px;box-shadow:0 60px 120px rgba(0,0,0,.6),0 0 0 2px rgba(216,166,74,.35)}
+.laptop .vw{position:relative;width:100%;aspect-ratio:1184/556;border-radius:12px;overflow:hidden;background:#fff}
+.laptop video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%}
+.laptop .base{height:28px;margin:0 -30px;border-radius:0 0 30px 30px;background:linear-gradient(180deg,#2a3346,#151b27)}
+.node{position:absolute;width:250px;height:250px;margin:-125px 0 0 -125px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 30% 25%,#1d3460,#0c1830);box-shadow:0 0 0 3px rgba(216,166,74,.55),0 30px 80px rgba(0,0,0,.55)}
+.node .t{font-size:40px;font-weight:900}
+.node .s{font-size:26px;color:var(--mut)}
+.hub{width:340px;height:340px;margin:-170px 0 0 -170px;background:radial-gradient(circle at 30% 25%,#c22a2f,#6e0b10);box-shadow:0 0 0 4px var(--gold),0 0 120px rgba(224,69,63,.5)}
+.phone{position:absolute;width:470px;height:960px;border-radius:64px;background:#05080f;padding:15px;box-shadow:0 60px 120px rgba(0,0,0,.6),0 0 0 3px rgba(255,255,255,.08)}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:50px;overflow:hidden;background:#0b141a}
+.phone .notch{position:absolute;top:27px;left:50%;width:136px;height:36px;margin-left:-68px;background:#05080f;border-radius:30px;z-index:9}
+.wa .top{height:160px;background:#1f2c34;display:flex;align-items:flex-end;gap:18px;padding:0 26px 22px;font-size:32px;font-weight:700}
+.wa .av{width:70px;height:70px;border-radius:50%;background:#fff;display:grid;place-items:center;color:var(--red);font-family:CairoL;font-weight:900;font-size:26px;border:3px solid var(--red)}
+.wa .msg{margin:22px 24px 0 60px;background:#1f2c34;border-radius:6px 24px 24px 24px;padding:20px 24px;font-size:28px;line-height:1.6}
+.wa .t{font-size:20px;color:#8696a0;text-align:left}
+.mod{position:absolute;width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:28px;font-weight:700;background:rgba(14,24,46,.95);border:2px solid rgba(216,166,74,.45);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.mod span{font-size:64px}
+.login{position:absolute;left:240px;width:600px;border-radius:40px;background:#fff;color:#16213a;padding:44px;box-shadow:0 60px 140px rgba(0,0,0,.6),0 0 0 4px rgba(216,166,74,.6)}
+.login .f{margin-top:18px;padding:20px 24px;border-radius:18px;background:#f1f3f7;font-size:30px;color:#7a8499}
+.login .b{margin-top:24px;padding:24px;border-radius:99px;background:linear-gradient(90deg,var(--red),var(--red2));color:#fff;text-align:center;font-size:36px;font-weight:900}
+.mj{border-radius:70px;background:#0b1424;display:grid;place-items:center;box-shadow:0 40px 120px rgba(216,166,74,.35),0 0 0 3px rgba(216,166,74,.55)}
+.mj b{font-family:CairoL;font-weight:900;color:var(--gold);letter-spacing:-8px}
+.ripple{position:absolute;width:140px;height:140px;border-radius:50%;border:6px solid var(--gold2);margin:-70px 0 0 -70px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="grid" id="grid"></div>
+  <div class="glow" id="g1" style="width:900px;height:900px;background:#1e5fc0;left:-320px;top:-220px;opacity:.42"></div>
+  <div class="glow" id="g2" style="width:760px;height:760px;background:#d8a64a;right:-360px;bottom:-260px;opacity:.22"></div>
+  <div class="glow" id="g3" style="width:600px;height:600px;background:#c22a2f;right:-220px;top:640px;opacity:.18"></div>
+
+  <!-- S1 imagine: classroom -->
+  <div class="scene" id="s1">
+    <div class="center a" data-in="0.0" style="top:170px"><h1 style="font-size:92px">تخيّل تدير<br><span class="gold">مركز تعليمي كامل</span></h1></div>
+    <svg class="a" data-in="0.2" id="room" viewBox="0 0 1000 700" style="position:absolute;left:40px;top:560px;width:1000px;height:700px">
+      <defs><linearGradient id="wb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#20324f"/><stop offset="1" stop-color="#162540"/></linearGradient>
+      <radialGradient id="lamp" cx=".5" cy="0" r="1"><stop offset="0" stop-color="rgba(243,211,138,.35)"/><stop offset="1" stop-color="rgba(243,211,138,0)"/></radialGradient></defs>
+      <rect x="0" y="0" width="1000" height="700" rx="40" fill="rgba(255,255,255,.03)" stroke="rgba(216,166,74,.35)" stroke-width="3"/>
+      <rect x="0" y="0" width="1000" height="420" rx="40" fill="url(#lamp)"/>
+      <rect x="170" y="50" width="660" height="250" rx="16" fill="url(#wb)" stroke="#d8a64a" stroke-width="5"/>
+      <g font-family="CairoL" font-weight="700" fill="#f3d38a" font-size="44" direction="ltr"><text x="215" y="125" id="eq1">f(x) = 2x² + 3x</text><text x="215" y="195" fill="#9fdcff" font-size="38">∫ x dx = x²/2 + C</text><text x="215" y="262" fill="#fff" font-size="34">E = mc² · ΔABC</text></g>
+      <g id="desks"></g>
+    </svg>
+    <div id="chips1" style="position:absolute;left:0;right:0;top:1330px;height:500px"></div>
+  </div>
+
+  <!-- S2 chaos sheets -->
+  <div class="scene" id="s2">
+    <div class="center a" data-in="0.0" style="top:150px"><h2>وكل حاجة في<br><span class="red">شيت منفصل…</span></h2></div>
+    <div id="sheets" style="position:absolute;inset:0"></div>
+    <div class="center" id="chaos" style="top:1560px"><h1 style="font-size:120px" class="red">فوضى كاملة</h1></div>
+  </div>
+
+  <!-- S3 A-One branches network -->
+  <div class="scene" id="s3">
+    <div class="center a" data-in="0.0" style="top:130px"><div style="font-size:44px;color:var(--mut);font-weight:700">ده مركز</div><h1 style="font-family:CairoL;font-size:130px;letter-spacing:4px">A-<span class="gold">One</span></h1></div>
+    <svg id="net" width="1080" height="1920" style="position:absolute;inset:0;direction:ltr"></svg>
+    <div class="node hub" id="hub" style="left:540px;top:900px"><div style="width:110px;height:110px;border-radius:26px;background:#fff;display:grid;place-items:center;font-family:CairoL;font-weight:900;font-size:46px;color:var(--red)">A1</div><div class="t" style="margin-top:12px">المنصة</div><div class="s" style="color:#ffd9d6">نظام واحد متكامل</div></div>
+    <div class="node br" data-k="0" style="left:230px;top:600px"><div style="font-size:60px">🏫</div><div class="t">New Cairo</div><div class="s">فرع</div></div>
+    <div class="node br" data-k="1" style="left:850px;top:600px"><div style="font-size:60px">🏫</div><div class="t">Maadi</div><div class="s">فرع</div></div>
+    <div class="node br" data-k="2" style="left:540px;top:1330px;border:3px dashed rgba(216,166,74,.8);box-shadow:0 30px 80px rgba(0,0,0,.55)"><div style="font-size:60px">➕</div><div class="t">فرع جديد</div><div class="s">جاهز يتضاف</div></div>
+    <div class="center a" data-in="3.0" style="top:1590px"><div class="sub" style="color:#fff;font-weight:900;font-size:50px">منصة تشغيلية داخلية <span class="gold">متكاملة</span></div></div>
+  </div>
+
+  <!-- S4 one place: branch analytics -->
+  <div class="scene" id="s4">
+    <div class="center a" data-in="0.0" style="top:220px"><h2>بتدير المركز بالكامل<br><span class="gold">من مكان واحد</span></h2></div>
+    <div class="laptop a" data-in="0.2" style="top:640px"><div class="sc"><div class="vw"><video src="clipF.webm" muted preload="auto" data-z="1.3" data-ox="-7" data-oy="10"></video></div></div><div class="base"></div></div>
+    <div class="a" data-in="1.0" style="position:absolute;right:60px;top:1260px"><div class="chip"><span class="ico">📍</span>New Cairo</div></div>
+    <div class="a" data-in="1.3" style="position:absolute;left:60px;top:1260px"><div class="chip"><span class="ico">📍</span>Maadi</div></div>
+    <div class="center a" data-in="1.6" style="top:1460px"><div class="chip" style="border-color:var(--gold)"><span class="ico g">📊</span>Branch Analytics</div></div>
+  </div>
+
+  <!-- S5 registration / attendance / scheduling -->
+  <div class="scene" id="s5">
+    <div class="center a" data-in="0.0" style="top:130px"><span class="kicker"><i></i>الطلاب والحضور</span></div>
+    <div class="laptop a" data-in="0.15" style="top:280px"><div class="sc"><div class="vw"><video src="clipA.webm" muted preload="auto" data-z="1.75" data-ox="12" data-oy="18"></video></div></div><div class="base"></div></div>
+    <div class="a" data-in="0.3" style="position:absolute;right:50px;top:860px"><div class="chip"><span class="ico">📝</span>تسجيل الطلاب</div></div>
+    <div class="a" data-in="1.5" style="position:absolute;left:50px;top:1020px"><div class="chip"><span class="ico">🪪</span>حضور بالرقم القومي</div></div>
+    <div class="a" data-in="2.6" style="position:absolute;right:50px;top:1180px"><div class="chip"><span class="ico">📱</span>أو رقم الموبايل</div></div>
+    <div class="a" data-in="3.9" style="position:absolute;left:50px;top:1340px"><div class="chip"><span class="ico g">🗓️</span>جدولة الفصول والغرف</div></div>
+    <div class="center a" data-in="6.4" style="top:1560px"><div id="btn" style="display:inline-block;padding:34px 90px;border-radius:99px;font-size:56px;font-weight:900;background:linear-gradient(90deg,var(--red),var(--red2));box-shadow:0 30px 80px rgba(224,69,63,.45)">بضغطة زرار ✓</div></div>
+    <div class="ripple" id="rip" style="left:540px;top:1640px;opacity:0"></div>
+  </div>
+
+  <!-- S6 wallet / HR / inventory -->
+  <div class="scene" id="s6">
+    <div class="center a" data-in="0.0" style="top:130px"><span class="kicker"><i></i>الفلوس والموظفين</span></div>
+    <div class="laptop a" data-in="0.15" style="top:280px"><div class="sc"><div class="vw"><video src="clipG.webm" muted preload="auto" data-z="1.3" data-ox="-6" data-oy="6"></video></div></div><div class="base"></div></div>
+    <div class="svcs" style="position:absolute;left:60px;right:60px;top:860px">
+      <div class="row6 card" data-k="0" style="display:flex;align-items:center;gap:28px;padding:30px 36px;border-radius:34px;background:rgba(14,24,46,.92);border:2px solid rgba(216,166,74,.4);margin-bottom:26px"><span class="ico" style="width:100px;height:100px;font-size:54px">💳</span><div><div style="font-size:50px;font-weight:900">محفظة إلكترونية</div><div style="font-size:32px;color:var(--mut)">لمدفوعات الطلاب</div></div></div>
+      <div class="row6 card" data-k="1" style="display:flex;align-items:center;gap:28px;padding:30px 36px;border-radius:34px;background:rgba(14,24,46,.92);border:2px solid rgba(216,166,74,.4);margin-bottom:26px"><span class="ico g" style="width:100px;height:100px;font-size:54px">👥</span><div><div style="font-size:50px;font-weight:900">بورتال الموارد البشرية</div><div style="font-size:32px;color:var(--mut)">والمرتبات</div></div></div>
+      <div class="row6 card" data-k="2" style="display:flex;align-items:center;gap:28px;padding:30px 36px;border-radius:34px;background:rgba(14,24,46,.92);border:2px solid rgba(216,166,74,.4)"><span class="ico" style="width:100px;height:100px;font-size:54px">📦</span><div><div style="font-size:50px;font-weight:900">المخزون</div><div style="font-size:32px;color:var(--mut)">بيتتابع من نفس المكان</div></div></div>
+    </div>
+  </div>
+
+  <!-- S7 WhatsApp to parents -->
+  <div class="scene" id="s7">
+    <div class="center a" data-in="0.0" style="top:120px"><h2 style="font-size:70px">رسائل <span style="color:var(--wa)">واتساب</span> جماعية<br><span class="gold">أوتوماتيك</span> لأولياء الأمور</h2></div>
+    <div class="phone" id="ph0" style="left:305px;top:470px"><div class="notch"></div><div class="scr wa">
+      <div class="top"><div class="av">A1</div><div>A-One<div style="font-size:22px;color:#8696a0;font-weight:400">رسالة تلقائية</div></div></div>
+      <div class="msg m" data-k="0">🔔 تذكير: حصة <b>الرياضيات</b> بكرة الساعة <b>5:00 م</b> · فرع New Cairo<div class="t">4:00 م</div></div>
+      <div class="msg m" data-k="1">🧾 تذكير بالفاتورة: اشتراك شهر أكتوبر مستحق<div class="t">4:00 م</div></div>
+      <div class="msg m" data-k="2">✅ تم تسجيل حضور الطالب النهارده<div class="t">5:02 م</div></div>
+    </div></div>
+    <div class="phone mini" data-k="0" style="left:-40px;top:620px;transform:scale(.55)"><div class="notch"></div><div class="scr" style="background:#0b141a"></div></div>
+    <div class="phone mini" data-k="1" style="left:650px;top:620px;transform:scale(.55)"><div class="notch"></div><div class="scr" style="background:#0b141a"></div></div>
+    <div class="center a" data-in="5.6" style="top:1500px"><div class="chip" style="border-color:var(--wa)"><span class="ico" style="background:linear-gradient(135deg,#25d366,#128c7e)">🤖</span>من غير ما حد يبعتها يدوي</div></div>
+  </div>
+
+  <!-- S8 one login -->
+  <div class="scene" id="s8">
+    <div class="center a" data-in="0.0" style="top:150px"><h2 style="font-size:70px">من التسجيل… <span class="gold">للمرتبات</span></h2></div>
+    <div id="mods"></div>
+    <div class="login" id="login" style="top:700px">
+      <div style="display:flex;align-items:center;gap:18px"><div style="width:80px;height:80px;border-radius:20px;background:var(--red);color:#fff;display:grid;place-items:center;font-family:CairoL;font-weight:900;font-size:34px">A1</div><div style="font-family:CairoL;font-size:44px;font-weight:900">A-One</div></div>
+      <div class="f" style="direction:ltr;text-align:left">owner@a-one</div><div class="f" style="direction:ltr;text-align:left">••••••••</div>
+      <div class="b">تسجيل الدخول</div>
+    </div>
+    <div class="center a" data-in="2.6" style="top:1400px"><h2 style="font-size:66px">كل حاجة تحت<br><span class="gold">لوجين واحد</span></h2></div>
+  </div>
+
+  <!-- S9 CTA -->
+  <div class="scene" id="s9">
+    <div class="center a" data-in="0.0" style="top:250px"><h2 style="font-size:76px">عندك <span class="gold">مركز</span> أو <span class="gold">بيزنس</span>؟</h2></div>
+    <div class="center a" data-in="1.7" style="top:470px"><div class="sub" style="color:#fff;font-size:52px">ومحتاج نظام زي ده؟</div></div>
+    <div class="a" id="bigmj" data-in="3.0" style="position:absolute;left:290px;top:700px"><div class="mj" dir="ltr" style="width:500px;height:500px"><b style="font-size:270px">MJ.</b></div></div>
+    <div class="center a" data-in="3.4" style="top:1260px"><div id="cta" style="display:inline-block;padding:36px 90px;border-radius:99px;font-size:64px;font-weight:900;background:linear-gradient(90deg,var(--gold2),var(--gold));color:#0a1428;box-shadow:0 30px 90px rgba(216,166,74,.45)">كلّمنا دلوقتي</div></div>
+    <div class="center a" data-in="3.8" style="top:1480px"><div style="font-family:CairoL;font-size:54px;font-weight:700;color:var(--gold2)">mubarmijonline.com</div><div style="font-family:CairoL;font-size:44px;color:#fff;direction:ltr;margin-top:8px">WhatsApp · +20 120 058 8803</div></div>
+  </div>
+</div>
+
+<script>
+window.SCENES = window.SCENES || [6.0,4.75,6.1,3.0,8.8,8.05,8.6,4.7,8.4];
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-clamp(x),3);
+const eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const back=x=>{x=clamp(x);const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+// desks
+const D=document.getElementById('desks');
+for(let r=0;r<3;r++)for(let c=0;c<5;c++){const x=120+c*170+(r%2)*20, y=380+r*100;
+  D.insertAdjacentHTML('beforeend',`<g class="stu" data-k="${r*5+c}"><circle cx="${x+50}" cy="${y-18}" r="24" fill="${['#e0a36a','#c98a5a','#f0c08a','#a86b45'][(r+c)%4]}"/><path d="M${x+18} ${y+30} q32 -46 64 0 z" fill="${['#2f5ea8','#a3141b','#d8a64a','#2b8a6e','#6a4fb3'][(r*2+c)%5]}"/><rect x="${x}" y="${y+26}" width="100" height="18" rx="6" fill="#8a5a33"/></g>`)}
+// chips scene1
+const C1=document.getElementById('chips1');
+[['🎓','طلاب',2.4,'right:60px;top:0'],['✅','حضور',3.2,'left:60px;top:0'],['💰','فلوس',3.95,'right:120px;top:180px'],['👔','موظفين',4.85,'left:120px;top:180px']].forEach(([i,t,d,pos])=>C1.insertAdjacentHTML('beforeend',`<div class="a pop" data-in="${d}" style="position:absolute;${pos}"><div class="chip" style="font-size:52px"><span class="ico">${i}</span>${t}</div></div>`));
+// sheets
+const SH=document.getElementById('sheets');
+[['طلاب.xlsx',90,520,-12],['حضور.xlsx',640,560,10],['فلوس.xlsx',120,900,8],['مرتبات.xlsx',660,940,-9],['غرف.xlsx',380,730,-3],['مخزون.xlsx',300,1200,14],['واتساب.txt',700,1260,-14]].forEach(([n,x,y,r],k)=>SH.insertAdjacentHTML('beforeend',`<div class="sheet" data-k="${k}" data-r="${r}" style="left:${x}px;top:${y}px"><div class="hd" style="${n.endsWith('txt')?'background:#5b6b86':''}">📄 ${n}</div><div class="gr"></div></div>`));
+// network lines
+const NET=document.getElementById('net');
+[[230,600],[850,600],[540,1330]].forEach(([x,y],k)=>NET.insertAdjacentHTML('beforeend',`<line class="ln" data-k="${k}" x1="540" y1="900" x2="${x}" y2="${y}" stroke="url(#lg${k})" stroke-width="8" stroke-linecap="round" ${k==2?'stroke-dasharray="18 16"':''}/><defs><linearGradient id="lg${k}" gradientUnits="userSpaceOnUse" x1="540" y1="900" x2="${x}" y2="${y}"><stop offset="0" stop-color="#e0453f"/><stop offset="1" stop-color="#f3d38a"/></linearGradient></defs><circle class="pk" data-k="${k}" r="12" fill="#fff"/>`));
+// modules scene 8
+const MO=document.getElementById('mods');
+const mods=[['📝','التسجيل'],['✅','الحضور'],['🗓️','الجدولة'],['💳','المحفظة'],['👥','HR'],['💵','المرتبات'],['📦','المخزون'],['💬','واتساب']];
+mods.forEach(([i,t],k)=>{const a=k/mods.length*Math.PI*2;MO.insertAdjacentHTML('beforeend',`<div class="mod" data-k="${k}" data-a="${a}"><span>${i}</span>${t}</div>`)});
+const scenes=[...document.querySelectorAll('.scene')];
+const baseT={};document.querySelectorAll('.a').forEach((el,i)=>{el.dataset.i=i;baseT[i]=el.style.transform||''});
+const X=0.5;
+window.render=async function(t){
+  const S=window.SCENES;let acc=0;const seeks=[];
+  g1.style.transform=`translate(${Math.sin(t*.3)*120}px,${Math.cos(t*.25)*90}px)`;
+  g2.style.transform=`translate(${Math.cos(t*.27)*110}px,${Math.sin(t*.2)*120}px)`;
+  g3.style.transform=`translate(${Math.sin(t*.35)*90}px,${Math.cos(t*.3)*140}px)`;
+  grid.style.transform=`translateY(${(t*14)%90}px)`;
+  scenes.forEach((sc,k)=>{
+    const st=acc,d=S[k];acc+=d;const lt=t-st;
+    const inP=k==0?clamp((lt+.5)/.5):eio((lt+X/2)/X), outP=k<scenes.length-1?eio((lt-(d-X/2))/X):(lt>d-1.2?eio((lt-(d-1.2))/1.2):0);
+    const op=Math.min(inP,1-outP);
+    if(op<=0.001){sc.style.display='none';return}
+    sc.style.display='block';sc.style.opacity=op;
+    sc.style.transform=`scale(${1+0.025*clamp(lt/d)+0.05*outP+(k?0.05*(1-inP):0)})`;
+    sc.style.filter=(outP>0||inP<1)?`blur(${(outP+(1-inP))*10}px)`:'none';
+    sc.querySelectorAll('.a[data-in]').forEach(el=>{
+      const p0=(lt-parseFloat(el.dataset.in))/0.6,p=eo(p0),pop=el.classList.contains('pop');
+      el.style.opacity=p;if(el.tagName!=='svg')el.style.filter=p<1?`blur(${(1-p)*12}px)`:'none';
+      el.style.transform=`${baseT[el.dataset.i]} translateY(${(1-p)*50}px)${pop?` scale(${0.5+0.5*back(p0)})`:''}`;
+    });
+    sc.querySelectorAll('video').forEach(v=>{const z=+v.dataset.z,ox=+v.dataset.ox,oy=+v.dataset.oy;const p=clamp(lt/d);
+      v.style.transform=`scale(${z*(1+0.05*p)}) translate(${ox+(p-.5)*4}%,${oy}%)`;
+      const want=Math.max(0,Math.min(v.duration||99,lt+0.0)-0.001);
+      if(Math.abs(v.currentTime-want)>0.001) seeks.push(new Promise(r=>{v.addEventListener('seeked',r,{once:true});v.currentTime=want;}));});
+    fx[k]&&fx[k](sc,lt,d);
+  });
+  await Promise.all(seeks);
+};
+const fx={
+  0:(sc,lt)=>{sc.querySelectorAll('.stu').forEach(s=>{const k=+s.dataset.k;const p=eo((lt-0.6-k*0.05)/0.4);s.style.opacity=p;s.style.transform=`translateY(${(1-p)*30+Math.sin(lt*2+k)*2}px)`})},
+  1:(sc,lt)=>{sc.querySelectorAll('.sheet').forEach(s=>{const k=+s.dataset.k,r=+s.dataset.r;const p0=(lt-0.2-k*0.18)/0.4;const shake=lt>3.0?Math.sin(lt*45+k)*7:Math.sin(lt*6+k)*2;
+     s.style.opacity=eo(p0);s.style.transform=`translate(${shake}px,${(1-eo(p0))*-300}px) rotate(${r+(lt>3.0?Math.sin(lt*30+k)*3:0)}deg) scale(${0.6+0.4*back(p0)})`;s.style.filter=lt>3?'saturate(.6)':'none'});
+    const c=document.getElementById('chaos');const p=(lt-3.0)/0.35;c.style.opacity=eo(p);c.style.transform=`scale(${0.5+0.5*back(p)}) translateX(${lt>3.2?Math.sin(lt*50)*6:0}px)`},
+  2:(sc,lt)=>{
+    const hub=document.getElementById('hub');const hp=(lt-1.2)/0.5;hub.style.opacity=eo(hp);hub.style.transform=`scale(${0.4+0.6*back(hp)})`;
+    sc.querySelectorAll('.br').forEach(b=>{const k=+b.dataset.k;const p=(lt-1.6-k*0.35)/0.5;b.style.opacity=eo(p);b.style.transform=`scale(${0.4+0.6*back(p)})`});
+    sc.querySelectorAll('.ln').forEach(l=>{const k=+l.dataset.k;const p=eio((lt-2.0-k*0.35)/0.6);const x2=+l.getAttribute('x2'),y2=+l.getAttribute('y2');const L=Math.hypot(x2-540,y2-900);
+      l.setAttribute('stroke-dasharray',k==2?'18 16':`${L}`);l.setAttribute('stroke-dashoffset',k==2?-lt*40:L*(1-p));l.style.opacity=p});
+    sc.querySelectorAll('.pk').forEach(c=>{const k=+c.dataset.k;const l=sc.querySelector(`.ln[data-k="${k}"]`);const x2=+l.getAttribute('x2'),y2=+l.getAttribute('y2');
+      const f=((lt*0.7+k*0.33)%1);const show=lt>2.8;c.setAttribute('cx',x2+(540-x2)*f);c.setAttribute('cy',y2+(900-y2)*f);c.style.opacity=show?Math.sin(f*Math.PI):0});
+  },
+  4:(sc,lt)=>{const b=document.getElementById('btn');b.style.transform=`scale(${lt>7.2&&lt<7.45?0.94:1})`;const r=document.getElementById('rip');const rp=(lt-7.3)/0.6;r.style.opacity=rp>0&&rp<1?1-rp:0;r.style.transform=`scale(${0.4+rp*1.4})`},
+  5:(sc,lt)=>{sc.querySelectorAll('.row6').forEach(e=>{const k=+e.dataset.k;const t0=[0.3,2.3,5.0][k];const p=(lt-t0)/0.6;e.style.opacity=eo(p);e.style.transform=`translateX(${(1-eo(p))*200}px)`;
+     e.style.borderColor=(lt>t0&&lt<t0+1.6)?'rgba(243,211,138,1)':'rgba(216,166,74,.4)'})},
+  6:(sc,lt)=>{
+    const ph=document.getElementById('ph0');const p=(lt-0.4)/0.6;ph.style.opacity=eo(p);ph.style.transform=`translateY(${(1-eo(p))*120}px)`;
+    sc.querySelectorAll('.m').forEach(m=>{const k=+m.dataset.k;const q=(lt-[1.6,3.9,5.0][k])/0.4;m.style.opacity=eo(q);m.style.transform=`translateY(${(1-eo(q))*30}px) scale(${0.85+0.15*back(q)})`});
+    sc.querySelectorAll('.mini').forEach(m=>{const k=+m.dataset.k;const q=eo((lt-2.6-k*0.3)/0.6);m.style.opacity=q*0.55;m.style.transform=`scale(.55) translateX(${(k?1:-1)*(1-q)*200}px) rotate(${(k?8:-8)}deg)`});
+  },
+  7:(sc,lt)=>{
+    sc.querySelectorAll('.mod').forEach(m=>{const k=+m.dataset.k,a=+m.dataset.a+lt*0.3;const conv=eio((lt-1.7)/0.9);const R=420*(1-conv);
+      const p=eo((lt-0.1-k*0.08)/0.4);m.style.left=(540+Math.cos(a)*R)+'px';m.style.top=(930+Math.sin(a)*R*0.9)+'px';m.style.opacity=p*(1-eio((lt-2.3)/0.3));m.style.transform=`scale(${(0.6+0.4*p)*(1-0.6*conv)})`});
+    const lg=document.getElementById('login');const q=(lt-2.2)/0.5;lg.style.opacity=eo(q);lg.style.transform=`scale(${0.5+0.5*back(q)})`;
+  },
+  8:(sc,lt)=>{const m=document.getElementById('bigmj');m.style.transform+=` scale(${0.85+0.15*eo((lt-3.0)/1.2)})`;document.getElementById('cta').style.transform=`scale(${1+0.035*Math.sin(Math.max(0,lt-3.4)*4)})`}
+};
+window.TOTAL=()=>window.SCENES.reduce((a,b)=>a+b,0);
+render(0);
+</script>
+</body>
+</html>
