@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Cairo;font-weight:400;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-900-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:400;src:url(node_modules/@fontsource/cairo/files/cairo-latin-400-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-latin-700-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-latin-900-normal.woff2)}
+:root{--navy:#081120;--gold:#d8a64a;--gold2:#f3d38a;--or:#ef6a2c;--ink:#f2f4f8;--mut:#b8c3d8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--navy)}
+body{font-family:CairoL,Cairo,sans-serif;color:var(--ink)}
+#stage{position:absolute;inset:0;overflow:hidden;background:#060c18}
+.scene{position:absolute;inset:0;display:none;overflow:hidden}
+.bg{position:absolute;inset:-60px;background:center/cover no-repeat}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,12,24,.85) 0%,rgba(6,12,24,.25) 30%,rgba(6,12,24,.35) 60%,rgba(6,12,24,.95) 100%)}
+.vig{position:absolute;inset:0;box-shadow:inset 0 0 260px 60px rgba(0,0,0,.7);pointer-events:none;z-index:40}
+.grain{position:absolute;inset:0;z-index:41;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")}
+#sweep{position:absolute;inset:-400px;z-index:42;pointer-events:none;background:linear-gradient(105deg,transparent 40%,rgba(243,211,138,.0) 44%,rgba(243,211,138,.35) 50%,rgba(243,211,138,0) 56%,transparent 60%);opacity:0}
+h1{font-size:110px;line-height:1.2;font-weight:900;text-shadow:0 10px 40px rgba(0,0,0,.6)}
+h2{font-size:80px;line-height:1.25;font-weight:900;text-shadow:0 10px 40px rgba(0,0,0,.6)}
+.gold{background:linear-gradient(90deg,var(--gold2),var(--gold));-webkit-background-clip:text;color:transparent}
+.or{color:var(--or)}
+.sub{font-size:46px;line-height:1.5;color:var(--mut);text-shadow:0 6px 30px rgba(0,0,0,.7)}
+.center{position:absolute;left:0;right:0;text-align:center;padding:0 70px}
+.line{display:block;width:180px;height:4px;margin:26px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.kicker{display:inline-flex;align-items:center;gap:16px;padding:12px 32px;border:1.5px solid rgba(216,166,74,.6);border-radius:99px;font-size:32px;font-weight:700;letter-spacing:2px;color:var(--gold2);background:rgba(8,17,32,.55);backdrop-filter:blur(8px)}
+.kicker i{width:12px;height:12px;border-radius:50%;background:var(--or);display:block;box-shadow:0 0 14px var(--or)}
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1.5px solid rgba(243,211,138,.35);border-radius:40px;backdrop-filter:blur(14px);box-shadow:0 40px 100px rgba(0,0,0,.5)}
+.phone{position:absolute;width:470px;height:980px;border-radius:64px;background:#04070d;padding:15px;box-shadow:0 60px 140px rgba(0,0,0,.7),0 0 0 2px rgba(243,211,138,.35)}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:50px;overflow:hidden;background:#fff}
+.phone .scr img{position:absolute;top:0;left:0;width:100%}
+.phone .notch{position:absolute;top:27px;left:50%;width:136px;height:36px;margin-left:-68px;background:#04070d;border-radius:30px;z-index:9}
+.logos{position:absolute;left:70px;right:70px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.lg{height:130px;border-radius:28px;background:#fff;display:grid;place-items:center;box-shadow:0 20px 60px rgba(0,0,0,.45),0 0 0 2px rgba(243,211,138,.5)}
+.lg img{max-width:72%;max-height:62%}
+.svc{position:absolute;left:70px;right:70px;height:250px;border-radius:34px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1.5px rgba(243,211,138,.4)}
+.svc .im{position:absolute;inset:0;background:center/cover}
+.svc .ov{position:absolute;inset:0;background:linear-gradient(270deg,rgba(6,12,24,.92) 30%,rgba(6,12,24,.2))}
+.svc .tx{position:absolute;right:44px;top:50%;transform:translateY(-50%);font-size:52px;font-weight:900}
+.svc .tx small{display:block;font-family:CairoL;font-size:28px;font-weight:700;color:var(--gold2);letter-spacing:2px}
+.svc .n{position:absolute;left:40px;top:50%;transform:translateY(-50%);font-family:CairoL;font-size:90px;font-weight:900;color:rgba(243,211,138,.25)}
+.doc{position:absolute;left:150px;right:150px;background:#fff;color:#0b1a33;border-radius:34px;padding:40px;box-shadow:0 50px 120px rgba(0,0,0,.6)}
+.bar{height:16px;border-radius:8px;background:#e8ecf3;overflow:hidden;direction:ltr;margin-top:24px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--or),#ff9a5c);transform-origin:left}
+.ripple{position:absolute;width:120px;height:120px;border-radius:50%;border:5px solid var(--gold2);margin:-60px 0 0 -60px}
+.inbox{position:absolute;left:110px;right:110px;border-radius:34px;padding:34px 40px}
+.mj{border-radius:80px;background:#0b1424;display:grid;place-items:center;box-shadow:0 40px 120px rgba(216,166,74,.35),0 0 0 3px rgba(216,166,74,.55)}
+.mj b{font-family:CairoL;font-weight:900;color:var(--gold);letter-spacing:-8px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- S1 hook -->
+  <div class="scene" id="s1">
+    <div class="bg kb" style="background-image:url(img/platform.jpg)" data-kb="1"></div>
+    <div class="bg" id="s1b" style="background-image:url(img/night.jpg);opacity:0"></div>
+    <div class="shade"></div>
+    <div class="center a" data-in="0.3" style="top:300px"><span class="kicker"><i></i>OIL & GAS</span></div>
+    <div class="center a" data-in="0.6" style="top:420px"><h1>قطاع<br><span class="gold">البترول والغاز</span></h1></div>
+    <div class="center a" data-in="2.6" style="top:1380px"><h2 style="font-size:70px">الثقة <span class="or">·</span> الاحترافية</h2><span class="line"></span><div class="sub">هي الأساس</div></div>
+  </div>
+
+  <!-- S2 masar intro -->
+  <div class="scene" id="s2">
+    <div class="bg kb" style="background-image:url(img/refinery.jpg)" data-kb="-1"></div>
+    <div class="shade"></div>
+    <div class="center a" data-in="0.2" style="top:260px"><div class="glass" style="display:inline-block;padding:40px 60px;background:rgba(255,255,255,.92)"><img src="img/logo-s.png" style="height:240px;display:block"></div></div>
+    <div class="center a" data-in="0.6" style="top:680px"><h2 style="font-family:CairoL;letter-spacing:6px;font-size:84px">MASAR <span class="gold">GROUP</span></h2></div>
+    <div class="center a" data-in="3.0" style="top:1180px">
+      <div style="font-family:CairoL;font-size:240px;font-weight:900;line-height:1" class="gold"><span id="yrs">0</span>+</div>
+      <div style="font-size:52px;font-weight:700;text-shadow:0 6px 30px #000">سنة خبرة في خدمات البترول والغاز</div>
+    </div>
+  </div>
+
+  <!-- S3 digital presence + clients -->
+  <div class="scene" id="s3">
+    <div class="bg kb" style="background-image:url(img/pipes.jpg);filter:brightness(.45)" data-kb="1"></div>
+    <div class="shade"></div>
+    <div class="center a" data-in="0.1" style="top:130px"><h2 style="font-size:66px">حضور رقمي<br><span class="gold">يليق بحجمها</span></h2></div>
+    <div class="phone a" data-in="0.3" style="left:305px;top:440px;height:820px"><div class="notch"></div><div class="scr"><img src="m_00.png" id="s3img"></div></div>
+    <div class="center a" data-in="1.5" style="top:1300px"><span class="kicker"><i></i>عملاء بحجم</span></div>
+    <div class="logos" id="logos" style="top:1390px"></div>
+  </div>
+
+  <!-- S4 services -->
+  <div class="scene" id="s4">
+    <div class="bg kb" style="background-image:url(img/night.jpg);filter:brightness(.35)" data-kb="-1"></div>
+    <div class="shade"></div>
+    <div class="center a" data-in="0.1" style="top:150px"><span class="kicker"><i></i>خدماتهم بوضوح</span></div>
+    <div class="svc" data-k="0" style="top:330px"><div class="im" style="background-image:url(img/PIPILINE.jpg)"></div><div class="ov"></div><div class="n">01</div><div class="tx"><small>PROCUREMENT</small>تخطيط المشتريات</div></div>
+    <div class="svc" data-k="1" style="top:630px"><div class="im" style="background-image:url(img/worker.jpg)"></div><div class="ov"></div><div class="n">02</div><div class="tx"><small>PROJECT MANAGEMENT</small>إدارة المشاريع</div></div>
+    <div class="svc" data-k="2" style="top:930px"><div class="im" style="background-image:url(img/barrels.jpg)"></div><div class="ov"></div><div class="n">03</div><div class="tx"><small>OIL TRADING</small>تجارة البترول</div></div>
+    <div class="svc" data-k="3" style="top:1230px"><div class="im" style="background-image:url(img/turbine.jpg)"></div><div class="ov"></div><div class="n">04</div><div class="tx"><small>ENERGY SERVICES</small>خدمات الطاقة</div></div>
+    <div class="center a" data-in="6.6" style="top:1580px"><div class="sub" style="font-size:40px;color:#fff">Engineering · Procurement · Trading</div></div>
+  </div>
+
+  <!-- S5 company profile -->
+  <div class="scene" id="s5">
+    <div class="bg kb" style="background-image:url(img/handshake.jpg);filter:brightness(.4)" data-kb="1"></div>
+    <div class="shade"></div>
+    <div class="center a" data-in="0.1" style="top:140px"><h2 style="font-size:70px">ملف الشركة كامل<br><span class="gold">بضغطة واحدة</span></h2></div>
+    <div class="phone a" data-in="0.3" style="left:305px;top:460px;height:800px"><div class="notch"></div><div class="scr"><img src="m_00.png" style="top:-60px"></div>
+      <div class="ripple" id="rip" style="left:250px;top:720px;opacity:0"></div></div>
+    <div class="doc" id="doc" style="top:1180px">
+      <div style="display:flex;align-items:center;gap:28px">
+        <div style="width:110px;height:140px;border-radius:16px;background:linear-gradient(160deg,#ef6a2c,#b8441a);display:grid;place-items:center;color:#fff;font-family:CairoL;font-weight:900;font-size:36px;flex:none">PDF</div>
+        <div style="flex:1;direction:ltr;text-align:left"><div style="font-family:CairoL;font-weight:900;font-size:38px">MASAR GROUP</div><div style="font-family:CairoL;font-size:30px;color:#5b6a85">Company Profile.pdf</div></div>
+        <div id="okk" style="width:80px;height:80px;border-radius:50%;background:#16a35c;color:#fff;display:grid;place-items:center;font-size:46px;flex:none">✓</div>
+      </div>
+      <div class="bar"><i id="dl"></i></div>
+    </div>
+    <div class="center a" data-in="6.0" style="top:1620px"><div class="sub" style="color:#fff;font-weight:700;font-size:42px">عرض احترافي… <span class="gold">يبني ثقة من أول لحظة</span></div></div>
+  </div>
+
+  <!-- S6 quote request -->
+  <div class="scene" id="s6">
+    <div class="bg kb" style="background-image:url(img/header.jpg);filter:brightness(.4)" data-kb="-1"></div>
+    <div class="shade"></div>
+    <div class="center a" data-in="0.1" style="top:130px"><div style="font-size:44px;color:var(--mut);font-weight:700">الهدف الأساسي؟</div><h2 style="font-size:76px">طلب <span class="gold">عرض سعر</span> بسهولة</h2></div>
+    <div class="phone a" data-in="0.4" style="left:305px;top:440px;height:860px"><div class="notch"></div><div class="scr" style="background:#16223d"><img src="mob_contact_1.png" style="top:-160px"></div>
+      <div class="ripple" id="rip2" style="left:235px;top:780px;opacity:0"></div></div>
+    <svg id="flow" width="1080" height="300" style="position:absolute;left:0;top:1260px;direction:ltr"><path id="fp" d="M540 20 C 540 140, 540 160, 540 260" stroke="url(#fg)" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="20 18"/><defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ef6a2c"/><stop offset="1" stop-color="#f3d38a"/></linearGradient></defs></svg>
+    <div class="inbox glass" id="inbox" style="top:1520px">
+      <div style="display:flex;align-items:center;gap:26px">
+        <div style="width:96px;height:96px;border-radius:26px;background:linear-gradient(135deg,var(--gold),#a5772a);display:grid;place-items:center;font-size:48px;flex:none">📩</div>
+        <div style="flex:1"><div style="font-size:40px;font-weight:900">طلب عرض سعر جديد</div><div style="font-size:30px;color:var(--mut)">وصل مباشرةً لفريق المبيعات</div></div>
+        <div style="font-family:CairoL;font-weight:900;font-size:30px;padding:8px 20px;border-radius:99px;background:var(--or)">NEW</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7 CTA -->
+  <div class="scene" id="s7">
+    <div class="bg kb" style="background-image:url(img/platform.jpg);filter:brightness(.3) saturate(.8)" data-kb="1"></div>
+    <div class="shade"></div>
+    <div class="center a" data-in="0.1" style="top:200px"><h2 style="font-size:70px">عندك شركة <span class="gold" style="font-family:CairoL">B2B</span>؟</h2><div class="sub" style="color:#fff;margin-top:10px">محتاجة موقع يعكس احترافيتها؟</div></div>
+    <div class="a" id="bigmj" data-in="0.9" style="position:absolute;left:290px;top:600px"><div class="mj" dir="ltr" style="width:500px;height:500px"><b style="font-size:270px">MJ.</b></div></div>
+    <div class="center a" data-in="1.4" style="top:1150px"><div style="font-family:CairoL;font-size:96px;font-weight:900;letter-spacing:4px">Mubarmi<span class="gold">J</span></div></div>
+    <div class="center a" data-in="3.5" style="top:1340px"><div id="cta" style="display:inline-block;padding:34px 70px;border-radius:99px;font-size:52px;font-weight:900;background:linear-gradient(90deg,var(--gold2),var(--gold));color:#081120;box-shadow:0 30px 90px rgba(216,166,74,.45)">احجز استشارتك المجانية دلوقتي</div></div>
+    <div class="center a" data-in="4.0" style="top:1560px"><div style="font-family:CairoL;font-size:50px;font-weight:700;color:var(--gold2)">mubarmijonline.com</div><div style="font-family:CairoL;font-size:42px;color:#fff;direction:ltr;margin-top:8px">WhatsApp · +20 120 058 8803</div></div>
+  </div>
+  <div class="vig"></div><div class="grain"></div><div id="sweep"></div>
+</div>
+<script>
+window.SCENES = window.SCENES || [6.031,7.094,4.124,8.609,10.083,9.196,10.811];
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-clamp(x),3);
+const eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const L=document.getElementById('logos');
+['BP','SHELL','ARAMCO','ADNOC','ENI','KOC','Petrochina','Technip','ENPPI'].forEach((n,i)=>L.insertAdjacentHTML('beforeend',`<div class="lg" data-k="${i}"><img src="logos/${n}.png"></div>`));
+const scenes=[...document.querySelectorAll('.scene')];
+const baseT={};document.querySelectorAll('.a').forEach((el,i)=>{el.dataset.i=i;baseT[i]=el.style.transform||''});
+const X=0.9;
+window.render=function(t){
+  const S=window.SCENES;let acc=0,sw=-1;
+  scenes.forEach((sc,k)=>{
+    const st=acc,d=S[k];acc+=d;const lt=t-st;
+    const inP=k==0?clamp((lt+0.8)/0.8):eio((lt+X/2)/X), outP=k<scenes.length-1?eio((lt-(d-X/2))/X):0;
+    const op=Math.min(inP,1-outP);
+    if(op<=0.001){sc.style.display='none';return}
+    sc.style.display='block';sc.style.opacity=op;sc.style.zIndex=k;
+    if(k>0&&Math.abs(lt)<0.7) sw=lt;
+    sc.querySelectorAll('.kb').forEach(b=>{const dir=+b.dataset.kb;const p=clamp((lt+X)/(d+X*2));b.style.transform=`scale(${1.16-0.1*p}) translateX(${dir*(p-.5)*50}px)`});
+    sc.querySelectorAll('.a[data-in]').forEach(el=>{
+      const p=eo((lt-parseFloat(el.dataset.in))/1.0);
+      el.style.opacity=p;el.style.filter=p<1?`blur(${(1-p)*14}px)`:'none';
+      el.style.transform=`${baseT[el.dataset.i]} translateY(${(1-p)*40}px)`;
+    });
+    fx[k]&&fx[k](sc,lt,d);
+  });
+  const s=document.getElementById('sweep');
+  if(sw>-1){const p=(sw+0.7)/1.4;s.style.opacity=Math.sin(p*Math.PI)*0.9;s.style.transform=`translateX(${(p-0.5)*1600}px)`}else s.style.opacity=0;
+};
+const fx={
+  0:(sc,lt,d)=>{document.getElementById('s1b').style.opacity=eio((lt-2.0)/1.2)},
+  1:(sc,lt)=>{document.getElementById('yrs').textContent=Math.round(18*eio((lt-3.0)/1.6))},
+  2:(sc,lt,d)=>{
+    const im=document.getElementById('s3img');im.style.transform=`translateY(${-eio((lt-0.6)/(d-0.8))*60}px)`;
+    sc.querySelectorAll('.lg').forEach(e=>{const p=eo((lt-1.6-e.dataset.k*0.12)/0.6);e.style.opacity=p;e.style.transform=`translateY(${(1-p)*50}px) scale(${.9+.1*p})`});
+    // logos fit only 1 row visible; clip under fold
+  },
+  3:(sc,lt,d)=>{sc.querySelectorAll('.svc').forEach(e=>{const k=+e.dataset.k;const p=eo((lt-0.6-k*1.5)/0.8);e.style.opacity=p;e.style.transform=`translateX(${(1-p)*-160}px)`;
+     e.querySelector('.im').style.transform=`scale(${1.15-0.1*clamp((lt-0.6-k*1.5)/(d))})`;
+     e.style.boxShadow=(lt>0.6+k*1.5&&lt<2.0+k*1.5)?'0 30px 80px rgba(0,0,0,.55),0 0 0 3px rgba(243,211,138,.9)':''})},
+  4:(sc,lt)=>{
+    const r=document.getElementById('rip');const rp=(lt-3.0)/0.6;r.style.opacity=rp>0&&rp<1?1-rp:0;r.style.transform=`scale(${0.3+rp})`;
+    const doc=document.getElementById('doc');const p=eo((lt-3.3)/0.6);doc.style.opacity=p;doc.style.transform=`translateY(${(1-p)*120}px)`;
+    document.getElementById('dl').style.transform=`scaleX(${eio((lt-3.6)/1.4)})`;
+    const ok=document.getElementById('okk');const q=eo((lt-5.0)/0.4);ok.style.opacity=q;ok.style.transform=`scale(${q})`;
+  },
+  5:(sc,lt)=>{
+    const r=document.getElementById('rip2');const rp=(lt-4.6)/0.6;r.style.opacity=rp>0&&rp<1?1-rp:0;r.style.transform=`scale(${0.3+rp})`;
+    const fp=document.getElementById('fp');const fpP=eo((lt-5.0)/0.8);fp.style.opacity=fpP;fp.setAttribute('stroke-dashoffset',-lt*80);
+    const ib=document.getElementById('inbox');const p=eo((lt-5.6)/0.6);ib.style.opacity=p;ib.style.transform=`translateY(${(1-p)*80}px) scale(${.92+.08*p})`;
+  },
+  6:(sc,lt)=>{const m=document.getElementById('bigmj');m.style.transform+=` scale(${0.85+0.15*eo((lt-0.9)/1.2)})`;
+    document.getElementById('cta').style.transform=`scale(${1+0.025*Math.sin(Math.max(0,lt-2)*4)})`}
+};
+window.TOTAL=()=>window.SCENES.reduce((a,b)=>a+b,0);
+render(0);
+</script>
+</body>
+</html>
