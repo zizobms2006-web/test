@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Cairo;font-weight:400;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-400-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-700-normal.woff2)}
+@font-face{font-family:Cairo;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-900-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:400;src:url(node_modules/@fontsource/cairo/files/cairo-latin-400-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:700;src:url(node_modules/@fontsource/cairo/files/cairo-latin-700-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-latin-900-normal.woff2)}
+:root{--navy:#0a1428;--navy2:#10203d;--blue:#1e7be0;--gold:#d8a64a;--gold2:#f3d38a;--ink:#eaf1ff;--mut:#9fb2d4}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--navy)}
+body{font-family:CairoL,Cairo,sans-serif;color:var(--ink)}
+#stage{position:absolute;inset:0;overflow:hidden;
+  background:radial-gradient(120% 70% at 50% 0%,#14284d 0%,#0a1428 55%,#060c1a 100%)}
+.grid{position:absolute;inset:-200px;background-image:linear-gradient(rgba(120,160,230,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,230,.06) 1px,transparent 1px);background-size:90px 90px}
+.glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.55}
+.scene{position:absolute;inset:0;opacity:0}
+.a{will-change:transform,opacity}
+.kicker{display:inline-flex;align-items:center;gap:14px;padding:12px 30px;border:2px solid rgba(216,166,74,.5);border-radius:99px;font-size:34px;font-weight:700;color:var(--gold2);background:rgba(216,166,74,.08)}
+.kicker i{width:14px;height:14px;border-radius:50%;background:var(--gold);display:block}
+h1{font-size:96px;line-height:1.25;font-weight:900;letter-spacing:-.5px}
+h2{font-size:74px;line-height:1.3;font-weight:900}
+.gold{background:linear-gradient(90deg,var(--gold2),var(--gold));-webkit-background-clip:text;color:transparent}
+.blue{color:#5aa7ff}
+.sub{font-size:44px;line-height:1.6;color:var(--mut);font-weight:400}
+.center{position:absolute;left:0;right:0;text-align:center;padding:0 80px}
+.phone{position:absolute;width:500px;height:1040px;border-radius:70px;background:#05080f;padding:18px;box-shadow:0 60px 120px rgba(0,0,0,.6),0 0 0 3px rgba(255,255,255,.08),inset 0 0 0 2px #1d2740}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:54px;overflow:hidden;background:#fff}
+.phone .scr img{position:absolute;top:0;left:0;width:100%}
+.phone .notch{position:absolute;top:30px;left:50%;width:150px;height:40px;margin-left:-75px;background:#05080f;border-radius:30px;z-index:5}
+.card{background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.03));border:2px solid rgba(255,255,255,.1);border-radius:40px;backdrop-filter:blur(10px)}
+.chip{display:inline-flex;align-items:center;gap:22px;padding:26px 40px;border-radius:32px;font-size:44px;font-weight:700;background:rgba(14,28,56,.85);border:2px solid rgba(90,167,255,.35);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.ico{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,var(--blue),#0d4fa0)}
+.ico.g{background:linear-gradient(135deg,var(--gold),#a5772a)}
+.mj{width:220px;height:220px;border-radius:56px;background:#0b1424;display:grid;place-items:center;border:4px solid #000;box-shadow:0 30px 80px rgba(216,166,74,.25),0 0 0 2px rgba(216,166,74,.4)}
+.mj b{font-family:CairoL;font-weight:900;font-size:120px;color:var(--gold);letter-spacing:-6px}
+.mj b span{color:var(--gold);font-size:120px}
+/* dashboard */
+.dash{position:absolute;left:70px;right:70px;padding:40px}
+.stats{display:flex;gap:24px}
+.stat{flex:1;padding:28px;border-radius:28px;background:rgba(10,20,40,.7);border:2px solid rgba(255,255,255,.08)}
+.stat .n{font-size:64px;font-weight:900;font-family:CairoL}
+.stat .l{font-size:30px;color:var(--mut)}
+.bars{display:flex;align-items:flex-end;gap:22px;height:360px;margin-top:36px;padding:30px;border-radius:28px;background:rgba(10,20,40,.7);border:2px solid rgba(255,255,255,.08);direction:ltr}
+.bar{flex:1;border-radius:14px 14px 6px 6px;background:linear-gradient(180deg,#5aa7ff,#1e5fb8);transform-origin:bottom}
+.bar.g{background:linear-gradient(180deg,var(--gold2),var(--gold))}
+.row{display:flex;align-items:center;justify-content:space-between;padding:22px 30px;margin-top:18px;border-radius:24px;background:rgba(10,20,40,.7);font-size:34px;border:2px solid rgba(255,255,255,.06)}
+.pill{padding:6px 22px;border-radius:99px;font-size:28px;font-weight:700}
+/* exam */
+.paper{position:absolute;left:150px;right:150px;background:#fbfcff;border-radius:36px;padding:50px 56px;color:#13213d;box-shadow:0 60px 120px rgba(0,0,0,.55);overflow:hidden}
+.q{display:flex;align-items:center;gap:26px;padding:24px 0;border-bottom:2px dashed #dbe3f2;font-size:36px}
+.q .ln{flex:1;height:18px;border-radius:9px;background:#e6ecf7}
+.q .mk{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:38px;font-weight:900;color:#fff}
+.scan{position:absolute;left:0;right:0;height:140px;background:linear-gradient(180deg,rgba(30,123,224,0),rgba(30,123,224,.28),rgba(30,123,224,0));border-bottom:4px solid #1e7be0}
+/* whatsapp */
+.wa{position:absolute;inset:0;background:#0b141a;font-family:CairoL,Cairo}
+.wa .top{height:170px;background:#1f2c34;display:flex;align-items:flex-end;gap:20px;padding:0 30px 24px;color:#e9edef;font-size:34px;font-weight:700}
+.wa .av{width:76px;height:76px;border-radius:50%;background:#0b1424;display:grid;place-items:center;color:var(--gold);font-weight:900;font-size:34px;border:2px solid var(--gold)}
+.wa .msg{margin:26px 26px 0 70px;background:#005c4b;color:#e9edef;border-radius:24px 6px 24px 24px;padding:24px 28px;font-size:29px;line-height:1.65}
+.wa .msg.in{margin:26px 70px 0 26px;background:#1f2c34;border-radius:6px 24px 24px 24px}
+.wa .t{font-size:22px;color:#9fd6c8;text-align:left;margin-top:6px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="grid a" id="grid"></div>
+  <div class="glow a" id="g1" style="width:900px;height:900px;background:#1e7be0;left:-300px;top:-200px"></div>
+  <div class="glow a" id="g2" style="width:800px;height:800px;background:#d8a64a;right:-350px;bottom:-250px;opacity:.28"></div>
+
+  <!-- S1: hook -->
+  <div class="scene" id="s1">
+    <div class="center a" data-in="0.1" style="top:170px"><span class="kicker"><i></i>منصة تعليمية متكاملة</span></div>
+    <div class="center a" data-in="0.4" style="top:280px"><h1>الطالب · المدرّس<br><span class="gold">وولي الأمر</span></h1></div>
+    <div class="phone a" id="s1pL" data-in="1.0" style="left:40px;top:760px;transform:scale(.8)"><div class="notch"></div><div class="scr"><img src="p_courses.png"></div></div>
+    <div class="phone a" id="s1pR" data-in="1.3" style="left:540px;top:760px;transform:scale(.8)"><div class="notch"></div><div class="scr"><div class="wa" data-tpl="wa"></div></div></div>
+    <div class="phone a" id="s1pC" data-in="1.6" style="left:290px;top:700px"><div class="notch"></div><div class="scr" style="background:#0a1428"><div data-tpl="minidash"></div></div></div>
+    <div class="center a" data-in="2.6" style="top:1770px"><div class="sub" style="color:#fff;font-weight:700">كل واحد ليه شاشته… جوّه <span class="gold">منصة واحدة</span></div></div>
+  </div>
+
+  <!-- S2: teacher -->
+  <div class="scene" id="s2">
+    <div class="center a" data-in="0.1" style="top:200px"><span class="kicker"><i></i>مشروع MubarmiJ</span></div>
+    <div class="a" data-in="0.3" style="position:absolute;left:190px;top:360px;width:700px;height:700px;border-radius:50%;padding:10px;background:conic-gradient(from 0deg,var(--gold2),var(--gold),#7a5520,var(--gold2))">
+      <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;background:#e9eff9"><img src="teacher.png" style="width:118%;margin:40px 0 0 -9%"></div>
+    </div>
+    <div class="center a" data-in="0.8" style="top:1120px"><h1>مستر <span class="gold">لؤي مطاوع</span></h1></div>
+    <div class="center a" data-in="1.2" style="top:1290px"><div class="chip" style="font-family:CairoL;font-size:52px"><span class="ico g">∑</span>IGCSE Math</div></div>
+    <div class="center a" data-in="1.8" style="top:1500px"><div class="sub">Cambridge · Edexcel · CNISE</div></div>
+  </div>
+
+  <!-- S3: built from scratch -->
+  <div class="scene" id="s3">
+    <div class="center a" data-in="0.1" style="top:170px"><h2>بنّينا له منصة كاملة<br><span class="gold">من الصفر</span></h2></div>
+    <div class="phone a" id="s3p" data-in="0.5" style="left:70px;top:520px"><div class="notch"></div><div class="scr" id="s3scr"><img src="site_0.png"><img src="site_1.png"><img src="site_2.png"><img src="site_3.png"><img src="site_4.png"><img src="site_5.png"><img src="site_6.png"><img src="site_7.png"></div></div>
+    <div class="a" data-in="1.2" style="position:absolute;right:50px;top:700px"><div class="chip"><span class="ico">🌐</span>ويب سايت</div></div>
+    <div class="a" data-in="2.0" style="position:absolute;right:50px;top:930px"><div class="chip"><span class="ico">📱</span>تطبيق موبايل</div></div>
+    <div class="a" data-in="2.8" style="position:absolute;right:50px;top:1160px"><div class="chip"><span class="ico g">⚙️</span>سيستم إدارة<br>داخلي احترافي</div></div>
+    <div class="center a" data-in="3.4" style="top:1700px"><div class="sub">loaymotawie.com</div></div>
+  </div>
+
+  <!-- S4: admin -->
+  <div class="scene" id="s4">
+    <div class="center a" data-in="0.1" style="top:150px"><span class="kicker"><i></i>لوحة تحكم الأدمن</span></div>
+    <div class="center a" data-in="0.3" style="top:250px"><h2>تحكّم كامل في<br><span class="gold">كل حاجة</span></h2></div>
+    <div class="dash card a" data-in="0.7" style="top:560px">
+      <div class="stats">
+        <div class="stat"><div class="n" data-count="1000" data-suffix="+">0</div><div class="l">الطلاب</div></div>
+        <div class="stat"><div class="n" data-count="6">0</div><div class="l">الكورسات</div></div>
+        <div class="stat"><div class="n gold" data-count="98" data-suffix="%">0</div><div class="l">النتايج A*–B</div></div>
+      </div>
+      <div class="bars" id="bars"></div>
+      <div class="row a" data-in="2.2"><span>📚 المحتوى والدروس</span><span class="pill" style="background:rgba(90,167,255,.18);color:#8cc2ff">180+ ساعة</span></div>
+      <div class="row a" data-in="2.5"><span>📝 الامتحانات والنتايج</span><span class="pill" style="background:rgba(216,166,74,.18);color:var(--gold2)">200+ امتحان</span></div>
+      <div class="row a" data-in="2.8"><span>👥 متابعة الطلاب</span><span class="pill" style="background:rgba(60,200,140,.18);color:#7fe0b4">لحظي</span></div>
+    </div>
+    <div class="center a" data-in="3.6" style="top:1720px"><div class="sub" style="color:#fff;font-weight:700">قرارات مبنية على <span class="gold">بيانات حقيقية</span>… مش تخمين</div></div>
+  </div>
+
+  <!-- S5: student -->
+  <div class="scene" id="s5">
+    <div class="center a" data-in="0.1" style="top:150px"><span class="kicker"><i></i>تجربة الطالب</span></div>
+    <div class="center a" data-in="0.3" style="top:250px"><h2>مكتبة دروس <span class="gold">كاملة</span></h2></div>
+    <div class="phone a" id="s5p" data-in="0.5" style="left:510px;top:500px"><div class="notch"></div><div class="scr"><img id="s5img" src="full_courses.png"></div></div>
+    <div class="a" data-in="1.2" style="position:absolute;left:40px;top:620px"><div class="chip"><span class="ico">🎬</span>فيديوهات<br>مسجّلة</div></div>
+    <div class="a" data-in="2.2" style="position:absolute;left:40px;top:880px"><div class="chip"><span class="ico g">📝</span>امتحانات سابقة<br>محلولة</div></div>
+    <div class="a" data-in="3.2" style="position:absolute;left:40px;top:1150px;width:430px">
+      <div class="card" style="padding:34px;text-align:center">
+        <svg width="220" height="220" viewBox="0 0 220 220" style="display:block;margin:0 auto">
+          <circle cx="110" cy="110" r="92" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="22"/>
+          <circle id="ring" cx="110" cy="110" r="92" fill="none" stroke="url(#rg)" stroke-width="22" stroke-linecap="round" transform="rotate(-90 110 110)" stroke-dasharray="578" stroke-dashoffset="578"/>
+          <defs><linearGradient id="rg"><stop offset="0" stop-color="#f3d38a"/><stop offset="1" stop-color="#d8a64a"/></linearGradient></defs>
+          <text id="ringT" x="110" y="128" text-anchor="middle" fill="#fff" font-size="54" font-weight="900" font-family="CairoL">0%</text>
+        </svg>
+        <div style="font-size:36px;font-weight:700;margin-top:14px">متابعة لحظية<br><span style="color:var(--mut);font-weight:400;font-size:30px">لمستواه في كل سيشن</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6: AI grading -->
+  <div class="scene" id="s6">
+    <div class="center a" data-in="0.1" style="top:140px"><span class="kicker"><i></i>أقوى ميزة في المنصة</span></div>
+    <div class="center a" data-in="0.3" style="top:240px"><h2>تصحيح أوتوماتيك<br><span class="gold">بالذكاء الاصطناعي</span></h2></div>
+    <div class="paper a" dir="ltr" data-in="0.8" style="top:620px">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-family:CairoL;font-weight:900;font-size:40px;direction:ltr"><span>Assignment · Algebra</span><span id="score" style="color:#1e7be0">-- / 50</span></div>
+      <div id="qs"></div>
+      <div class="scan" id="scan"></div>
+    </div>
+    <div class="a" data-in="4.0" style="position:absolute;left:0;right:0;top:1440px;text-align:center"><div class="chip" style="border-color:rgba(216,166,74,.6)"><span class="ico g">⚡</span>النتيجة والتقييم التفصيلي في ثواني</div></div>
+    <div class="center a" data-in="5.2" style="top:1660px"><div class="sub" style="color:#fff;font-weight:700">من غير أي تدخّل بشري… <span class="gold">ومن غير Assistant</span></div></div>
+  </div>
+
+  <!-- S7: app + whatsapp -->
+  <div class="scene" id="s7">
+    <div class="center a" data-in="0.1" style="top:150px"><span class="kicker"><i></i>تطبيق موبايل + واتساب</span></div>
+    <div class="center a" data-in="0.3" style="top:250px"><h2>تقرير أسبوعي<br><span class="gold">لولي الأمر</span></h2></div>
+    <div class="phone a" id="s7p" data-in="0.6" style="left:290px;top:560px"><div class="notch"></div><div class="scr"><div class="wa" id="wa7" data-tpl="wa"></div></div></div>
+    <div class="center a" data-in="3.4" style="top:1680px"><div class="sub" style="color:#fff;font-weight:700">يعرف مستوى ابنه وتقدّمه <span class="gold">أوّل بأوّل</span></div></div>
+  </div>
+
+  <!-- S8: MubarmiJ -->
+  <div class="scene" id="s8">
+    <div class="a" data-in="0.1" style="position:absolute;left:430px;top:420px"><div class="mj" dir="ltr"><b>MJ<span>.</span></b></div></div>
+    <div class="center a" data-in="0.5" style="top:720px"><h1 style="font-family:CairoL;font-size:120px">Mubarmi<span class="gold">J</span></h1></div>
+    <div class="center a" data-in="1.0" style="top:930px"><h2 style="font-size:64px">بيحوّل أي فكرة تعليمية<br>أو بيزنس</h2></div>
+    <div class="center a" data-in="1.8" style="top:1160px"><h2 style="font-size:64px">لـ <span class="gold">منصة تكنولوجية جاهزة</span><br>تنافس في السوق</h2></div>
+  </div>
+
+  <!-- S9: CTA -->
+  <div class="scene" id="s9">
+    <div class="center a" data-in="0.1" style="top:430px"><h1>عندك <span class="gold">فكرة؟</span></h1></div>
+    <div class="center a" data-in="0.5" style="top:640px"><div class="sub" style="font-size:52px;color:#fff">عايز تنفّذها؟</div></div>
+    <div class="center a" data-in="0.9" style="top:860px"><div id="cta" style="display:inline-block;padding:40px 80px;border-radius:99px;font-size:62px;font-weight:900;background:linear-gradient(90deg,var(--gold2),var(--gold));color:#0a1428;box-shadow:0 30px 90px rgba(216,166,74,.45)">اتواصل معانا دلوقتي</div></div>
+    <div class="a" data-in="1.5" style="position:absolute;left:430px;top:1180px"><div class="mj" dir="ltr"><b>MJ<span>.</span></b></div></div>
+    <div class="center a" data-in="1.8" style="top:1450px"><div style="font-family:CairoL;font-size:52px;font-weight:700;color:var(--gold2)">mubarmijonline.com</div></div>
+  </div>
+</div>
+
+<template id="tpl-wa">
+  <div class="top"><div class="av">MJ</div><div>منصة مستر لؤي<div style="font-size:24px;color:#8696a0;font-weight:400">تقرير أسبوعي</div></div></div>
+  <div class="msg in r" data-k="0">👋 أهلاً يا فندم، ده التقرير الأسبوعي لـ <b>يوسف</b></div>
+  <div class="msg in r" data-k="1">📊 <b>التقرير الأسبوعي</b><br>✅ الحضور: 4 / 4 سيشن<br>📝 متوسط الامتحانات: <b>94%</b><br>📈 التقدّم: +8% عن الأسبوع اللي فات<br>⭐ المستوى: A*<div class="t">9:00 م</div></div>
+  <div class="msg r" data-k="2">شكراً جداً 🙏 متابعة ممتازة<div class="t">9:02 م ✓✓</div></div>
+</template>
+<template id="tpl-minidash">
+  <div style="padding:110px 30px 30px;color:#fff">
+    <div style="font-size:30px;font-weight:900;margin-bottom:20px">لوحة التحكم</div>
+    <div style="display:flex;gap:12px"><div class="stat" style="padding:16px"><div class="n" style="font-size:38px">1000+</div><div class="l" style="font-size:20px">طالب</div></div><div class="stat" style="padding:16px"><div class="n gold" style="font-size:38px">98%</div><div class="l" style="font-size:20px">نتايج</div></div></div>
+    <div class="bars" style="height:300px;padding:18px;gap:12px;margin-top:18px"><div class="bar" style="height:40%"></div><div class="bar" style="height:62%"></div><div class="bar g" style="height:55%"></div><div class="bar" style="height:78%"></div><div class="bar g" style="height:92%"></div></div>
+    <div class="row" style="font-size:22px;padding:14px 18px">📚 الكورسات<span class="pill" style="font-size:18px;background:rgba(90,167,255,.18)">6</span></div>
+    <div class="row" style="font-size:22px;padding:14px 18px">📝 النتايج<span class="pill" style="font-size:18px;background:rgba(216,166,74,.18)">A*</span></div>
+  </div>
+</template>
+
+<script>
+// scene durations (seconds); overridden by window.SCENES before render
+window.SCENES = window.SCENES || [6,6,7,9,9,11,9,6,6];
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-clamp(x),3);
+const eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+document.querySelectorAll('[data-tpl]').forEach(el=>{el.innerHTML=document.getElementById('tpl-'+el.dataset.tpl).innerHTML});
+// bars
+const bars=document.getElementById('bars');
+[38,52,47,66,58,74,70,86,92].forEach((h,i)=>{const b=document.createElement('div');b.className='bar'+(i%3==2?' g':'');b.dataset.h=h;b.style.height=h+'%';bars.appendChild(b)});
+// exam questions
+const qs=document.getElementById('qs');
+for(let i=0;i<6;i++){qs.insertAdjacentHTML('beforeend',`<div class="q"><b style="font-family:CairoL;width:60px">Q${i+1}</b><div class="ln" style="max-width:${55+((i*37)%40)}%"></div><div class="mk" data-ok="${i==3?0:1}" style="opacity:0;transform:scale(0)">${i==3?'½':'✓'}</div></div>`)}
+const scenes=[...document.querySelectorAll('.scene')];
+const baseT={}; // remember inline transforms
+document.querySelectorAll('.a').forEach((el,i)=>{el.dataset.i=i;baseT[i]=el.style.transform||''});
+
+window.render=function(t){
+  const S=window.SCENES; let acc=0;
+  document.getElementById('g1').style.transform=`translate(${Math.sin(t*.3)*120}px,${Math.cos(t*.25)*90}px)`;
+  document.getElementById('g2').style.transform=`translate(${Math.cos(t*.27)*110}px,${Math.sin(t*.2)*120}px)`;
+  document.getElementById('grid').style.transform=`translateY(${(t*12)%90}px)`;
+  scenes.forEach((sc,k)=>{
+    const st=acc, d=S[k]; acc+=d;
+    const lt=t-st, X=0.45;
+    let op = k==0? clamp((lt+X)/X) : clamp((lt+X/2)/X);
+    if(k<scenes.length-1) op=Math.min(op, clamp((d+X/2-lt)/X));
+    const vis=op>0.001;
+    sc.style.opacity=vis?op:0; sc.style.display=vis?'block':'none';
+    if(!vis) return;
+    const zoom=1+0.03*clamp(lt/d);
+    sc.style.transform=`scale(${zoom})`;
+    sc.querySelectorAll('.a[data-in]').forEach(el=>{
+      const p=eo((lt-parseFloat(el.dataset.in))/0.7);
+      el.style.opacity=p; el.style.filter=p<1?`blur(${(1-p)*14}px)`:'none';
+      el.style.transform=`${baseT[el.dataset.i]} translateY(${(1-p)*70}px)`;
+    });
+    sceneFx[k]&&sceneFx[k](sc,lt,d);
+  });
+};
+function waAnim(root,lt,start,gap){root.querySelectorAll('.msg.r').forEach(m=>{const p=eo((lt-start-gap*m.dataset.k)/0.5);m.style.opacity=p;m.style.transform=`translateY(${(1-p)*40}px) scale(${.9+.1*p})`})}
+const sceneFx={
+  0:(sc,lt)=>{
+    const L=sc.querySelector('#s1pL'),R=sc.querySelector('#s1pR');
+    L.style.transform+=` rotate(${-8*eo((lt-1)/1)}deg) translateX(${-20*eo((lt-1))}px)`;
+    R.style.transform+=` rotate(${8*eo((lt-1.3)/1)}deg)`;
+    waAnim(R,lt,1.6,0.5); L.querySelector('img').style.transform=`translateY(${-Math.max(0,lt-1.5)*60}px)`;
+    sc.querySelectorAll('#s1pC .bar').forEach((b,i)=>b.style.transform=`scaleY(${eo((lt-1.9-i*.12)/.6)})`);
+  },
+  2:(sc,lt,d)=>{const ims=[...document.querySelectorAll('#s3scr img')];const f=clamp((lt-0.6)/(d-0.9))*(ims.length-1);
+    ims.forEach((im,i)=>{const x=i-f;const y=x>=0?Math.min(1,x):0;const e=eio(1-y);im.style.zIndex=i;im.style.transform=`translateY(${(1-eio(clamp(1-x)))*100}%)`;im.style.opacity=x<-1?0:1});},
+  3:(sc,lt)=>{
+    sc.querySelectorAll('.bar').forEach((b,i)=>b.style.transform=`scaleY(${eo((lt-1.2-i*.1)/.7)})`);
+    sc.querySelectorAll('[data-count]').forEach(n=>{const v=Math.round(n.dataset.count*eio((lt-0.9)/1.8));n.textContent=v+(n.dataset.suffix||'')});
+  },
+  4:(sc,lt,d)=>{
+    document.getElementById('s5img').style.transform=`translateY(${-eio(clamp((lt-0.8)/(d-1.2)))*maxScroll('s5img')}px)`;
+    const p=eio((lt-3.5)/2.2);document.getElementById('ring').setAttribute('stroke-dashoffset',578-578*.87*p);
+    document.getElementById('ringT').textContent=Math.round(87*p)+'%';
+  },
+  5:(sc,lt)=>{
+    const scan=document.getElementById('scan'),paper=sc.querySelector('.paper');
+    const sp=clamp((lt-1.4)/2.4);scan.style.opacity=sp>0&&sp<1?1:0;scan.style.top=(sp*(paper.offsetHeight)-120)+'px';
+    sc.querySelectorAll('.mk').forEach((m,i)=>{const p=eo((lt-1.7-i*0.38)/.35);m.style.opacity=p;m.style.transform=`scale(${p})`;m.style.background=m.dataset.ok=='1'?'#22b07d':'#e0a12b'});
+    const s=lt<1.7?null:Math.round(47*eio((lt-1.7)/2.4));document.getElementById('score').textContent=(s==null?'--':s)+' / 50';
+  },
+  6:(sc,lt)=>{waAnim(sc.querySelector('#wa7'),lt,1.0,0.9)},
+  8:(sc,lt)=>{const c=document.getElementById('cta');c.style.transform=`scale(${1+0.04*Math.sin(Math.max(0,lt-1.5)*5)})`}
+};
+function maxScroll(id){const im=document.getElementById(id);return Math.max(0,im.offsetHeight-im.parentElement.offsetHeight)}
+window.TOTAL=()=>window.SCENES.reduce((a,b)=>a+b,0);
+render(0);
+</script>
+</body>
+</html>
