@@ -1,5 +1,8 @@
 (() => {
-  const D = window.SITE;
+  const S = window.SITE;
+  const en = window.LANG === 'en';
+  const L = v => Array.isArray(v) ? v[en ? 1 : 0] : v;
+  const D = Object.assign({}, S, S[en ? 'en' : 'ar']);
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -21,11 +24,11 @@
 
   $('#clientsGrid').innerHTML = D.clients.map(c => `
     <figure class="client tilt" data-tilt="12">
-      <div class="client-logo"><img src="assets/clients/${c.f}.webp" alt="${c.n}" loading="lazy" width="360" height="360"></div>
-      <figcaption><b>${c.n}</b><small>${c.s}</small></figcaption>
+      <div class="client-logo"><img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy" width="360" height="360"></div>
+      <figcaption><b>${L(c.n)}</b><small>${L(c.s)}</small></figcaption>
     </figure>`).join('');
 
-  const logos = D.clients.map(c => `<div class="m-logo"><img src="assets/clients/${c.f}.webp" alt="${c.n}" loading="lazy"></div>`);
+  const logos = D.clients.map(c => `<div class="m-logo"><img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy"></div>`);
   const half = Math.ceil(logos.length / 2);
   const rowA = logos.slice(0, half).join(''), rowB = logos.slice(half).concat(logos.slice(0, 2)).join('');
   $('#marqueeA').innerHTML = rowA + rowA + rowA;
@@ -33,8 +36,8 @@
 
   $('#workGrid').innerHTML = D.work.map((w, i) => `
     <figure class="work-item" data-c="${w.c}" data-i="${i}">
-      <img src="assets/work/${w.f}.webp" alt="${w.t}" loading="lazy">
-      <figcaption>${w.t}</figcaption>
+      <img src="assets/work/${w.f}.webp" alt="${L(w.t)}" loading="lazy">
+      <figcaption>${L(w.t)}</figcaption>
     </figure>`).join('');
 
   $('#faqList').innerHTML = D.faq.map((f, i) => `
@@ -209,7 +212,7 @@
   const show = i => {
     const v = visible(); cur = (i + v.length) % v.length;
     const w = D.work[+v[cur].dataset.i];
-    lbImg.src = `assets/work/${w.f}.webp`; lbImg.alt = w.t; lbCap.textContent = w.t;
+    lbImg.src = `assets/work/${w.f}.webp`; lbImg.alt = L(w.t); lbCap.textContent = L(w.t);
   };
   items.forEach(it => it.addEventListener('click', () => { show(visible().indexOf(it)); lb.classList.add('open'); lenis && lenis.stop(); }));
   const closeLb = () => { lb.classList.remove('open'); lenis && lenis.start(); };
@@ -220,8 +223,8 @@
   addEventListener('keydown', e => {
     if (!lb.classList.contains('open')) return;
     if (e.key === 'Escape') closeLb();
-    if (e.key === 'ArrowLeft') show(cur + 1);
-    if (e.key === 'ArrowRight') show(cur - 1);
+    if (e.key === (en ? 'ArrowRight' : 'ArrowLeft')) show(cur + 1);
+    if (e.key === (en ? 'ArrowLeft' : 'ArrowRight')) show(cur - 1);
   });
 
   /* ---------- Demo chat (phone mock) ---------- */

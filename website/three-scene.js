@@ -152,7 +152,8 @@ function hero() {
     camera.aspect = w / h; camera.updateProjectionMatrix();
     const mobile = w < 960;
     const visibleW = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * camera.aspect;
-    baseX = mobile ? 0 : -visibleW * 0.24;
+    // portrait column is on the left in RTL, on the right in LTR
+    baseX = mobile ? 0 : visibleW * 0.24 * (document.documentElement.dir === 'ltr' ? 1 : -1);
     baseY = mobile ? 1.6 : 0;
     scale = mobile ? 0.62 : 1;
     root.position.set(baseX, baseY, 0);

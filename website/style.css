@@ -406,3 +406,26 @@ main,footer{position:relative;z-index:2}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .js .reveal-up{opacity:1;transform:none}
 }
+
+/* ============ ENGLISH / LTR ============ */
+.lang-btn{height:42px;min-width:42px;padding:0 12px;display:grid;place-items:center;border-radius:999px;border:1px solid var(--line-strong);
+  font-family:var(--font-num);font-weight:700;font-size:.85rem;letter-spacing:.04em;transition:.3s}
+.lang-btn:hover{border-color:var(--brand);color:var(--brand)}
+html[lang="ar"] .lang-btn{font-family:'Almarai',sans-serif;font-size:1.05rem}
+html[lang="en"]{--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif}
+html[lang="en"] .hero-title{letter-spacing:-.03em;line-height:1.08}
+html[lang="en"] .section-head h2,html[lang="en"] .cta h2{letter-spacing:-.02em}
+html[lang="en"] .kicker{text-transform:uppercase;font-size:.74rem;letter-spacing:.16em}
+[dir="ltr"] .flip{transform:scaleX(-1)}
+[dir="ltr"] .kicker::before{background:linear-gradient(270deg,var(--brand),transparent)}
+[dir="ltr"] .scroll-progress{transform-origin:left}
+[dir="ltr"] .steps-line span{transform-origin:left;background:linear-gradient(90deg,var(--brand),var(--brand-light))}
+[dir="ltr"] .lb-prev{right:auto;left:20px}
+[dir="ltr"] .lb-next{left:auto;right:20px}
+[dir="ltr"] .lb-close{left:auto;right:20px}
+[dir="ltr"] .whatsapp-float{left:24px}
+@media (max-width:640px){
+  .lang-btn{height:38px;min-width:38px;padding:0 10px}
+  [dir="ltr"] .lb-prev{left:20px}
+  [dir="ltr"] .lb-next{right:20px}
+}
