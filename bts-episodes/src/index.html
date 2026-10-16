@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:Cairo;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-arabic-900-normal.woff2)}
+@font-face{font-family:CairoL;font-weight:900;src:url(node_modules/@fontsource/cairo/files/cairo-latin-900-normal.woff2)}
+:root{--y:#ffd23f;--teal:#19b5a5;--red:#ff3b3b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+body{font-family:CairoL,Cairo,sans-serif;color:#fff;font-weight:900}
+#stage{position:absolute;inset:0;overflow:hidden;background:#000}
+#cam{position:absolute;inset:0}
+#cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:30}
+#vig{position:absolute;inset:0;z-index:6;box-shadow:inset 0 0 220px 40px rgba(0,0,0,.55);pointer-events:none}
+#bars{position:absolute;inset:0;z-index:7;pointer-events:none}
+.word{position:absolute;left:40px;right:40px;text-align:center;z-index:25;font-size:104px;line-height:1.1;-webkit-text-stroke:5px #000;paint-order:stroke fill;text-shadow:0 12px 0 rgba(0,0,0,.45)}
+.take{position:absolute;z-index:26;top:250px;left:70px;padding:16px 30px;border-radius:18px;background:#111;border:5px solid #fff;font-family:CairoL;font-size:56px;letter-spacing:3px;direction:ltr;box-shadow:0 12px 0 rgba(0,0,0,.4)}
+.take i{display:block;height:16px;margin:-16px -30px 12px;border-radius:12px 12px 0 0;background:repeating-linear-gradient(45deg,#fff 0 22px,#111 22px 44px)}
+#rec{position:absolute;top:130px;right:70px;z-index:21;display:flex;align-items:center;gap:12px;font-family:CairoL;font-size:36px;direction:ltr;text-shadow:0 2px 10px #000}
+#rec b{width:26px;height:26px;border-radius:50%;background:var(--red);box-shadow:0 0 20px var(--red)}
+#spd{position:absolute;top:130px;left:70px;z-index:21;font-family:CairoL;font-size:48px;direction:ltr;color:var(--y);-webkit-text-stroke:3px #000;paint-order:stroke fill}
+#scan{position:absolute;inset:0;z-index:8;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 5px);opacity:0}
+#end{position:absolute;left:0;right:0;top:1330px;z-index:26;text-align:center;opacity:0}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="cam">
+    <video id="c32" src="c32.webm" muted preload="auto"></video>
+    <video id="c42" src="c42.webm" muted preload="auto"></video>
+    <video id="c43" src="c43.webm" muted preload="auto"></video>
+    <video id="logo" src="logo.webm" muted preload="auto"></video>
+  </div>
+  <div id="scan"></div><div id="vig"></div>
+  <div id="rec"><b></b>REC</div><div id="spd"></div>
+  <div id="words"></div>
+  <div class="take" id="take"><i></i><span id="takeT">TAKE 01</span></div>
+  <div id="end"><div class="word" style="position:static;font-size:96px">المسوّق <span style="color:var(--y)">المطحون</span></div>
+    <div id="cta" style="display:inline-block;margin-top:30px;padding:26px 74px;border-radius:99px;background:var(--y);color:#111;font-size:62px;box-shadow:0 14px 0 rgba(0,0,0,.35)">كلّمنا 📲</div></div>
+  <div id="flash"></div>
+</div>
+<script>
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-clamp(x),3);
+const back=x=>{x=clamp(x);const c=1.9;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const BEAT=60/140, H=BEAT*2;
+// segments: [start,dur,src,in,speed,opts]
+const SEG=[];let T=0;
+const add=(d,src,inp,sp=1,o={})=>{SEG.push({s:T,d,src,inp,sp,...o});T+=d;};
+// hook 3 quick cuts
+add(BEAT,'c43',15.0,1,{w:'كواليس'});add(BEAT,'c42',9.0,1,{w:'الحلقة'});add(1.29-2*BEAT,'c32',13.0,1,{w:'🎬'});
+// take 1 (good line) + take 1b stumble + freeze
+add(3.91,'c32',1.45,1,{take:'TAKE 01'});
+add(3.60,'c32',5.36,1,{take:'TAKE 01'});
+add(9.43-T,'c32',8.95,0,{freeze:1,w:'❌ تاني!',wc:'#ff3b3b',take:'TAKE 01'});
+// grind montage 1 (7 cuts x 2 beats)
+[['c43',0,4,'سكريبت ✍️','x4'],['c42',0.5,1.5,'تعديل…',''],['c32',6.0,0.5,'بعيد عن الكاميرا 👀','0.5x'],['c42',9.5,1,'تاني تعديل 😮‍💨',''],['c43',6,4,'وكمان تعديل','x4'],['c42',12.5,0.6,'تفكير 🤯','0.6x'],['c32',12.6,1,'ومن الأول!','']]
+ .forEach(([src,inp,sp,w,lab])=>add(H,src,inp,sp,{w,lab,m:1}));
+// take 2 with stutter + freeze
+add(1.50,'c32',9.40,1,{take:'TAKE 02'});add(0.82,'c32',10.08,1,{take:'TAKE 02',stut:1});
+add(18.15-T,'c32',10.89,0,{freeze:1,w:'❌',wc:'#ff3b3b',take:'TAKE 02'});
+// grind montage 2 (5 cuts)
+[['c43',14,1,'ساعات شغل ⏱️',''],['c42',16,1,'مفيش زرار سحري',''],['c32',7.0,0.5,'','0.5x'],['c43',18,3,'','x3'],['c42',18.2,1,'آخر محاولة؟','']]
+ .forEach(([src,inp,sp,w,lab])=>add(H,src,inp,sp,{w,lab,m:1}));
+// take 3 final
+add(3.57,'c32',15.60,1,{take:'TAKE 03 ✅',ok:1});
+// finale: 20 beats, speed ramps
+const fin=[['c42',2,2],['c43',10,4],['c32',13.5,1],['c42',8.5,1],['c32',6.5,0.5],['c43',3,4],['c42',14,0.5],['c32',17,1],['c42',17.5,1],['c43',20,2],['c32',2.5,1],['c42',11,0.6]];
+const fw=['تعب','تصوير','تعديل','تركيز','💪','تاني','تالت','🔥'];
+let fi=0;while(T<34.7-0.01){const d=Math.min(fi<12?BEAT:BEAT*2,34.7-T);const f=fin[fi%fin.length];add(d,f[0],f[1],f[2],{w:fi<8?fw[fi]:(fi<10?'عشان المحتوى':'يطلع جامد 🔥'),fin:1});fi++;}
+add(40-T,'logo',0,1,{logo:1});
+const CUTS=SEG.map(s=>s.s);
+const W=document.getElementById('words');
+SEG.forEach((s,i)=>{if(s.w)W.insertAdjacentHTML('beforeend',`<div class="word" data-i="${i}" style="top:${s.freeze?820:1340}px;${s.wc?`color:${s.wc};`:''}${s.freeze?'font-size:150px;':''}display:none">${s.w}</div>`)});
+const vids={};document.querySelectorAll('#cam video').forEach(v=>vids[v.id]=v);
+window.render=async function(t){
+  const seeks=[];const seek=(v,w)=>{w=Math.max(0,Math.min((v.duration||999)-0.03,w));if(Math.abs(v.currentTime-w)>0.0005)seeks.push(new Promise(r=>{v.addEventListener('seeked',r,{once:true});v.currentTime=w;}))};
+  const k=Math.max(0,SEG.findIndex((s,i)=>t>=s.s&&(i==SEG.length-1||t<SEG[i+1].s)));const s=SEG[k];const lt=t-s.s;
+  for(const id in vids)vids[id].style.display=id==s.src?'block':'none';
+  let vt=s.inp+lt*s.sp;
+  if(s.stut){vt=s.inp+(lt%0.41);} // stutter repeat
+  if(s.logo&&lt>2.85)vt=2.85;
+  seek(vids[s.src],vt);
+  // fx
+  const dc=lt;const punch=Math.exp(-dc*(s.fin?12:8))*(k>0?1:0);
+  const beatPh=(t%BEAT);const pulse=Math.exp(-beatPh*12)*(s.m||s.fin?0.035:0.012);
+  const shake=punch*22+(s.freeze?Math.max(0,1-lt*4)*30:0);
+  const sp=s.sp>=2?1:0;
+  const cam=document.getElementById('cam');
+  const zoomIn=s.take?1+0.06*clamp(lt/s.d):1.0;
+  cam.style.transform=`scale(${(1.03+pulse+0.18*punch)*zoomIn}) translate(${Math.sin(t*93)*shake}px,${Math.cos(t*71)*shake}px) rotate(${Math.sin(t*41)*punch*2.2}deg)`;
+  const rgb=Math.max(punch*14,s.freeze?8:0,sp?4:0);
+  let filt=rgb>0.5?`drop-shadow(${rgb}px 0 0 rgba(255,0,60,.75)) drop-shadow(${-rgb}px 0 0 rgba(0,240,255,.75))`:'';
+  if(punch>0.05)filt+=` blur(${punch*7}px) contrast(${1+punch*.3})`;
+  if(s.freeze)filt+=' grayscale(.85) contrast(1.25)';
+  if(s.sp<1&&s.sp>0)filt+=' saturate(1.25)';
+  cam.style.filter=filt||'none';
+  document.getElementById('flash').style.opacity=(k>0&&lt<0.12)?(s.freeze?0.9:0.5)*(1-lt/0.12):0;
+  document.getElementById('scan').style.opacity=(sp||s.freeze||k<3)?0.8:0;
+  // REC/speed label
+  const ui=!s.logo;document.getElementById('rec').style.opacity=ui?((Math.floor(t*2.5)%2)?1:0.25):0;
+  const spd=document.getElementById('spd');spd.textContent=s.lab||'';spd.style.transform=`scale(${back(lt/0.25)})`;
+  // take sticker
+  const tk=document.getElementById('take');const tks=s.take?SEG.filter(x=>x.take==s.take)[0]:null;
+  if(s.take){tk.style.display='block';document.getElementById('takeT').textContent=s.take;const p=(t-tks.s)/0.3;tk.style.transform=`rotate(-6deg) scale(${0.4+0.6*back(p)})`;tk.style.borderColor=s.ok?'#3ee07a':(s.freeze?'#ff3b3b':'#fff');}else tk.style.display='none';
+  // words
+  document.querySelectorAll('.word[data-i]').forEach(w=>{const i=+w.dataset.i;const on=i==k;w.style.display=on?'block':'none';
+    if(on){const p=lt/0.2;w.style.transform=`scale(${0.4+0.6*back(p)}) rotate(${(i%2?3:-3)*(1-clamp(p))}deg)`;}});
+  // end
+  const en=document.getElementById('end');const ep=(t-35.4)/0.35;en.style.opacity=s.logo?eo(ep):0;en.style.transform=`scale(${0.6+0.4*back(ep)})`;
+  document.getElementById('cta').style.transform=`scale(${1+0.06*Math.exp(-(t%BEAT)*8)})`;
+  await Promise.all(seeks);
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+};
+window.TOTAL=()=>40;
+</script>
+</body>
+</html>
