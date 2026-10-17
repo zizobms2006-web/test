@@ -27,6 +27,8 @@
     </a>`;
 
   const slot = id => document.getElementById(id);
+  // a client's own project page, when we have one
+  const projOf = f => P.find(p => p.logo === f || p.id === f);
 
   if (slot('serviceTiles')) slot('serviceTiles').innerHTML = D.services.map((s, i) => `
     <a class="tile" href="services.html#svc-${i + 1}">
@@ -42,25 +44,38 @@
       <h3>${s.t}</h3>
       <p>${s.d}</p>
       <div class="svc-tags">${s.tags.map(t => `<span>${t}</span>`).join('')}</div>
+      <div class="svc-links">
+        <a href="contact.html">${en ? 'Request this service' : 'اطلب الخدمة'} ${arrow}</a>
+        ${s.icon === 'fa-robot' || s.icon === 'fa-database'
+          ? `<a href="#automation">${en ? 'See it in action' : 'شوفها شغالة'}</a>`
+          : `<a href="projects.html">${en ? 'See our work' : 'شوف شغلنا'}</a>`}
+      </div>
     </article>`).join('');
 
   if (slot('featuredProjects')) slot('featuredProjects').innerHTML = P.slice(0, 3).map(projectCard).join('');
   if (slot('projectsGrid')) slot('projectsGrid').innerHTML = P.map(projectCard).join('');
 
-  if (slot('clientsGrid')) slot('clientsGrid').innerHTML = D.clients.map(c => `
+  if (slot('clientsGrid')) slot('clientsGrid').innerHTML = D.clients.map(c => { const pr = projOf(c.f); return `
     <figure class="client tilt" data-tilt="10" tabindex="0">
       <div class="client-card">
         <div class="client-face client-front"><img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy" width="360" height="360"><span class="shine"></span></div>
         <div class="client-face client-back">
           <img src="assets/clients/${c.f}.webp" alt="" loading="lazy">
           <b>${L(c.n)}</b><small>${L(c.s)}</small>
+          ${pr ? `<a class="client-go" href="project.html?id=${pr.id}">${en ? 'View project' : 'شوف المشروع'} ${arrow}</a>` : ''}
         </div>
       </div>
-      <figcaption><b>${L(c.n)}</b><small>${L(c.s)}</small></figcaption>
-    </figure>`).join('');
+      <figcaption>${pr ? `<a href="project.html?id=${pr.id}"><b>${L(c.n)}</b></a>` : `<b>${L(c.n)}</b>`}<small>${L(c.s)}</small></figcaption>
+    </figure>`; }).join('');
 
   if (slot('marqueeA')) {
-    const logos = D.clients.map(c => `<div class="m-logo"><img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy"></div>`);
+    // each logo opens that client's project, or the clients page
+    const onClients = document.body.dataset.page === 'clients';
+    const logos = D.clients.map(c => {
+      const pr = projOf(c.f), href = pr ? `project.html?id=${pr.id}` : onClients ? '' : 'clients.html';
+      const img = `<img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy">`;
+      return href ? `<a class="m-logo" href="${href}" tabindex="-1">${img}</a>` : `<div class="m-logo">${img}</div>`;
+    });
     const half = Math.ceil(logos.length / 2);
     const rowA = logos.slice(0, half).join(''), rowB = logos.slice(half).concat(logos.slice(0, 2)).join('');
     slot('marqueeA').innerHTML = rowA + rowA + rowA;
@@ -83,7 +98,7 @@
     slot('pdClient').innerHTML = `${logoOf(p)}<div><b>${p.name}</b><small>${L(p.sector)}</small></div>`;
     slot('pdTitle').textContent = L(p.title);
     slot('pdDesc').textContent = L(p.desc);
-    slot('pdSector').textContent = L(p.sector);
+    slot('pdSector').innerHTML = `<a href="projects.html?c=${p.c}">${L(p.sector)}</a>`;
     slot('pdTags').innerHTML = L(p.tags).map(t => `<span>${t}</span>`).join('');
     slot('pdCover').innerHTML = `<span class="proj-stack">${p.imgs.slice(0, 3).map((f, k) => `<img class="pi pi-${k}" src="assets/work/${f}.webp" alt="">`).join('')}</span><span class="proj-zoom"><i class="fa-solid fa-expand"></i></span>`;
     slot('pdCover').dataset.gallery = '0';
@@ -140,12 +155,9 @@
 
   /* ================= Nav ================= */
   const nav = $('#nav'), burger = $('#burger'), links = $('#navLinks');
-  let lastY = 0;
   const onScroll = () => {
     const y = scrollY;
-    nav.classList.toggle('scrolled', y > 30 || document.body.dataset.page !== 'index');
-    nav.classList.toggle('hide', y > lastY && y > 500 && !links.classList.contains('open'));
-    lastY = y;
+    nav.classList.toggle('scrolled', y > 30);  // turns brand-coloured and stays on screen
     const h = document.documentElement.scrollHeight - innerHeight;
     $('#scrollProgress').style.transform = `scaleX(${h > 0 ? y / h : 0})`;
   };
@@ -196,7 +208,7 @@
   // logo cards: hover flips on desktop (CSS), tap flips on touch
   $$('.client').forEach(c => {
     c.addEventListener('click', () => { if (!fine) c.classList.toggle('flipped'); });
-    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.classList.toggle('flipped'); } });
+    c.addEventListener('keydown', e => { if (e.target !== c) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.classList.toggle('flipped'); } });
   });
 
   /* ================= Marquee ribbons ================= */
@@ -305,6 +317,13 @@
     cards.forEach(c => c.classList.toggle('hidden', f !== 'all' && c.dataset.c !== f));
     if (hasGsap && !reduced) gsap.fromTo(cards.filter(c => !c.classList.contains('hidden')), { opacity: 0, y: 30, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .6, stagger: .06, ease: 'power3.out' });
   }));
+  // projects.html?c=beauty opens with that filter on (linked from a project's sector)
+  const wantC = new URLSearchParams(location.search).get('c');
+  if (wantC && $(`#filters .chip[data-f="${CSS.escape(wantC)}"]`)) {
+    const ch = $(`#filters .chip[data-f="${CSS.escape(wantC)}"]`);
+    $$('#filters .chip').forEach(c => c.classList.toggle('active', c === ch));
+    $$('#projectsGrid .pcard').forEach(c => c.classList.toggle('hidden', c.dataset.c !== wantC));
+  }
 
   /* ================= Lightbox (project gallery) ================= */
   const lb = $('#lightbox'), lbImg = $('#lbImg'), lbCap = $('#lbCap');
