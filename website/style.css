@@ -636,3 +636,6 @@ html{color-scheme:light}
 .float-a i{background:var(--accent-soft);color:var(--accent)}
 .proj-num{-webkit-text-stroke:1px rgba(255,90,31,.5)}
 .proj-count b{color:var(--accent)}
+
+/* failsafe: if scripts did not start, show everything without animation */
+.failsafe .reveal-up,.failsafe .projects .proj{opacity:1!important;transform:none!important}

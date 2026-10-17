@@ -87,9 +87,10 @@
   Promise.race([ready, new Promise(r => setTimeout(r, 3500))]).then(() => {
     bar.style.width = '100%'; count.textContent = 100;
     setTimeout(() => {
+      window.__siteReady = true;
       $('#loader').classList.add('done');
       document.body.classList.remove('loading');
-      intro();
+      try { intro(); } catch (e) { console.warn('animations disabled:', e); document.documentElement.classList.add('failsafe'); }
     }, 250);
   });
 
