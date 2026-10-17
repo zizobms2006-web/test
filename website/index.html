@@ -15,14 +15,12 @@
 })();
 </script>
 <title>المسوق المطحون | وكالة تسويق متكاملة — نبني أنظمة نمو، مش بوستات</title>
-<meta name="description" content="المسوق المطحون — وكالة تسويق رقمي متكاملة بقيادة د. محمد حسين بخبرة 26+ سنة. محتوى، تصميمات، فيديو، إعلانات ممولة، مواقع، CRM وأتمتة بالذكاء الاصطناعي في مصر وليبيا والخليج.">
+<meta name="description" content="المسوق المطحون — وكالة تسويق رقمي متكاملة بقيادة د. محمد حسين بخبرة 26+ سنة: محتوى، تصميمات، فيديو، إعلانات ممولة، مواقع، CRM وأتمتة بالذكاء الاصطناعي.">
 <meta name="theme-color" content="#FFFFFF">
-<meta property="og:title" content="المسوق المطحون | نبني أنظمة نمو، مش بوستات">
-<meta property="og:description" content="محتوى، تصميمات، فيديو، إعلانات، مواقع، CRM وأتمتة — فريق كامل يشتغل على نمو مشروعك.">
+<meta property="og:title" content="المسوق المطحون | وكالة تسويق متكاملة — نبني أنظمة نمو، مش بوستات">
+<meta property="og:description" content="المسوق المطحون — وكالة تسويق رقمي متكاملة بقيادة د. محمد حسين بخبرة 26+ سنة: محتوى، تصميمات، فيديو، إعلانات ممولة، مواقع، CRM وأتمتة بالذكاء الاصطناعي.">
 <meta property="og:image" content="assets/img/founder.webp">
 <meta property="og:type" content="website">
-<link rel="alternate" hreflang="ar" href="?lang=ar">
-<link rel="alternate" hreflang="en" href="?lang=en">
 <link rel="icon" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,10 +35,9 @@
   "@type": "MarketingAgency",
   "name": "المسوق المطحون",
   "alternateName": "El Mat7oon Agency",
-  "logo": "assets/img/logo.webp",
-  "image": "assets/img/founder.webp",
+  "url": "https://elmat7oon-agency.com/",
+  "logo": "https://elmat7oon-agency.com/assets/img/logo.webp",
   "founder": {"@type": "Person", "name": "Dr. Mohamed Hussein"},
-  "description": "Full-service marketing agency: content, design, video, paid ads, websites, CRM and AI automation.",
   "email": "zizobms2006@gmail.com",
   "telephone": "+201550069683",
   "areaServed": ["EG", "LY", "SA", "AE"],
@@ -63,9 +60,9 @@ fbq('init','3561579477337173');fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=3561579477337173&ev=PageView&noscript=1"></noscript>
 </head>
-<body>
+<body data-page="index" data-title-en="El Mat7oon Agency | Full-Service Marketing — Growth Systems, Not Just Posts" data-desc-en="Full-service digital marketing agency led by Dr. Mohamed Hussein (26+ years): content, design, video, paid ads, websites, CRM and AI automation.">
 
-<!-- Preloader -->
+<!-- Preloader (home only) -->
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader-inner">
     <img src="assets/img/logo.webp" alt="" class="loader-logo">
@@ -74,6 +71,7 @@ fbq('init','3561579477337173');fbq('track','PageView');
   </div>
 </div>
 <script>
+/* never leave the loader on screen if a script fails or a CDN is slow */
 setTimeout(function () {
   if (window.__siteReady) return;
   var l = document.getElementById('loader');
@@ -82,25 +80,24 @@ setTimeout(function () {
   document.documentElement.classList.add('failsafe');
 }, 6000);
 </script>
-
+<div class="page-wipe" id="pageWipe" aria-hidden="true"><img src="assets/img/logo.webp" alt=""></div>
 <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-<div class="noise" aria-hidden="true"></div>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <!-- Nav -->
 <header class="nav" id="nav">
   <div class="container nav-inner">
-    <a href="#top" class="brand">
+    <a href="index.html" class="brand">
       <img src="assets/img/logo.webp" alt="">
       <span data-i18n="brand">المسوق المطحون</span>
     </a>
     <nav class="nav-links" id="navLinks" data-i18n-aria="nav.aria" aria-label="القائمة الرئيسية">
-      <a href="#services" data-i18n="nav.services">خدماتنا</a>
-      <a href="#clients" data-i18n="nav.clients">عملاؤنا</a>
-      <a href="#projects" data-i18n="nav.work">مشاريعنا</a>
-      <a href="#founder" data-i18n="nav.about">مين إحنا</a>
-      <a href="#process" data-i18n="nav.process">آلية العمل</a>
-      <a href="#faq" data-i18n="nav.faq">أسئلة شائعة</a>
+      <a href="index.html" data-nav="home" data-i18n="nav.home">الرئيسية</a>
+      <a href="about.html" data-nav="about" data-i18n="nav.about">مين إحنا</a>
+      <a href="services.html" data-nav="services" data-i18n="nav.services">خدماتنا</a>
+      <a href="projects.html" data-nav="projects" data-i18n="nav.work">مشاريعنا</a>
+      <a href="clients.html" data-nav="clients" data-i18n="nav.clients">عملاؤنا</a>
+      <a href="contact.html" data-nav="contact" data-i18n="nav.contact">تواصل معنا</a>
     </nav>
     <div class="nav-actions">
       <a href="?lang=en" class="lang-btn" id="langBtn" hreflang="en" aria-label="English">EN</a>
@@ -112,7 +109,6 @@ setTimeout(function () {
 </header>
 
 <main id="top">
-
 <!-- HERO -->
 <section class="hero" id="hero">
   <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
@@ -127,7 +123,7 @@ setTimeout(function () {
       <p class="hero-sub reveal-up" data-i18n="hero.sub">محتوى، تصميمات، فيديو، إعلانات ممولة، مواقع، CRM وأتمتة بالذكاء الاصطناعي — فريق كامل بيشتغل على نمو مشروعك، بقيادة د. محمد حسين وخبرة أكتر من 26 سنة.</p>
       <div class="hero-ctas reveal-up">
         <a href="https://wa.me/201550069683" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="hero.cta1">ابدأ مشروعك دلوقتي</span></a>
-        <a href="#services" class="btn btn-ghost btn-lg"><span data-i18n="hero.cta2">اكتشف خدماتنا</span> <i class="fa-solid fa-arrow-left flip"></i></a>
+        <a href="projects.html" class="btn btn-ghost btn-lg"><span data-i18n="hero.cta2b">شوف شغلنا</span> <i class="fa-solid fa-arrow-left flip"></i></a>
       </div>
       <div class="hero-trust reveal-up">
         <div class="avatars">
@@ -191,179 +187,99 @@ setTimeout(function () {
   </div>
 </section>
 
-<!-- CLIENT MARQUEE -->
+<!-- CLIENT RIBBONS -->
 <section class="marquee-sec" data-i18n-aria="nav.clients" aria-label="عملاؤنا">
   <div class="marquee" data-dir="1"><div class="marquee-track" id="marqueeA"></div></div>
   <div class="marquee" data-dir="-1"><div class="marquee-track" id="marqueeB"></div></div>
 </section>
 
-<!-- SERVICES -->
-<section class="section services" id="services">
+<!-- SERVICES TEASER -->
+<section class="section">
   <div class="container">
-    <header class="section-head">
-      <span class="kicker" data-i18n="services.kicker">خدماتنا</span>
-      <h2 class="split" data-i18n="services.title">كل اللي مشروعك محتاجه علشان يكبر — تحت سقف واحد</h2>
-      <p class="lead" data-i18n="services.lead">مش هتحتاج تتعامل مع 5 جهات. فريق واحد، خطة واحدة، وكل الأدوات بتشتغل مع بعض.</p>
-    </header>
-    <div class="services-grid" id="servicesGrid"></div>
-  </div>
-</section>
-
-<!-- AUTOMATION SHOWCASE -->
-<section class="section showcase" id="automation">
-  <div class="container showcase-grid">
-    <div class="showcase-copy">
-      <span class="kicker">AI Automation · CRM</span>
-      <h2 class="split" data-i18n="auto.title">موظف مبيعات بيشتغل 24 ساعة… ومبياخدش إجازة</h2>
-      <p class="lead" data-i18n="auto.lead">بنبني لك AI Agent بيرد على رسايل عملائك على فيسبوك وإنستجرام وواتساب بلهجة البراند، بيفهم الفويس والصور، بيجمع بيانات العملاء المهتمين ويبعتها لفريقك على CRM — مع داشبورد تتابع منها كل محادثة.</p>
-      <ul class="checks">
-        <li><i class="fa-solid fa-check"></i> <span data-i18n="auto.c1">رد فوري على مدار الساعة بلهجة البراند</span></li>
-        <li><i class="fa-solid fa-check"></i> <span data-i18n="auto.c2">فهم الرسايل الصوتية والصور</span></li>
-        <li><i class="fa-solid fa-check"></i> <span data-i18n="auto.c3">تسجيل العملاء المهتمين تلقائيًا في CRM</span></li>
-        <li><i class="fa-solid fa-check"></i> <span data-i18n="auto.c4">تنبيه فوري لفريق المبيعات + داشبورد متابعة</span></li>
-      </ul>
-      <button class="btn btn-primary magnetic" id="tryChat"><i class="fa-solid fa-comments"></i> <span data-i18n="auto.cta">جرّب الشات بنفسك</span></button>
-    </div>
-    <div class="showcase-visual">
-      <div class="phone tilt" data-tilt="8">
-        <div class="phone-notch"></div>
-        <div class="phone-head"><img src="assets/img/logo.webp" alt=""><div><b data-i18n="brand">المسوق المطحون</b><small data-i18n="auto.online">متصل الآن</small></div></div>
-        <div class="chat" id="demoChat"></div>
+    <header class="section-head head-row">
+      <div>
+        <span class="kicker" data-i18n="services.kicker">خدماتنا</span>
+        <h2 data-i18n="services.title">كل اللي مشروعك محتاجه علشان يكبر — تحت سقف واحد</h2>
       </div>
-      <div class="flow-node n1"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="auto.wa">واتساب</span></div>
-      <div class="flow-node n2"><i class="fa-brands fa-facebook-messenger"></i> <span data-i18n="auto.ms">ماسنجر</span></div>
-      <div class="flow-node n3"><i class="fa-brands fa-instagram"></i> <span data-i18n="auto.ig">إنستجرام</span></div>
-      <div class="flow-node n4"><i class="fa-solid fa-database"></i> CRM</div>
-    </div>
+      <a href="services.html" class="link-more"><span data-i18n="more.services">كل الخدمات</span> <i class="fa-solid fa-arrow-left flip"></i></a>
+    </header>
+    <div class="tiles" id="serviceTiles"></div>
   </div>
 </section>
 
-<!-- CLIENTS -->
-<section class="section clients" id="clients">
+<!-- FEATURED PROJECTS -->
+<section class="section band">
   <div class="container">
-    <header class="section-head">
-      <span class="kicker" data-i18n="clients.kicker">شركاء النجاح</span>
-      <h2 class="split" data-i18n="clients.title">براندات اختارت تكبر معانا</h2>
-      <p class="lead" data-i18n="clients.lead">من الأزياء والتجميل للمطاعم والعقارات والتعليم والمصانع — في مصر والخليج.</p>
+    <header class="section-head head-row">
+      <div>
+        <span class="kicker" data-i18n="work.kicker">مشاريعنا</span>
+        <h2 data-i18n="work.title">شغل بيتشاف… وبيبيع</h2>
+      </div>
+      <a href="projects.html" class="link-more"><span data-i18n="more.projects">كل المشاريع</span> <i class="fa-solid fa-arrow-left flip"></i></a>
     </header>
-    <div class="clients-grid" id="clientsGrid"></div>
+    <div class="pgrid" id="featuredProjects"></div>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section class="projects" id="projects">
-  <div class="container proj-head">
-    <header class="section-head">
-      <span class="kicker" data-i18n="work.kicker">مشاريعنا</span>
-      <h2 class="split" data-i18n="work.title">شغل بيتشاف… وبيبيع</h2>
-      <p class="lead" data-i18n="work.lead">مشاريع حقيقية نفذناها لعملائنا — من التصوير والتصميم لحد الـ AI Agent والداشبورد.</p>
-    </header>
-    <div class="proj-progress" aria-hidden="true">
-      <span class="proj-count"><b id="projCur">01</b><i>/</i><span id="projTotal">05</span></span>
-      <div class="proj-bar"><span id="projBar"></span></div>
-    </div>
-  </div>
-  <div class="proj-viewport"><div class="proj-track" id="projTrack"></div></div>
-</section>
-
-<!-- RESULTS -->
-<section class="section results" id="results">
-  <div class="container">
-    <header class="section-head">
-      <span class="kicker" data-i18n="results.kicker">نتائج حقيقية</span>
-      <h2 class="split" data-i18n="results.title">أرقام حصلت فعلاً، مش وعود</h2>
-    </header>
-    <div class="results-grid">
-      <article class="result tilt" data-tilt="6" data-before="26"><img src="assets/clients/ganga.webp" alt="GANGA"><b class="rnum" data-count="280" data-prefix="+" data-suffix="%">+280%</b><h3>GANGA</h3><p data-i18n="results.r1">نمو في الوصول والمبيعات خلال أشهر من إطلاق الاستراتيجية.</p><div class="rchart"></div></article>
-      <article class="result tilt" data-tilt="6" data-before="33"><img src="assets/clients/velora.webp" alt="Velora Kiss"><b class="rnum" data-count="3" data-prefix="×">×3</b><h3>Velora Kiss</h3><p data-i18n="results.r2">مضاعفة الإيرادات الشهرية بعد إعادة هيكلة الإعلانات والمحتوى.</p><div class="rchart"></div></article>
-      <article class="result tilt" data-tilt="6" data-before="25"><img src="assets/clients/gena.webp" alt="Gena Store"><b class="rnum" data-count="4" data-prefix="×">×4</b><h3>Gena Store</h3><p data-i18n="results.r3">نمو المبيعات أربع أضعاف بفضل منظومة تسويقية متكاملة.</p><div class="rchart"></div></article>
-    </div>
-  </div>
-</section>
-
-<!-- FOUNDER -->
-<section class="section founder" id="founder">
-  <div class="container founder-grid">
-    <div class="founder-photo tilt" data-tilt="6">
+<!-- ABOUT TEASER -->
+<section class="section">
+  <div class="container about-teaser">
+    <div class="at-photo tilt" data-tilt="6">
       <img src="assets/img/founder.webp" data-i18n-alt="founder.name" alt="د. محمد حسين" loading="lazy">
       <div class="founder-badge"><b>26+</b><span data-i18n="founder.badge">سنة في السوق</span></div>
     </div>
-    <div class="founder-copy">
+    <div class="at-copy">
       <span class="kicker" data-i18n="founder.kicker">مين ورا المسوق المطحون</span>
-      <h2 class="split" data-i18n="founder.title">التسويق عندنا مش صوت عالي… ده نظام بيشتغل.</h2>
-      <p class="lead" data-i18n="founder.lead">د. محمد حسين، أكتر من 26 سنة خبرة ميدانية في مصر والخليج، بنى المسوق المطحون كوكالة متكاملة — استراتيجيين، مصممين، كتّاب محتوى، مصورين، ومتخصصي CRM وأتمتة — عشان مشروعك ياخد فريق كامل يشتغل على نموه، مش بوستات عشوائية.</p>
-      <div class="why-grid">
-        <div class="why"><i class="fa-solid fa-crosshairs"></i><h3 data-i18n="why.t1">منهجية تركز على البيزنس</h3><p data-i18n="why.d1">بنفكر بعقلية صاحب المشروع لزيادة أرباحك.</p></div>
-        <div class="why"><i class="fa-solid fa-database"></i><h3 data-i18n="why.t2">قرارات مبنية على بيانات</h3><p data-i18n="why.d2">كل إعلان وكل محتوى مدعوم بتحليل لسلوك العملاء.</p></div>
-        <div class="why"><i class="fa-solid fa-chart-line"></i><h3 data-i18n="why.t3">التركيز على النتائج</h3><p data-i18n="why.d3">المبيعات والتحويلات قبل اللايكات والمتابعات.</p></div>
-        <div class="why"><i class="fa-solid fa-handshake-angle"></i><h3 data-i18n="why.t4">شراكة طويلة الأمد</h3><p data-i18n="why.d4">مش مجرد مقدمي خدمة، إحنا شركاء بنكبر بنجاحك.</p></div>
-      </div>
+      <h2 data-i18n="founder.title">التسويق عندنا مش صوت عالي… ده نظام بيشتغل.</h2>
+      <p class="lead" data-i18n="founder.short">فريق كامل من الاستراتيجيين والمصممين وكتّاب المحتوى والمصورين ومتخصصي الـ CRM والأتمتة، بقيادة د. محمد حسين وخبرة أكتر من 26 سنة في مصر والخليج.</p>
+      <a href="about.html" class="btn btn-ghost btn-lg"><span data-i18n="more.about">اعرف أكتر عنّا</span> <i class="fa-solid fa-arrow-left flip"></i></a>
     </div>
-  </div>
-</section>
-
-<!-- PROCESS -->
-<section class="section process" id="process">
-  <div class="container">
-    <header class="section-head">
-      <span class="kicker" data-i18n="process.kicker">آلية العمل</span>
-      <h2 class="split" data-i18n="process.title">4 خطوات بس بينا وبين النمو</h2>
-    </header>
-    <div class="steps">
-      <div class="steps-line"><span id="stepsFill"></span></div>
-      <div class="step"><span class="step-n">01</span><h3 data-i18n="process.t1">الاكتشاف</h3><p data-i18n="process.d1">نفهم شغلك، سوقك، ومنافسينك قبل أي خطوة.</p></div>
-      <div class="step"><span class="step-n">02</span><h3 data-i18n="process.t2">التخطيط</h3><p data-i18n="process.d2">نبني استراتيجية وخطة تنفيذ واضحة مبنية على أهدافك.</p></div>
-      <div class="step"><span class="step-n">03</span><h3 data-i18n="process.t3">التنفيذ</h3><p data-i18n="process.d3">الفريق الكامل يشتغل — محتوى، إعلانات، تصميم، وأتمتة.</p></div>
-      <div class="step"><span class="step-n">04</span><h3 data-i18n="process.t4">النمو</h3><p data-i18n="process.d4">نقيس، نحسّن، ونوسّع اللي بيشتغل فعلاً.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="section faq" id="faq">
-  <div class="container faq-grid">
-    <header class="section-head">
-      <span class="kicker" data-i18n="faq.kicker">أسئلة شائعة</span>
-      <h2 class="split" data-i18n="faq.title">أسئلة بتتكرر معانا كتير</h2>
-      <p class="lead" data-i18n="faq.lead">لو سؤالك مش موجود، ابعته لنا على واتساب أو اسأل الشات.</p>
-    </header>
-    <div class="faq-list" id="faqList"></div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="section cta" id="contact">
+<section class="section cta">
   <canvas id="ctaCanvas" class="cta-canvas" aria-hidden="true"></canvas>
   <div class="container cta-inner">
     <span class="kicker" data-i18n="cta.kicker">لنبدأ نتعاون</span>
-    <h2 class="split" data-i18n="cta.title">جاهز تبدأ تعاون حقيقي يكبّر بيزنسك؟</h2>
+    <h2 data-i18n="cta.title">جاهز تبدأ تعاون حقيقي يكبّر بيزنسك؟</h2>
     <p class="lead" data-i18n="cta.lead">كلّمنا دلوقتي، وهنرجعلك بخطة واضحة مش كلام عام.</p>
-    <div class="contact-cards">
-      <a class="contact-card magnetic" href="https://wa.me/201550069683" target="_blank" rel="noopener">
-        <i class="fa-brands fa-whatsapp"></i><span data-i18n="cta.wa">واتساب</span><b dir="ltr">+20 155 006 9683</b>
-      </a>
-      <a class="contact-card magnetic" href="tel:+201550069683">
-        <i class="fa-solid fa-phone"></i><span data-i18n="cta.call">اتصل بينا</span><b dir="ltr">01550069683</b>
-      </a>
-      <a class="contact-card magnetic" href="mailto:zizobms2006@gmail.com">
-        <i class="fa-solid fa-envelope"></i><span data-i18n="cta.email">إيميل</span><b dir="ltr">zizobms2006@gmail.com</b>
-      </a>
+    <div class="cta-btns">
+      <a href="https://wa.me/201550069683" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="hero.cta1">ابدأ مشروعك دلوقتي</span></a>
+      <a href="contact.html" class="btn btn-ghost btn-lg"><span data-i18n="nav.contact">تواصل معنا</span> <i class="fa-solid fa-arrow-left flip"></i></a>
     </div>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSchNZTHshzLrokQS8Aa7kIzdK0PIQZ-85QSWHslhfWkhrLWig/viewform" target="_blank" rel="noopener" class="btn btn-ghost btn-lg"><span data-i18n="cta.form">أو احجز مكالمة من الفورم</span> <i class="fa-solid fa-arrow-left flip"></i></a>
   </div>
 </section>
-
 </main>
 
 <footer class="footer">
-  <div class="container footer-inner">
-    <a href="#top" class="brand"><img src="assets/img/logo.webp" alt=""><span data-i18n="brand">المسوق المطحون</span></a>
-    <div class="socials">
-      <a href="https://www.facebook.com/profile.php?id=61576923941440" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/elmosaweq_elmat7oun/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@elmosauq_elmat7oun" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://wa.me/201550069683" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <a href="index.html" class="brand"><img src="assets/img/logo.webp" alt=""><span data-i18n="brand">المسوق المطحون</span></a>
+      <p data-i18n="footer.about">وكالة تسويق متكاملة بقيادة د. محمد حسين — بنبني أنظمة نمو، مش بوستات.</p>
+      <div class="socials">
+        <a href="https://www.facebook.com/profile.php?id=61576923941440" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/elmosaweq_elmat7oun/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@elmosauq_elmat7oun" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://wa.me/201550069683" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
     </div>
+    <div class="footer-col">
+      <b data-i18n="footer.pages">الصفحات</b>
+      <a href="about.html" data-i18n="nav.about">مين إحنا</a>
+      <a href="services.html" data-i18n="nav.services">خدماتنا</a>
+      <a href="projects.html" data-i18n="nav.work">مشاريعنا</a>
+      <a href="clients.html" data-i18n="nav.clients">عملاؤنا</a>
+      <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
+    </div>
+    <div class="footer-col">
+      <b data-i18n="footer.contact">تواصل</b>
+      <a href="https://wa.me/201550069683" target="_blank" rel="noopener" dir="ltr">+20 155 006 9683</a>
+      <a href="tel:+201550069683" dir="ltr">01550069683</a>
+      <a href="mailto:zizobms2006@gmail.com" dir="ltr">zizobms2006@gmail.com</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
     <small>© <span id="year">2026</span> <span data-i18n="footer.rights">المسوق المطحون. جميع الحقوق محفوظة.</span></small>
   </div>
 </footer>
@@ -381,12 +297,12 @@ setTimeout(function () {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script type="importmap">
-{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
-</script>
 <script src="i18n.js?v=dev"></script>
 <script src="data.js?v=dev"></script>
 <script src="main.js?v=dev"></script>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
 <script type="module" src="three-scene.js?v=dev"></script>
 
 <!-- n8n chat (same webhook as the landing page) -->

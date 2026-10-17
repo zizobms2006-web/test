@@ -1,0 +1,121 @@
+<!-- HERO -->
+<section class="hero" id="hero">
+  <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-vignette" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="kicker reveal-up" data-i18n="hero.kicker">وكالة تسويق متكاملة · مصر · ليبيا · الخليج</span>
+      <h1 class="hero-title" data-i18n-html="hero.title">
+        <span class="line"><span class="word">إحنا</span> <span class="word">مش</span> <span class="word">هنعملك</span> <span class="word">بوستات.</span></span>
+        <span class="line"><span class="word">إحنا</span> <span class="word">هنبني</span> <span class="word">لك</span> <span class="word accent">منظومة نمو.</span></span>
+      </h1>
+      <p class="hero-sub reveal-up" data-i18n="hero.sub">محتوى، تصميمات، فيديو، إعلانات ممولة، مواقع، CRM وأتمتة بالذكاء الاصطناعي — فريق كامل بيشتغل على نمو مشروعك، بقيادة د. محمد حسين وخبرة أكتر من 26 سنة.</p>
+      <div class="hero-ctas reveal-up">
+        <a href="https://wa.me/201550069683" target="_blank" rel="noopener" class="btn btn-primary btn-lg magnetic"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="hero.cta1">ابدأ مشروعك دلوقتي</span></a>
+        <a href="projects.html" class="btn btn-ghost btn-lg"><span data-i18n="hero.cta2b">شوف شغلنا</span> <i class="fa-solid fa-arrow-left flip"></i></a>
+      </div>
+      <div class="hero-trust reveal-up">
+        <div class="avatars">
+          <img src="assets/clients/velora.webp" alt="">
+          <img src="assets/clients/guarobow.webp" alt="">
+          <img src="assets/clients/ganga.webp" alt="">
+          <img src="assets/clients/smartsteps.webp" alt="">
+        </div>
+        <span data-i18n-html="hero.trust"><b>+20</b> براند بيثقوا فينا في 20+ قطاع</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="portrait tilt" data-tilt="10">
+        <div class="blob" aria-hidden="true"></div>
+        <div class="portrait-glow"></div>
+        <div class="orbit o1" aria-hidden="true">
+          <span class="arm" style="--a:0deg"><i class="planet fa-solid fa-pen-nib"></i></span>
+          <span class="arm" style="--a:120deg"><i class="planet fa-solid fa-bullhorn"></i></span>
+          <span class="arm" style="--a:240deg"><i class="planet fa-solid fa-robot"></i></span>
+        </div>
+        <div class="orbit o2" aria-hidden="true">
+          <span class="arm" style="--a:60deg"><i class="planet fa-solid fa-palette"></i></span>
+          <span class="arm" style="--a:180deg"><i class="planet fa-solid fa-clapperboard"></i></span>
+          <span class="arm" style="--a:300deg"><i class="planet fa-solid fa-globe"></i></span>
+        </div>
+        <div class="portrait-frame">
+          <img src="assets/img/founder.webp" data-i18n-alt="founder.alt" alt="د. محمد حسين — مؤسس المسوق المطحون" width="900" height="900">
+          <span class="frame-shine" aria-hidden="true"></span>
+        </div>
+        <div class="spin-badge" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><defs><path id="badgeCircle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
+            <text><textPath href="#badgeCircle" textLength="286">EL MAT7OON • GROWTH AGENCY • 26+ YEARS •</textPath></text></svg>
+          <img src="assets/img/logo.webp" alt="">
+        </div>
+        <div class="portrait-card float-a">
+          <i class="fa-solid fa-chart-line"></i>
+          <div><b>+300%</b><small data-i18n="hero.card1">متوسط نمو العملاء</small></div>
+        </div>
+        <div class="portrait-card float-b">
+          <i class="fa-solid fa-robot"></i>
+          <div><b>24/7</b><small data-i18n="hero.card2">AI Agent بيرد على عملائك</small></div>
+        </div>
+        <div class="portrait-name">
+          <b data-i18n="founder.name">د. محمد حسين</b>
+          <small data-i18n="founder.role">المؤسس · 26+ سنة خبرة ميدانية</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#stats" class="scroll-hint" data-i18n-aria="hero.scroll" aria-label="انزل لتحت"><span></span></a>
+</section>
+
+{{> stats}}
+
+<!-- CLIENT RIBBONS -->
+<section class="marquee-sec" data-i18n-aria="nav.clients" aria-label="عملاؤنا">
+  <div class="marquee" data-dir="1"><div class="marquee-track" id="marqueeA"></div></div>
+  <div class="marquee" data-dir="-1"><div class="marquee-track" id="marqueeB"></div></div>
+</section>
+
+<!-- SERVICES TEASER -->
+<section class="section">
+  <div class="container">
+    <header class="section-head head-row">
+      <div>
+        <span class="kicker" data-i18n="services.kicker">خدماتنا</span>
+        <h2 data-i18n="services.title">كل اللي مشروعك محتاجه علشان يكبر — تحت سقف واحد</h2>
+      </div>
+      <a href="services.html" class="link-more"><span data-i18n="more.services">كل الخدمات</span> <i class="fa-solid fa-arrow-left flip"></i></a>
+    </header>
+    <div class="tiles" id="serviceTiles"></div>
+  </div>
+</section>
+
+<!-- FEATURED PROJECTS -->
+<section class="section band">
+  <div class="container">
+    <header class="section-head head-row">
+      <div>
+        <span class="kicker" data-i18n="work.kicker">مشاريعنا</span>
+        <h2 data-i18n="work.title">شغل بيتشاف… وبيبيع</h2>
+      </div>
+      <a href="projects.html" class="link-more"><span data-i18n="more.projects">كل المشاريع</span> <i class="fa-solid fa-arrow-left flip"></i></a>
+    </header>
+    <div class="pgrid" id="featuredProjects"></div>
+  </div>
+</section>
+
+<!-- ABOUT TEASER -->
+<section class="section">
+  <div class="container about-teaser">
+    <div class="at-photo tilt" data-tilt="6">
+      <img src="assets/img/founder.webp" data-i18n-alt="founder.name" alt="د. محمد حسين" loading="lazy">
+      <div class="founder-badge"><b>26+</b><span data-i18n="founder.badge">سنة في السوق</span></div>
+    </div>
+    <div class="at-copy">
+      <span class="kicker" data-i18n="founder.kicker">مين ورا المسوق المطحون</span>
+      <h2 data-i18n="founder.title">التسويق عندنا مش صوت عالي… ده نظام بيشتغل.</h2>
+      <p class="lead" data-i18n="founder.short">فريق كامل من الاستراتيجيين والمصممين وكتّاب المحتوى والمصورين ومتخصصي الـ CRM والأتمتة، بقيادة د. محمد حسين وخبرة أكتر من 26 سنة في مصر والخليج.</p>
+      <a href="about.html" class="btn btn-ghost btn-lg"><span data-i18n="more.about">اعرف أكتر عنّا</span> <i class="fa-solid fa-arrow-left flip"></i></a>
+    </div>
+  </div>
+</section>
+
+{{> cta}}

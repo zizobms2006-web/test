@@ -1,4 +1,4 @@
-/* English strings for the static page. Arabic is the default text in index.html. */
+/* English strings for every page. Arabic is the default text in the HTML (built from _src/). */
 (() => {
   const EN = {
     'meta.title': 'El Mat7oon Agency | Full-Service Marketing — Growth Systems, Not Just Posts',
@@ -9,6 +9,8 @@
     'nav.clients': 'Clients',
     'nav.work': 'Projects',
     'nav.about': 'About',
+    'nav.home': 'Home',
+    'nav.contact': 'Contact',
     'nav.process': 'Process',
     'nav.faq': 'FAQ',
     'nav.call': 'Call us',
@@ -101,6 +103,42 @@
     'cta.form': 'Or book a call via the form',
 
     'footer.rights': 'El Mat7oon Agency. All rights reserved.',
+    'footer.about': 'A full-service marketing agency led by Dr. Mohamed Hussein — we build growth systems, not just posts.',
+    'footer.pages': 'Pages',
+    'footer.contact': 'Contact',
+
+    'hero.cta2b': 'See our work',
+    'more.services': 'All services',
+    'more.projects': 'All projects',
+    'more.about': 'More about us',
+    'founder.short': 'A complete team of strategists, designers, copywriters, photographers and CRM & automation specialists, led by Dr. Mohamed Hussein with 26+ years in Egypt and the Gulf.',
+    'about.p2': 'We work with brands in Egypt, Libya, Saudi Arabia and the Gulf — fashion, beauty, restaurants, real estate, education and manufacturing. Every project is measured by sales and results, not by the number of posts.',
+    'why.kicker': 'Why El Mat7oon',
+    'why.title': 'What sets us apart from any other agency',
+
+    'ph.about.k': 'About us', 'ph.about.t': 'A complete team working on your growth', 'ph.about.l': 'A full-service marketing agency led by Dr. Mohamed Hussein, with 26+ years of experience in Egypt and the Gulf.',
+    'ph.services.k': 'Our services', 'ph.services.t': 'Everything your business needs — under one roof', 'ph.services.l': 'No need to juggle five vendors. One team, one plan, and every tool working together.',
+    'ph.projects.k': 'Our projects', 'ph.projects.t': 'Work that gets seen… and sells', 'ph.projects.l': 'Real projects we delivered for our clients — from photography and design to AI Agents and dashboards.',
+    'ph.clients.k': 'Our clients', 'ph.clients.t': 'Brands that chose to grow with us', 'ph.clients.l': 'From fashion and beauty to restaurants, real estate, education and manufacturing — across Egypt and the Gulf.',
+    'ph.contact.k': 'Contact', 'ph.contact.t': 'Let’s get started', 'ph.contact.l': 'Message us on WhatsApp or give us a call, and our team will come back with a clear plan — not generic advice.',
+
+    'work.all': 'All', 'work.beauty': 'Beauty & care', 'work.food': 'Food & restaurants', 'work.fashion': 'Fashion', 'work.product': 'Products', 'work.edu': 'Education & services',
+    'pd.sector': 'Sector',
+    'pd.services': 'What we did',
+    'pd.gallery': 'From the project',
+    'pd.galleryTitle': 'The work we delivered',
+    'pd.moreKicker': 'More projects',
+    'pd.moreTitle': 'See also',
+
+    'contact.chatTitle': 'Need an answer now?',
+    'contact.chatText': 'Talk to our team in the chat — we reply in seconds, all day.',
+    'contact.chatBtn': 'Open chat',
+    'contact.formTitle': 'Book a call',
+    'contact.formText': 'Fill in the form in under 3 minutes and someone from the team will contact you.',
+    'contact.formBtn': 'Open the form',
+    'contact.areaTitle': 'Where we work',
+    'contact.areaText': 'Egypt · Libya · Saudi Arabia & the Gulf — everything runs online and you send us the materials.',
+
     'lb.close': 'Close',
     'lb.prev': 'Previous',
     'lb.next': 'Next'
@@ -112,17 +150,19 @@
   const btn = document.getElementById('langBtn');
   const other = lang === 'en' ? 'ar' : 'en';
   btn.textContent = other === 'en' ? 'EN' : 'ع';
-  btn.href = '?lang=' + other + location.hash;
+  const q = new URLSearchParams(location.search); q.set('lang', other);
+  btn.href = '?' + q.toString() + location.hash;  // keeps ?id= on project pages
   btn.hreflang = other;
   btn.setAttribute('aria-label', other === 'en' ? 'English' : 'العربية');
   btn.addEventListener('click', () => { try { localStorage.setItem('lang', other); } catch (e) {} });
 
   if (lang !== 'en') return;
   const t = k => EN[k];
-  document.title = t('meta.title');
-  document.querySelector('meta[name="description"]').content = t('meta.desc');
-  document.querySelector('meta[property="og:title"]').content = t('meta.title');
-  document.querySelector('meta[property="og:description"]').content = t('meta.desc');
+  const title = document.body.dataset.titleEn || t('meta.title'), desc = document.body.dataset.descEn || t('meta.desc');
+  document.title = title;
+  document.querySelector('meta[name="description"]').content = desc;
+  document.querySelector('meta[property="og:title"]').content = title;
+  document.querySelector('meta[property="og:description"]').content = desc;
   document.querySelectorAll('[data-i18n]').forEach(el => { const v = t(el.dataset.i18n); if (v) el.textContent = v; });
   document.querySelectorAll('[data-i18n-html]').forEach(el => { const v = t(el.dataset.i18nHtml); if (v) el.innerHTML = v; });
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { const v = t(el.dataset.i18nAria); if (v) el.setAttribute('aria-label', v); });

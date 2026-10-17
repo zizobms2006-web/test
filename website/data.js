@@ -26,6 +26,7 @@ window.SITE = {
 
   projects: [
     {
+      id: "velora", c: "beauty",
       name: "Velora Kiss", logo: "velora", imgs: ["velora3", "velora4", "velora1", "velora2"],
       sector: ["تجميل وعناية", "Beauty & care"],
       title: ["إطلاق خط زيوت المساج بهوية فاخرة", "Launching a massage-oil line with a luxury identity"],
@@ -33,6 +34,7 @@ window.SITE = {
       tags: [["تصوير منتجات", "تصميمات حملات", "AI Agent واتساب", "داشبورد"], ["Product shoot", "Campaign design", "WhatsApp AI Agent", "Dashboard"]]
     },
     {
+      id: "guarobow", c: "product",
       name: "The Guarobow", logo: "guarobow", imgs: ["guarobow2", "guarobow1", "guarobow4", "guarobow5", "guarobow3"],
       sector: ["منتجات", "Products"],
       title: ["\u0022الأمان إحساس\u0022 — قصة براند بصرية", "“Safety is a feeling” — a visual brand story"],
@@ -40,6 +42,7 @@ window.SITE = {
       tags: [["محتوى Lifestyle", "تصميمات", "AI Agent", "داشبورد"], ["Lifestyle content", "Design", "AI Agent", "Dashboard"]]
     },
     {
+      id: "lappetito", c: "food",
       name: "L'Appetito", logo: "lappetito", imgs: ["lappetito2", "lappetito1", "lappetito3"],
       sector: ["مطاعم وكاترينج", "Food & catering"],
       title: ["أكل بيتشاف قبل ما يتاكل", "Food you can taste through the screen"],
@@ -47,6 +50,7 @@ window.SITE = {
       tags: [["تصوير أكل", "محتوى سوشيال", "ريلز"], ["Food photography", "Social content", "Reels"]]
     },
     {
+      id: "wearme", c: "fashion",
       name: "Wear Me", logo: "", imgs: ["wearme1", "wearme2"],
       sector: ["أزياء", "Fashion"],
       title: ["مرونة من كل اتجاه", "Stretch in every direction"],
@@ -54,6 +58,7 @@ window.SITE = {
       tags: [["تصميمات", "كوبي رايتنج", "إعلانات"], ["Design", "Copywriting", "Ads"]]
     },
     {
+      id: "smartsteps", c: "edu",
       name: "Smart Steps", logo: "smartsteps", imgs: ["smartsteps"],
       sector: ["تعليم", "Education"],
       title: ["ثقة أولياء الأمور أقوى إعلان", "Parents’ trust is the strongest ad"],

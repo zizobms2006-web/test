@@ -2,15 +2,15 @@
 
 Static site: no build step. Upload the contents of this folder to the web root of the domain.
 
-## Files
-- `index.html`: page structure, Meta Pixel, n8n chat
-- `data.js`: **edit content here** (services, clients, portfolio, FAQ), in Arabic and English
-- `i18n.js`: English text for the rest of the page (Arabic is the default text in `index.html`)
-- `style.css`: identity colors and layout
-- `main.js`: animations (GSAP + Lenis), tilt, counters, lightbox
-- `three-scene.js`: 3D hero and CTA wave (Three.js)
-- `assets/clients/`: client logos (360×360 webp)
-- `assets/work/`: portfolio images (800px webp)
+## Pages
+Home (`index.html`), About (`about.html`), Services (`services.html`), Projects (`projects.html`),
+Project detail (`project.html?id=<project id>`), Clients (`clients.html`), Contact (`contact.html`).
+
+## Editing
+- **Content** (services, clients, projects, FAQ, in Arabic and English): `data.js`. A new project only needs an entry in `projects` with a unique `id`, and its images in `assets/work/`; it then appears on the Projects page and gets its own page at `project.html?id=<id>`.
+- **Page text / layout**: edit `_src/pages/<page>.html` (or the shared `_src/layout.html`, `_src/partials/`), then run `python3 _src/build.py` to regenerate the `.html` files. Do not edit the generated `.html` files directly.
+- **English text** for anything marked `data-i18n`: `i18n.js`.
+- Styles: `style.css` · behaviour and animations: `main.js` (page-aware) · 3D hero: `three-scene.js` (home only).
 
 ## Languages
 Arabic is the default. `?lang=en` opens the English version, and the EN/ع button in the nav switches between them. The visitor's choice is remembered.
@@ -21,5 +21,5 @@ Arabic is the default. `?lang=en` opens the English version, and the EN/ع butto
 
 ## Live setup
 - Served from `/var/www/site` on the Contabo VPS by Caddy (`elmat7oon-agency.com`, with `www` redirecting to it). Client dashboards stay at `/agency`, `/kmq`, `/watania`, `/smartsteps` and `/guarobow`.
-- Redeploy: run the n8n workflow "Agency Dashboard Setup" with a command that pulls the `website` branch tarball into `/var/www/site`.
+- Redeploy: run the n8n workflow "Agency Dashboard Setup" with a command that pulls the `website` branch tarball into `/var/www/site`, removes `_src/` and `README.md`, and replaces `?v=dev` in the HTML files with a fresh version number (cache-busting). The home page and HTML are served with `Cache-Control: no-cache`.
 - Chat: n8n workflow "Chat AG". It loads the system prompt from the Google Doc and prices from the `SERVICES` tab of `El_Mat7oon_Agency_AI_Data`, keeps a separate memory per visitor, and registers leads through "Agency Register Lead" (platform `website`). Allowed origins: the landing page, `elmat7oon-agency.com` and `www.elmat7oon-agency.com`.

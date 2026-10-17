@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Pick language before first paint: ?lang= > saved choice > Arabic */
+(function () {
+  var q = new URLSearchParams(location.search).get('lang'), s = null;
+  try { s = localStorage.getItem('lang'); } catch (e) {}
+  var l = q === 'en' || q === 'ar' ? q : (s === 'en' ? 'en' : 'ar');
+  try { localStorage.setItem('lang', l); } catch (e) {}
+  document.documentElement.lang = l;
+  document.documentElement.dir = l === 'en' ? 'ltr' : 'rtl';
+})();
+</script>
+<title>تواصل معنا | المسوق المطحون</title>
+<meta name="description" content="كلّم المسوق المطحون على واتساب أو تليفون أو إيميل، أو احجز مكالمة.">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:title" content="تواصل معنا | المسوق المطحون">
+<meta property="og:description" content="كلّم المسوق المطحون على واتساب أو تليفون أو إيميل، أو احجز مكالمة.">
+<meta property="og:image" content="assets/img/founder.webp">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@n8n/chat@1.40.1/dist/style.css">
+<link rel="stylesheet" href="style.css?v=dev">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MarketingAgency",
+  "name": "المسوق المطحون",
+  "alternateName": "El Mat7oon Agency",
+  "url": "https://elmat7oon-agency.com/",
+  "logo": "https://elmat7oon-agency.com/assets/img/logo.webp",
+  "founder": {"@type": "Person", "name": "Dr. Mohamed Hussein"},
+  "email": "zizobms2006@gmail.com",
+  "telephone": "+201550069683",
+  "areaServed": ["EG", "LY", "SA", "AE"],
+  "sameAs": [
+    "https://www.facebook.com/profile.php?id=61576923941440",
+    "https://www.instagram.com/elmosaweq_elmat7oun/",
+    "https://www.tiktok.com/@elmosauq_elmat7oun"
+  ]
+}
+</script>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','3561579477337173');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=3561579477337173&ev=PageView&noscript=1"></noscript>
+</head>
+<body data-page="contact" data-title-en="Contact | El Mat7oon Agency" data-desc-en="Reach El Mat7oon Agency on WhatsApp, phone or email, or book a call.">
+
+
+<div class="page-wipe" id="pageWipe" aria-hidden="true"><img src="assets/img/logo.webp" alt=""></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- Nav -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo.webp" alt="">
+      <span data-i18n="brand">المسوق المطحون</span>
+    </a>
+    <nav class="nav-links" id="navLinks" data-i18n-aria="nav.aria" aria-label="القائمة الرئيسية">
+      <a href="index.html" data-nav="home" data-i18n="nav.home">الرئيسية</a>
+      <a href="about.html" data-nav="about" data-i18n="nav.about">مين إحنا</a>
+      <a href="services.html" data-nav="services" data-i18n="nav.services">خدماتنا</a>
+      <a href="projects.html" data-nav="projects" data-i18n="nav.work">مشاريعنا</a>
+      <a href="clients.html" data-nav="clients" data-i18n="nav.clients">عملاؤنا</a>
+      <a href="contact.html" data-nav="contact" class="active" aria-current="page" data-i18n="nav.contact">تواصل معنا</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="?lang=en" class="lang-btn" id="langBtn" hreflang="en" aria-label="English">EN</a>
+      <a href="tel:+201550069683" class="icon-btn" data-i18n-aria="nav.call" aria-label="اتصل بنا"><i class="fa-solid fa-phone"></i></a>
+      <a href="https://wa.me/201550069683" target="_blank" rel="noopener" class="btn btn-primary btn-sm magnetic"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="nav.cta">كلّمنا واتساب</span></a>
+      <button class="burger" id="burger" data-i18n-aria="nav.menu" aria-label="فتح القائمة" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="page-hero">
+  <div class="ph-bg" aria-hidden="true"><span class="ph-orb a"></span><span class="ph-orb b"></span><span class="ph-ring"></span><i class="ph-icon fa-solid fa-paper-plane"></i></div>
+  <div class="container">
+    <nav class="crumbs" aria-label="breadcrumb"><a href="index.html" data-i18n="nav.home">الرئيسية</a><i class="fa-solid fa-chevron-left flip"></i><span data-i18n="nav.contact">تواصل معنا</span></nav>
+    <h1 data-i18n="ph.contact.t">خلّينا نبدأ</h1>
+    <p class="lead" data-i18n="ph.contact.l">ابعتلنا على واتساب أو كلّمنا، والفريق هيرجعلك بخطة واضحة مش كلام عام.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-page">
+  <div class="container">
+    <div class="contact-cards">
+      <a class="contact-card magnetic" href="https://wa.me/201550069683" target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp"></i><span data-i18n="cta.wa">واتساب</span><b dir="ltr">+20 155 006 9683</b>
+      </a>
+      <a class="contact-card magnetic" href="tel:+201550069683">
+        <i class="fa-solid fa-phone"></i><span data-i18n="cta.call">اتصل بينا</span><b dir="ltr">01550069683</b>
+      </a>
+      <a class="contact-card magnetic" href="mailto:zizobms2006@gmail.com">
+        <i class="fa-solid fa-envelope"></i><span data-i18n="cta.email">إيميل</span><b dir="ltr">zizobms2006@gmail.com</b>
+      </a>
+    </div>
+    <div class="contact-extra">
+      <div class="ce-card">
+        <i class="fa-solid fa-comments"></i>
+        <h3 data-i18n="contact.chatTitle">عايز رد دلوقتي؟</h3>
+        <p data-i18n="contact.chatText">كلّم فريقنا من الشات — بنرد في ثواني وعلى مدار اليوم.</p>
+        <button class="btn btn-primary" data-try-chat><span data-i18n="contact.chatBtn">افتح الشات</span></button>
+      </div>
+      <div class="ce-card">
+        <i class="fa-regular fa-calendar-check"></i>
+        <h3 data-i18n="contact.formTitle">احجز مكالمة</h3>
+        <p data-i18n="contact.formText">املا الفورم في أقل من 3 دقايق، وحد من الفريق هيتواصل معاك.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSchNZTHshzLrokQS8Aa7kIzdK0PIQZ-85QSWHslhfWkhrLWig/viewform" target="_blank" rel="noopener" class="btn btn-ghost"><span data-i18n="contact.formBtn">افتح الفورم</span></a>
+      </div>
+      <div class="ce-card">
+        <i class="fa-solid fa-earth-africa"></i>
+        <h3 data-i18n="contact.areaTitle">بنخدم فين؟</h3>
+        <p data-i18n="contact.areaText">مصر · ليبيا · السعودية والخليج — الشغل كله أونلاين وبنستقبل منك المواد.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq band">
+  <div class="container faq-grid">
+    <header class="section-head">
+      <span class="kicker" data-i18n="faq.kicker">أسئلة شائعة</span>
+      <h2 data-i18n="faq.title">أسئلة بتتكرر معانا كتير</h2>
+      <p class="lead" data-i18n="faq.lead">لو سؤالك مش موجود، ابعته لنا على واتساب أو اسأل الشات.</p>
+    </header>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <a href="index.html" class="brand"><img src="assets/img/logo.webp" alt=""><span data-i18n="brand">المسوق المطحون</span></a>
+      <p data-i18n="footer.about">وكالة تسويق متكاملة بقيادة د. محمد حسين — بنبني أنظمة نمو، مش بوستات.</p>
+      <div class="socials">
+        <a href="https://www.facebook.com/profile.php?id=61576923941440" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/elmosaweq_elmat7oun/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@elmosauq_elmat7oun" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://wa.me/201550069683" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <b data-i18n="footer.pages">الصفحات</b>
+      <a href="about.html" data-i18n="nav.about">مين إحنا</a>
+      <a href="services.html" data-i18n="nav.services">خدماتنا</a>
+      <a href="projects.html" data-i18n="nav.work">مشاريعنا</a>
+      <a href="clients.html" data-i18n="nav.clients">عملاؤنا</a>
+      <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
+    </div>
+    <div class="footer-col">
+      <b data-i18n="footer.contact">تواصل</b>
+      <a href="https://wa.me/201550069683" target="_blank" rel="noopener" dir="ltr">+20 155 006 9683</a>
+      <a href="tel:+201550069683" dir="ltr">01550069683</a>
+      <a href="mailto:zizobms2006@gmail.com" dir="ltr">zizobms2006@gmail.com</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <small>© <span id="year">2026</span> <span data-i18n="footer.rights">المسوق المطحون. جميع الحقوق محفوظة.</span></small>
+  </div>
+</footer>
+
+<a href="https://wa.me/201550069683" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-close" id="lbClose" data-i18n-aria="lb.close" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+  <button class="lb-nav lb-prev" id="lbPrev" data-i18n-aria="lb.prev" aria-label="السابق"><i class="fa-solid fa-chevron-right flip"></i></button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-nav lb-next" id="lbNext" data-i18n-aria="lb.next" aria-label="التالي"><i class="fa-solid fa-chevron-left flip"></i></button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="i18n.js?v=dev"></script>
+<script src="data.js?v=dev"></script>
+<script src="main.js?v=dev"></script>
+
+
+<!-- n8n chat (same webhook as the landing page) -->
+<script type="module">
+import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat@1.40.1/dist/chat.bundle.es.js';
+const en = document.documentElement.lang === 'en';
+createChat({
+  webhookUrl: 'https://vmi3330209.contaboserver.net/webhook/3d57087d-9ab2-47fe-a492-d50ced226b97/chat',
+  mode: 'window',
+  showWelcomeScreen: false,
+  defaultLanguage: 'en',
+  initialMessages: [en ? 'Hi there! 👋 How can we help you grow?' : 'أهلاً بيك! عامل إيه؟ 😊'],
+  i18n: { en: en
+    ? { title: 'El Mat7oon', subtitle: 'We reply in seconds', footer: '', getStarted: 'Start chatting', inputPlaceholder: 'Type your message…' }
+    : { title: 'المسوق المطحون', subtitle: 'بنرد عليك في ثواني', footer: '', getStarted: 'ابدأ المحادثة', inputPlaceholder: 'اكتب رسالتك…' } }
+});
+</script>
+</body>
+</html>

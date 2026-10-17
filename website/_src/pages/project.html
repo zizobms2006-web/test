@@ -1,0 +1,46 @@
+<!-- PROJECT DETAIL (filled from data.js by ?id=) -->
+<section class="page-hero pd-hero">
+  <div class="ph-bg" aria-hidden="true"><span class="ph-orb a"></span><span class="ph-orb b"></span><span class="ph-ring"></span></div>
+  <div class="container pd-grid">
+    <div class="pd-copy">
+      <nav class="crumbs" aria-label="breadcrumb">
+        <a href="index.html" data-i18n="nav.home">الرئيسية</a><i class="fa-solid fa-chevron-left flip"></i>
+        <a href="projects.html" data-i18n="nav.work">مشاريعنا</a><i class="fa-solid fa-chevron-left flip"></i>
+        <span id="pdCrumb"></span>
+      </nav>
+      <div class="proj-client" id="pdClient"></div>
+      <h1 id="pdTitle"></h1>
+      <p class="lead" id="pdDesc"></p>
+      <dl class="pd-meta">
+        <div><dt data-i18n="pd.sector">القطاع</dt><dd id="pdSector"></dd></div>
+        <div><dt data-i18n="pd.services">اللي اتعمل</dt><dd><div class="svc-tags" id="pdTags"></div></dd></div>
+      </dl>
+    </div>
+    <div class="pd-cover proj-media" id="pdCover"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <header class="section-head">
+      <span class="kicker" data-i18n="pd.gallery">من المشروع</span>
+      <h2 data-i18n="pd.galleryTitle">الشغل اللي اتنفذ</h2>
+    </header>
+    <div class="gallery" id="pdGallery"></div>
+  </div>
+</section>
+
+<section class="section band">
+  <div class="container">
+    <header class="section-head head-row">
+      <div>
+        <span class="kicker" data-i18n="pd.moreKicker">مشاريع تانية</span>
+        <h2 data-i18n="pd.moreTitle">شوف كمان</h2>
+      </div>
+      <a href="projects.html" class="link-more"><span data-i18n="more.projects">كل المشاريع</span> <i class="fa-solid fa-arrow-left flip"></i></a>
+    </header>
+    <div class="pgrid" id="pdMore"></div>
+  </div>
+</section>
+
+{{> cta}}
