@@ -19,12 +19,7 @@ Arabic is the default. `?lang=en` opens the English version, and the EN/ع butto
 1. Put the logo at `assets/clients/<name>.webp`.
 2. Add `{ n: "Name", f: "<name>", s: ["القطاع", "Sector"] }` to `clients` in `data.js`.
 
-## Before going live
-The n8n Chat Trigger only accepts requests from `https://el-mat7oon-landing.duckdns.org`.
-In n8n, open the Chat Trigger node, go to **Allowed Origins (CORS)**, add the new domain, then save and activate the workflow.
-Until you do this, the chat will not work on the new site.
-
-## Deploy (VPS / nginx example)
-```bash
-rsync -avz --delete website/ user@SERVER:/var/www/<domain>/
-```
+## Live setup
+- Served from `/var/www/site` on the Contabo VPS by Caddy (`elmat7oon-agency.com`, with `www` redirecting to it). Client dashboards stay at `/agency`, `/kmq`, `/watania`, `/smartsteps` and `/guarobow`.
+- Redeploy: run the n8n workflow "Agency Dashboard Setup" with a command that pulls the `website` branch tarball into `/var/www/site`.
+- Chat: n8n workflow "Chat AG". It loads the system prompt from the Google Doc and prices from the `SERVICES` tab of `El_Mat7oon_Agency_AI_Data`, keeps a separate memory per visitor, and registers leads through "Agency Register Lead" (platform `website`). Allowed origins: the landing page, `elmat7oon-agency.com` and `www.elmat7oon-agency.com`.
