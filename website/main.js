@@ -352,11 +352,33 @@
     tl.from('.hero-title .word', { yPercent: 120, rotate: 4, duration: 1.1, stagger: .06 })
       .to('.hero .reveal-up', { opacity: 1, y: 0, duration: .9, stagger: .1 }, '-=.7')
       .from('.portrait', { opacity: 0, scale: .85, rotateY: -25, duration: 1.4 }, '-=1.2')
-      .from('.portrait-card', { opacity: 0, scale: .6, duration: .8, stagger: .15, ease: 'back.out(2)' }, '-=.8');
+      .from('.portrait-card', { opacity: 0, scale: .6, duration: .8, stagger: .15, ease: 'back.out(2)' }, '-=.8')
+      .from('.orbit', { scale: .4, opacity: 0, duration: 1.4, stagger: .15, ease: 'expo.out' }, '-=1.1')
+      .from('.spin-badge', { scale: 0, rotate: -180, duration: 1, ease: 'back.out(1.8)' }, '-=1')
+      .call(rotateHeadline);
+
+    // last word of the headline cycles through what we build
+    function rotateHeadline() {
+      const el = $('.hero-title .accent');
+      if (!el) return;
+      const words = en ? ['growth system.', 'sales engine.', 'brand that wins.'] : ['منظومة نمو.', 'ماكينة مبيعات.', 'براند بيكسب.'];
+      let i = 0;
+      setInterval(() => {
+        if (document.hidden) return;
+        i = (i + 1) % words.length;
+        gsap.to(el, {
+          yPercent: -110, opacity: 0, duration: .45, ease: 'power2.in',
+          onComplete: () => { el.textContent = words[i]; gsap.fromTo(el, { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .7, ease: 'power3.out' }); }
+        });
+      }, 3200);
+    }
 
     // hero parallax out
-    gsap.to('.hero-copy', { yPercent: -18, opacity: .2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-    gsap.to('.portrait', { yPercent: -10, rotateX: 8, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    // desktop only: on phones the hero is taller than the screen and fading it would hide the buttons
+    gsap.matchMedia().add('(min-width: 961px)', () => {
+      gsap.to('.hero-copy', { yPercent: -18, opacity: .2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+      gsap.to('.portrait', { yPercent: -10, rotateX: 8, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    });
 
     // headings
     $$('.section-head, .showcase-copy, .founder-copy, .cta-inner').forEach(h => {

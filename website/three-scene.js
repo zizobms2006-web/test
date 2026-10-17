@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const BRAND = new THREE.Color('#FF5A1F');
-const BRAND_LIGHT = new THREE.Color('#FF8A52');
-const TEAL = new THREE.Color('#3FB8B0');
+// Logo palette on a white page: teal ring, deep teal, slate background.
+const BRAND = new THREE.Color('#279596');
+const BRAND_LIGHT = new THREE.Color('#42BEBC');
+const TEAL = new THREE.Color('#106067');
+const SLATE = new THREE.Color('#314A4F');
 
 function makeRenderer(canvas) {
   const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -39,7 +41,7 @@ function hero() {
   if (!canvas) return;
   const renderer = makeRenderer(canvas);
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0A0B0D, 0.045);
+  scene.fog = new THREE.FogExp2(0xFFFFFF, 0.04);
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
   camera.position.set(0, 0, 9);
 
@@ -72,9 +74,9 @@ function hero() {
       varying vec3 vN; varying vec3 vView; varying float vD;
       void main(){
         float f = pow(1.0 - max(dot(vN, vView), 0.0), 2.4);
-        vec3 col = mix(vec3(0.05,0.04,0.04), uColor, f);
-        col += uColor2 * smoothstep(0.05, 0.22, vD) * 0.55;
-        gl_FragColor = vec4(col, 0.35 + f*0.65);
+        vec3 col = mix(vec3(0.93,0.98,0.98), uColor, f);
+        col = mix(col, uColor2, smoothstep(0.05, 0.22, vD) * 0.6);
+        gl_FragColor = vec4(col, 0.5 + f*0.5);
       }`
   });
   const core = new THREE.Mesh(coreGeo, coreMat);
@@ -90,7 +92,7 @@ function hero() {
   // Shell vertices as glowing nodes
   const sprite = dotTexture();
   const nodeGeo = new THREE.BufferGeometry().setAttribute('position', shell.geometry.getAttribute('position').clone());
-  const nodes = new THREE.Points(nodeGeo, new THREE.PointsMaterial({ size: 0.09, map: sprite, color: BRAND_LIGHT, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const nodes = new THREE.Points(nodeGeo, new THREE.PointsMaterial({ size: 0.09, map: sprite, color: BRAND_LIGHT, transparent: true, depthWrite: false, blending: THREE.NormalBlending }));
   shell.add(nodes);
 
   // Orbit rings
@@ -100,7 +102,7 @@ function hero() {
     ring.rotation.set(rx, 0, rz);
     // satellite riding each ring
     const sat = new THREE.Mesh(new THREE.SphereGeometry(0.07 + (2 - i) * 0.02, 16, 16), new THREE.MeshBasicMaterial({ color: c }));
-    const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: sprite, color: c, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+    const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: sprite, color: c, transparent: true, blending: THREE.NormalBlending, depthWrite: false }));
     halo.scale.setScalar(0.7);
     sat.add(halo);
     ring.add(sat);
@@ -117,14 +119,14 @@ function hero() {
     pos[i * 3] = r * Math.sin(ph) * Math.cos(th);
     pos[i * 3 + 1] = r * Math.sin(ph) * Math.sin(th) * 0.6;
     pos[i * 3 + 2] = r * Math.cos(ph) - 4;
-    const c = Math.random() < 0.7 ? BRAND : Math.random() < 0.5 ? BRAND_LIGHT : new THREE.Color('#F4F1EC');
+    const c = Math.random() < 0.55 ? BRAND : Math.random() < 0.5 ? BRAND_LIGHT : SLATE;
     col.set([c.r, c.g, c.b], i * 3);
     seed[i] = Math.random();
   }
   const pGeo = new THREE.BufferGeometry();
   pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   pGeo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-  const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ size: 0.06, map: sprite, vertexColors: true, transparent: true, opacity: 0.85, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ size: 0.06, map: sprite, vertexColors: true, transparent: true, opacity: 0.85, depthWrite: false, blending: THREE.NormalBlending }));
   scene.add(particles);
 
   // Rising growth bars (a subtle 3D chart behind the core)
@@ -230,7 +232,7 @@ function ctaWave() {
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   const uniforms = { uTime: { value: 0 }, uColor: { value: BRAND }, uColor2: { value: BRAND_LIGHT }, uMouse: { value: new THREE.Vector2(0, 0) } };
   const mat = new THREE.ShaderMaterial({
-    uniforms, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    uniforms, transparent: true, depthWrite: false, blending: THREE.NormalBlending,
     vertexShader: `
       uniform float uTime; uniform vec2 uMouse; varying float vH;
       void main(){
