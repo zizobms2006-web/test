@@ -23,22 +23,50 @@
     </article>`).join('');
 
   $('#clientsGrid').innerHTML = D.clients.map(c => `
-    <figure class="client tilt" data-tilt="12">
-      <div class="client-logo"><img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy" width="360" height="360"></div>
+    <figure class="client tilt" data-tilt="10" tabindex="0">
+      <div class="client-card">
+        <div class="client-face client-front"><img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy" width="360" height="360"><span class="shine"></span></div>
+        <div class="client-face client-back">
+          <img src="assets/clients/${c.f}.webp" alt="" loading="lazy">
+          <b>${L(c.n)}</b><small>${L(c.s)}</small>
+        </div>
+      </div>
       <figcaption><b>${L(c.n)}</b><small>${L(c.s)}</small></figcaption>
     </figure>`).join('');
+
+  const P = D.projects;
+  $('#projTotal').textContent = String(P.length).padStart(2, '0');
+  $('#projTrack').innerHTML = P.map((p, i) => `
+    <article class="proj${i === 0 ? ' active' : ''}" data-i="${i}">
+      <button class="proj-media" data-open="${i}" aria-label="${en ? 'Open gallery' : 'افتح المعرض'}: ${p.name}">
+        <span class="proj-stack">${p.imgs.slice(0, 3).map((f, k) => `<img class="pi pi-${k}" src="assets/work/${f}.webp" alt="" loading="lazy">`).join('')}</span>
+        <span class="proj-zoom"><i class="fa-solid fa-expand"></i></span>
+      </button>
+      <div class="proj-info">
+        <span class="proj-num">${String(i + 1).padStart(2, '0')}</span>
+        <div class="proj-client">
+          ${p.logo ? `<img src="assets/clients/${p.logo}.webp" alt="">` : `<span class="proj-mono">${p.name.split(' ').map(w => w[0]).join('')}</span>`}
+          <div><b>${p.name}</b><small>${L(p.sector)}</small></div>
+        </div>
+        <h3>${L(p.title)}</h3>
+        <p>${L(p.desc)}</p>
+        <div class="svc-tags">${L(p.tags).map(t => `<span>${t}</span>`).join('')}</div>
+        <button class="btn btn-ghost proj-open" data-open="${i}"><i class="fa-regular fa-images"></i> ${en ? 'View project' : 'شوف المشروع'} <small>${p.imgs.length}</small></button>
+      </div>
+    </article>`).join('') + `
+    <article class="proj proj-end">
+      <div>
+        <span class="kicker">${en ? 'Your project next?' : 'مشروعك الجاي؟'}</span>
+        <h3>${en ? 'Let’s build something that sells.' : 'يلا نعمل شغل بيبيع.'}</h3>
+        <a href="https://wa.me/201550069683" target="_blank" rel="noopener" class="btn btn-primary btn-lg"><i class="fa-brands fa-whatsapp"></i> ${en ? 'Start on WhatsApp' : 'ابدأ على واتساب'}</a>
+      </div>
+    </article>`;
 
   const logos = D.clients.map(c => `<div class="m-logo"><img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy"></div>`);
   const half = Math.ceil(logos.length / 2);
   const rowA = logos.slice(0, half).join(''), rowB = logos.slice(half).concat(logos.slice(0, 2)).join('');
   $('#marqueeA').innerHTML = rowA + rowA + rowA;
   $('#marqueeB').innerHTML = rowB + rowB + rowB;
-
-  $('#workGrid').innerHTML = D.work.map((w, i) => `
-    <figure class="work-item" data-c="${w.c}" data-i="${i}">
-      <img src="assets/work/${w.f}.webp" alt="${L(w.t)}" loading="lazy">
-      <figcaption>${L(w.t)}</figcaption>
-    </figure>`).join('');
 
   $('#faqList').innerHTML = D.faq.map((f, i) => `
     <div class="faq-item${i === 0 ? ' open' : ''}">
@@ -153,6 +181,12 @@
     });
   }
 
+  /* ---------- Logo cards: hover flips on desktop, tap flips on touch ---------- */
+  $$('.client').forEach(c => {
+    c.addEventListener('click', () => { if (!fine) c.classList.toggle('flipped'); });
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.classList.toggle('flipped'); } });
+  });
+
   /* ---------- Marquee ---------- */
   $$('.marquee').forEach(m => {
     const track = m.firstElementChild, dir = +m.dataset.dir;
@@ -174,20 +208,78 @@
     loop();
   });
 
-  /* ---------- Counters ---------- */
-  const countUp = el => {
-    const end = +el.dataset.count, suf = el.dataset.suffix || '';
-    if (reduced) { el.textContent = end + suf; return; }
-    const t0 = performance.now(), dur = 1800;
-    const step = t => {
-      const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4);
-      el.textContent = Math.round(end * e) + suf;
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
+  /* ---------- Dynamic numbers ---------- */
+  // Growth sparkline: a rising, slightly noisy path ending at the top-right.
+  const sparkPath = (seed, w = 120, h = 34) => {
+    let s = seed;
+    const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    const n = 9, pts = [];
+    for (let i = 0; i < n; i++) {
+      const t = i / (n - 1);
+      pts.push([t * w, h - 4 - (t * t * .75 + t * .2) * (h - 8) + (i && i < n - 1 ? (rnd() - .5) * 9 : 0)]);
+    }
+    return pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
   };
-  const cObs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { countUp(e.target); cObs.unobserve(e.target); } }), { threshold: .6 });
-  $$('[data-count]').forEach(el => cObs.observe(el));
+  const sparkSvg = seed => {
+    const d = sparkPath(seed);
+    const end = d.split(' ').pop().slice(1).split(',');
+    return `<svg class="spark" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true">
+      <path class="spark-fill" d="${d} L120,34 L0,34 Z"/><path class="spark-line" pathLength="1" d="${d}"/>
+      <circle class="spark-dot" cx="${end[0]}" cy="${end[1]}" r="3"/></svg>`;
+  };
+
+  // Odometer: every digit is a rolling column; replays each time it scrolls into view.
+  $$('.odo').forEach((el, k) => {
+    const digits = String(el.dataset.to).split('');
+    el.innerHTML = digits.map(() => `<span class="odo-col"><span class="odo-strip">${'01234567890123456789'.split('').map(n => `<span>${n}</span>`).join('')}</span></span>`).join('')
+      + `<span class="odo-suf">${el.dataset.suffix || ''}</span>`;
+    el.setAttribute('aria-label', el.dataset.to + (el.dataset.suffix || ''));
+    el.closest('.stat').insertAdjacentHTML('beforeend', sparkSvg(17 + k * 31));
+  });
+  const roll = (el, on) => {
+    const digits = String(el.dataset.to).split('');
+    $$('.odo-strip', el).forEach((strip, i) => {
+      strip.style.transition = 'none';
+      strip.style.transform = 'translateY(0)';
+      if (!on) return;
+      void strip.offsetWidth;
+      strip.style.transition = `transform ${reduced ? 0 : 1.6 + i * .25}s cubic-bezier(.16,1,.3,1) ${i * .08}s`;
+      strip.style.transform = `translateY(-${(10 + +digits[i]) * 5}%)`;
+    });
+  };
+  const sObs = new IntersectionObserver(es => es.forEach(e => {
+    const stat = e.target;
+    roll($('.odo', stat), e.isIntersecting);
+    stat.classList.toggle('in', e.isIntersecting);
+  }), { threshold: .5 });
+  $$('.stat').forEach(s => sObs.observe(s));
+
+  // Results: count up + before/after bars + sparkline, replayed on every visit.
+  $$('.result').forEach((r, k) => {
+    $('.rchart', r).innerHTML = `
+      <div class="rbars">
+        <div class="rbar"><i style="--h:${r.dataset.before}%"></i><span>${en ? 'Before' : 'قبل'}</span></div>
+        <div class="rbar after"><i style="--h:100%"></i><span>${en ? 'After' : 'بعد'}</span></div>
+      </div>${sparkSvg(101 + k * 47)}`;
+  });
+  const countUp = (el, on) => {
+    const end = +el.dataset.count, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+    cancelAnimationFrame(el._raf);
+    if (!on) { el.textContent = pre + (end < 10 ? 1 : 0) + suf; return; }
+    if (reduced) { el.textContent = pre + end + suf; return; }
+    const from = end < 10 ? 1 : 0, t0 = performance.now(), dur = 1800;
+    const step = t => {
+      const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4), v = from + (end - from) * e;
+      el.textContent = pre + (end < 10 && p < 1 ? v.toFixed(1) : Math.round(v)) + suf;
+      if (p < 1) el._raf = requestAnimationFrame(step);
+    };
+    el._raf = requestAnimationFrame(step);
+  };
+  const rObs = new IntersectionObserver(es => es.forEach(e => {
+    countUp($('.rnum', e.target), e.isIntersecting);
+    e.target.classList.toggle('in', e.isIntersecting);
+  }), { threshold: .45 });
+  $$('.result').forEach(r => rObs.observe(r));
 
   /* ---------- FAQ ---------- */
   $$('.faq-item').forEach(item => $('.faq-q', item).addEventListener('click', () => {
@@ -197,24 +289,21 @@
     $('.faq-q', item).setAttribute('aria-expanded', open);
   }));
 
-  /* ---------- Work filters + lightbox ---------- */
-  const items = $$('.work-item');
-  $$('#filters .chip').forEach(ch => ch.addEventListener('click', () => {
-    $$('#filters .chip').forEach(c => c.classList.toggle('active', c === ch));
-    const f = ch.dataset.f;
-    items.forEach(it => it.classList.toggle('hidden', f !== 'all' && it.dataset.c !== f));
-    if (hasGsap && !reduced) gsap.fromTo(items.filter(i => !i.classList.contains('hidden')), { opacity: 0, y: 30, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .6, stagger: .04, ease: 'power3.out' });
-    if (hasGsap) ScrollTrigger.refresh();
-  }));
+  /* ---------- Project galleries (lightbox) ---------- */
   const lb = $('#lightbox'), lbImg = $('#lbImg'), lbCap = $('#lbCap');
-  let cur = 0;
-  const visible = () => items.filter(i => !i.classList.contains('hidden'));
+  let gal = [], cur = 0;
   const show = i => {
-    const v = visible(); cur = (i + v.length) % v.length;
-    const w = D.work[+v[cur].dataset.i];
-    lbImg.src = `assets/work/${w.f}.webp`; lbImg.alt = L(w.t); lbCap.textContent = L(w.t);
+    cur = (i + gal.length) % gal.length;
+    lbImg.src = gal[cur].src; lbImg.alt = gal[cur].cap;
+    lbCap.textContent = gal[cur].cap + (gal.length > 1 ? `  ·  ${cur + 1} / ${gal.length}` : '');
+    if (hasGsap && !reduced) gsap.fromTo(lbImg, { opacity: 0, scale: .94, rotateY: en ? -8 : 8 }, { opacity: 1, scale: 1, rotateY: 0, duration: .5, ease: 'power3.out' });
   };
-  items.forEach(it => it.addEventListener('click', () => { show(visible().indexOf(it)); lb.classList.add('open'); lenis && lenis.stop(); }));
+  $$('[data-open]').forEach(b => b.addEventListener('click', () => {
+    const p = P[+b.dataset.open];
+    gal = p.imgs.map(f => ({ src: `assets/work/${f}.webp`, cap: `${p.name} — ${L(p.title)}` }));
+    lb.querySelectorAll('.lb-nav').forEach(n => n.hidden = gal.length < 2);
+    show(0); lb.classList.add('open'); lenis && lenis.stop();
+  }));
   const closeLb = () => { lb.classList.remove('open'); lenis && lenis.start(); };
   $('#lbClose').addEventListener('click', closeLb);
   lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
@@ -280,17 +369,48 @@
       scrollTrigger: { trigger, start: 'top 80%' }, clearProps: 'transform', ...extra
     });
     cardsIn('.svc', '#servicesGrid');
-    cardsIn('.client', '#clientsGrid', { stagger: { each: .04, from: 'random' } });
+    // logo cards are dealt face-down, then flip over one by one
+    gsap.fromTo('.client-card', { rotateY: en ? -180 : 180, y: 60, opacity: 0 }, {
+      rotateY: 0, y: 0, opacity: 1, duration: 1.1, ease: 'power3.out', stagger: { each: .05, from: 'random' },
+      scrollTrigger: { trigger: '#clientsGrid', start: 'top 80%' }, clearProps: 'transform,opacity'
+    });
+    // crossed logo ribbons tilt a little more as you scroll past them
+    gsap.fromTo('.marquee-sec .marquee:first-child', { rotate: -1 }, { rotate: -4, ease: 'none', scrollTrigger: { trigger: '.marquee-sec', scrub: true } });
+    gsap.fromTo('.marquee-sec .marquee:last-child', { rotate: 1 }, { rotate: 3.5, ease: 'none', scrollTrigger: { trigger: '.marquee-sec', scrub: true } });
     cardsIn('.result', '.results-grid');
     cardsIn('.why', '.why-grid');
     cardsIn('.contact-card', '.contact-cards');
-    gsap.from('.stat', { y: 40, opacity: 0, duration: .9, stagger: .1, scrollTrigger: { trigger: '.stats', start: 'top 85%' } });
+    gsap.from('.stat', { y: 40, opacity: 0, rotateX: -40, transformOrigin: '50% 100%', duration: .9, stagger: .1, scrollTrigger: { trigger: '.stats', start: 'top 85%' } });
 
-    // work items reveal individually with clip
-    $$('.work-item').forEach(it => gsap.from(it, {
-      clipPath: 'inset(100% 0 0 0)', y: 60, duration: 1.2, ease: 'power4.out', scrollTrigger: { trigger: it, start: 'top 92%' }
-    }));
-    $$('.work-item img').forEach(img => gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: img.parentElement, scrub: true } }));
+    // projects: pinned horizontal scroll on desktop, native swipe on small screens
+    const track = $('#projTrack'), cards = $$('.proj:not(.proj-end)', track);
+    const setActive = i => {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      cards.forEach((c, k) => c.classList.toggle('active', k === i));
+      $('#projCur').textContent = String(i + 1).padStart(2, '0');
+    };
+    gsap.matchMedia().add('(min-width: 961px)', () => {
+      const dist = () => Math.max(0, track.scrollWidth - innerWidth);
+      const tween = gsap.to(track, {
+        x: () => (en ? -1 : 1) * dist(), ease: 'none',
+        scrollTrigger: {
+          trigger: '#projects', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: .8, invalidateOnRefresh: true,
+          onUpdate: s => { $('#projBar').style.transform = `scaleX(${s.progress})`; setActive(Math.round(s.progress * cards.length - .35)); }
+        }
+      });
+      return () => tween.scrollTrigger && tween.scrollTrigger.kill();
+    });
+    gsap.matchMedia().add('(max-width: 960px)', () => {
+      const vp = $('.proj-viewport');
+      const onS = () => {
+        const max = vp.scrollWidth - vp.clientWidth, p = max > 0 ? Math.abs(vp.scrollLeft) / max : 0;
+        $('#projBar').style.transform = `scaleX(${p})`;
+        setActive(Math.round(p * cards.length - .35));
+      };
+      vp.addEventListener('scroll', onS, { passive: true });
+      return () => vp.removeEventListener('scroll', onS);
+    });
+    new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { $('#projects').classList.add('proj-in'); o.disconnect(); } }, { threshold: .25 }).observe($('#projects'));
 
     // phone
     gsap.from('.phone', { rotateY: 35, rotateX: 10, y: 80, opacity: 0, duration: 1.4, ease: 'power3.out', scrollTrigger: { trigger: '.showcase', start: 'top 70%' } });

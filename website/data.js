@@ -24,23 +24,42 @@ window.SITE = {
     { n: "RA' Designs", f: "raa", s: ["تصميم", "Design"] }
   ],
 
-  work: [
-    { f: "velora3", c: "beauty", t: ["Velora Kiss — حملة إطلاق النكهات", "Velora Kiss — Flavour launch campaign"] },
-    { f: "guarobow2", c: "product", t: ["The Guarobow — الأمان إحساس", "The Guarobow — Safety is a feeling"] },
-    { f: "lappetito2", c: "food", t: ["L'Appetito — تصوير منيو", "L'Appetito — Menu photography"] },
-    { f: "agency", c: "edu", t: ["المسوق المطحون — منظومة نمو متكاملة", "El Mat7oon — A complete growth system"] },
-    { f: "wearme1", c: "fashion", t: ["Wear Me — مرونة من كل اتجاه", "Wear Me — Stretch in every direction"] },
-    { f: "velora4", c: "beauty", t: ["Velora Kiss — نكهة الشوكولاتة", "Velora Kiss — Chocolate edition"] },
-    { f: "guarobow4", c: "product", t: ["The Guarobow — تصوير منتج", "The Guarobow — Product shoot"] },
-    { f: "smartsteps", c: "edu", t: ["Smart Steps — آراء أولياء الأمور", "Smart Steps — Parent testimonials"] },
-    { f: "lappetito1", c: "food", t: ["L'Appetito — أطباق الكاترينج", "L'Appetito — Catering dishes"] },
-    { f: "velora1", c: "beauty", t: ["Velora Kiss — Spa Moment", "Velora Kiss — Spa moment"] },
-    { f: "guarobow1", c: "product", t: ["The Guarobow — حماية تفرق", "The Guarobow — Protection that matters"] },
-    { f: "wearme2", c: "fashion", t: ["Wear Me — لون يهدي يومك", "Wear Me — A colour to calm your day"] },
-    { f: "lappetito3", c: "food", t: ["L'Appetito — ركن الحلويات", "L'Appetito — Dessert corner"] },
-    { f: "velora2", c: "beauty", t: ["Velora Kiss — المجموعة الكاملة", "Velora Kiss — The full collection"] },
-    { f: "guarobow5", c: "product", t: ["The Guarobow — Lifestyle", "The Guarobow — Lifestyle"] },
-    { f: "guarobow3", c: "product", t: ["The Guarobow — Street Story", "The Guarobow — Street story"] }
+  projects: [
+    {
+      name: "Velora Kiss", logo: "velora", imgs: ["velora3", "velora4", "velora1", "velora2"],
+      sector: ["تجميل وعناية", "Beauty & care"],
+      title: ["إطلاق خط زيوت المساج بهوية فاخرة", "Launching a massage-oil line with a luxury identity"],
+      desc: ["تصوير منتجات وتصميمات حملات لكل نكهة، مع AI Agent بيرد على عملاء واتساب وداشبورد لمتابعة المحادثات.", "Product photography and campaign designs for every flavour, plus a WhatsApp AI Agent and a dashboard to follow every conversation."],
+      tags: [["تصوير منتجات", "تصميمات حملات", "AI Agent واتساب", "داشبورد"], ["Product shoot", "Campaign design", "WhatsApp AI Agent", "Dashboard"]]
+    },
+    {
+      name: "The Guarobow", logo: "guarobow", imgs: ["guarobow2", "guarobow1", "guarobow4", "guarobow5", "guarobow3"],
+      sector: ["منتجات", "Products"],
+      title: ["\u0022الأمان إحساس\u0022 — قصة براند بصرية", "“Safety is a feeling” — a visual brand story"],
+      desc: ["محتوى lifestyle بيحكي استخدام المنتج في الحياة اليومية، ومنظومة رد آلي على فيسبوك وإنستجرام وواتساب مع داشبورد للموديريتور.", "Lifestyle content showing the product in everyday life, plus auto-replies on Facebook, Instagram and WhatsApp with a moderator dashboard."],
+      tags: [["محتوى Lifestyle", "تصميمات", "AI Agent", "داشبورد"], ["Lifestyle content", "Design", "AI Agent", "Dashboard"]]
+    },
+    {
+      name: "L'Appetito", logo: "lappetito", imgs: ["lappetito2", "lappetito1", "lappetito3"],
+      sector: ["مطاعم وكاترينج", "Food & catering"],
+      title: ["أكل بيتشاف قبل ما يتاكل", "Food you can taste through the screen"],
+      desc: ["تصوير أطباق الكاترينج وركن الحلويات بإضاءة بتفتح النفس، ومحتوى سوشيال وريلز للمنيو.", "Appetising photography of catering dishes and the dessert corner, plus social content and reels for the menu."],
+      tags: [["تصوير أكل", "محتوى سوشيال", "ريلز"], ["Food photography", "Social content", "Reels"]]
+    },
+    {
+      name: "Wear Me", logo: "", imgs: ["wearme1", "wearme2"],
+      sector: ["أزياء", "Fashion"],
+      title: ["مرونة من كل اتجاه", "Stretch in every direction"],
+      desc: ["تصميمات منتجات بألوان هادية وكوبي بيركّز على الراحة، لسلسلة بوستات وإعلانات.", "Product designs in calm colours with comfort-led copy, for a run of posts and ads."],
+      tags: [["تصميمات", "كوبي رايتنج", "إعلانات"], ["Design", "Copywriting", "Ads"]]
+    },
+    {
+      name: "Smart Steps", logo: "smartsteps", imgs: ["smartsteps"],
+      sector: ["تعليم", "Education"],
+      title: ["ثقة أولياء الأمور أقوى إعلان", "Parents’ trust is the strongest ad"],
+      desc: ["تصميمات آراء أولياء الأمور، ومساعد AI على واتساب بيرد على الاستفسارات ويسجّل الطلبات.", "Parent-testimonial designs, plus a WhatsApp AI assistant that answers enquiries and records requests."],
+      tags: [["تصميمات", "AI Agent واتساب", "داشبورد"], ["Design", "WhatsApp AI Agent", "Dashboard"]]
+    }
   ],
 
   ar: {
