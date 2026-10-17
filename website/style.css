@@ -625,3 +625,14 @@ html{color-scheme:light}
   .section{padding:72px 0}
   .section-head{margin-bottom:34px}
 }
+
+/* ============ ORANGE ACCENT (light touch, El Mat7oon identity) ============ */
+:root{--accent:#FF5A1F;--accent-soft:rgba(255,90,31,.12)}
+.odo-suf{color:var(--accent)}
+.kicker::before{background:linear-gradient(90deg,var(--accent),transparent)}
+[dir="ltr"] .kicker::before{background:linear-gradient(270deg,var(--accent),transparent)}
+.scroll-progress{background:linear-gradient(90deg,var(--brand),var(--accent))}
+.o2 .arm:nth-child(2) .planet{background:linear-gradient(135deg,#FF8A52,var(--accent));box-shadow:0 10px 22px -8px rgba(255,90,31,.45)}
+.float-a i{background:var(--accent-soft);color:var(--accent)}
+.proj-num{-webkit-text-stroke:1px rgba(255,90,31,.5)}
+.proj-count b{color:var(--accent)}
