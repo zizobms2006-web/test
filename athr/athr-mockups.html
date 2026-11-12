@@ -1,0 +1,362 @@
+<title>Athr Stationery Mockups</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&family=IBM+Plex+Sans+Arabic:wght@300;400;600&family=Aref+Ruqaa:wght@400;700&display=swap">
+<style>
+/* Layout: a dark studio "desk" — one lit scene per stationery piece, spec sheet beside each scene, RTL. */
+:root{
+  --ink:#0d0c0b;          /* page + black stock */
+  --desk:#171513;         /* scene surface */
+  --desk-2:#211e1a;
+  --ivory:#f3eee3;        /* paper stock */
+  --gold:#c6a15b;         /* flat gold for text */
+  --gold-hi:#ecd398;
+  --gold-lo:#8a6a30;
+  --mute:#9a9183;         /* captions on dark */
+  --line:#2c2823;
+  --paper-ink:#1a1816;
+  --f-display:"Aref Ruqaa", "Amiri", serif;
+  --f-latin:"Josefin Sans", "Futura", "Century Gothic", sans-serif;
+  --f-body:"IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --foil:linear-gradient(115deg,#7d5f28 0%,#c9a45e 22%,#f1dca2 38%,#b58d45 55%,#e9cf90 72%,#8a6a30 100%);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ink);color:#e9e3d6;font-family:var(--f-body);font-size:15px;line-height:1.7;direction:rtl;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:1180px;margin-inline:auto}
+svg.defs{position:absolute;width:0;height:0}
+.logo{display:block;direction:ltr}
+.logo text{direction:ltr;unicode-bidi:normal}
+.logo .t{font-family:var(--f-latin);font-weight:300}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:64px 48px;border-bottom:1px solid var(--line)}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(56px,9vw,112px);line-height:1;margin:0 0 8px;
+  background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-family:var(--f-latin);letter-spacing:.32em;text-transform:uppercase;font-size:12px;color:var(--gold);direction:ltr;text-align:right}
+.hero p{color:#cfc7b8;max-width:52ch;margin:16px 0 0}
+.hero-mark{position:relative;aspect-ratio:1;max-width:420px;width:100%;justify-self:center;border-radius:4px;
+  background:radial-gradient(60% 55% at 55% 40%,#2a2620 0%,#121110 70%);display:grid;place-items:center;overflow:hidden}
+.hero-mark::after{content:"";position:absolute;inset:0;background-image:var(--grain);opacity:.35;mix-blend-mode:overlay}
+.hero-mark .logo{width:52%}
+.deliver{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;padding:0;list-style:none}
+.deliver li{border:1px solid var(--line);padding:4px 12px;font-size:13px;color:#d8cfbf;border-radius:2px}
+
+/* ---------- system strip ---------- */
+.system{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding-block:32px}
+.sw{border:1px solid var(--line);padding:14px;min-width:0}
+.sw .chip{height:56px;margin-bottom:10px;border-radius:2px}
+.sw b{display:block;font-weight:600;font-size:14px}
+.sw span{font-family:var(--f-latin);font-size:12px;color:var(--mute);letter-spacing:.08em;direction:ltr;display:block;text-align:right}
+.typo{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.typo div{border:1px solid var(--line);padding:14px;min-width:0}
+.typo .s1{font-family:var(--f-display);font-size:34px;color:var(--gold-hi);line-height:1.2}
+.typo .s2{font-family:var(--f-latin);font-size:26px;letter-spacing:.3em;color:var(--gold-hi);direction:ltr;text-align:right}
+.typo .s3{font-family:var(--f-body);font-size:20px;color:#efe8da}
+.typo small{display:block;color:var(--mute);font-size:12px;margin-top:6px}
+
+/* ---------- scenes ---------- */
+section.item{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;padding-block:48px;border-top:1px solid var(--line);align-items:start}
+.scene{position:relative;border-radius:4px;overflow:hidden;min-width:0;
+  background:radial-gradient(90% 80% at 70% 20%,#2b2722 0%,var(--desk) 55%,#0f0e0d 100%);aspect-ratio:16/11;max-width:100%}
+.scene::before{content:"";position:absolute;inset:0;background-image:var(--grain);opacity:.4;mix-blend-mode:overlay;pointer-events:none;z-index:5}
+.spec h2{font-family:var(--f-display);font-weight:700;font-size:36px;line-height:1.1;margin:0 0 4px;color:var(--gold-hi)}
+.spec .en{font-family:var(--f-latin);letter-spacing:.25em;font-size:11px;color:var(--mute);text-transform:uppercase;direction:ltr;text-align:right;margin-bottom:16px}
+.spec dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.spec dt{color:var(--mute)}
+.spec dd{margin:0;color:#e9e2d4}
+.spec .num{font-family:var(--f-latin);direction:ltr;unicode-bidi:isolate}
+.spec p{color:#bdb4a5;font-size:14px;margin:16px 0 0}
+
+/* generic sheet */
+.sheet{position:absolute;container-type:inline-size;transform-origin:center}
+.ivory{background-color:var(--ivory);background-image:var(--grain-light)}
+.black{background-color:#121110;background-image:var(--grain)}
+.shadow{box-shadow:0 1px 1px rgba(0,0,0,.4),0 18px 30px -8px rgba(0,0,0,.65),0 40px 80px -20px rgba(0,0,0,.6)}
+.foil{fill:url(#foil)}
+
+/* ---------- business cards ---------- */
+.card{aspect-ratio:85/55}
+.card.front{width:46%;right:9%;top:13%;transform:rotate(-8deg)}
+.card.back{width:46%;left:7%;top:42%;transform:rotate(6deg)}
+.card.front .logo{position:absolute;width:17%;left:50%;top:50%;transform:translate(-50%,-52%)}
+.card.back{color:var(--paper-ink)}
+.card.back .in{position:absolute;inset:9% 8%;display:flex;flex-direction:column;justify-content:space-between}
+.card.back .name{font-family:var(--f-body);font-weight:600;font-size:5.6cqw;line-height:1.2}
+.card.back .role{font-size:3.4cqw;color:#7a6338}
+.card.back .rule{height:.35cqw;width:22%;background:var(--foil)}
+.card.back .contact{font-family:var(--f-latin);font-size:3.1cqw;direction:ltr;text-align:left;line-height:1.7;color:#3a352e}
+.card.back .mk{position:absolute;left:7%;top:10%;width:9%}
+.stack-shadow{position:absolute;width:46%;aspect-ratio:85/55;right:10%;top:16%;transform:rotate(-5deg);background:#0a0909}
+
+/* ---------- letterhead ---------- */
+.a4{aspect-ratio:210/297}
+.lh{width:39%;right:12%;top:6%;transform:rotate(-3deg);color:var(--paper-ink)}
+.lh2{width:39%;left:15%;top:12%;transform:rotate(4deg)}
+.lh .hd{position:absolute;top:5%;right:8%;left:8%;display:flex;justify-content:space-between;align-items:flex-start}
+.lh .hd .logo{width:15%;order:-1}
+.lh .hd .ref{font-family:var(--f-latin);font-size:2.2cqw;color:#7d7466;direction:ltr;line-height:1.8;letter-spacing:.06em}
+.lh .body{position:absolute;top:22%;right:8%;left:8%}
+.lh .body i{display:block;height:1.1cqw;background:#d9d2c3;margin-bottom:2.4cqw;border-radius:1px}
+.lh .ft{position:absolute;bottom:4%;right:8%;left:8%;border-top:.3cqw solid transparent;border-image:var(--foil) 1;padding-top:2.4cqw;
+  display:flex;justify-content:space-between;font-family:var(--f-latin);font-size:2.1cqw;color:#5d564b;direction:ltr;letter-spacing:.05em}
+.lh .wm{position:absolute;width:52%;left:-6%;bottom:9%;opacity:.07}
+.pen{position:absolute;width:56%;height:3.2%;left:-6%;bottom:16%;transform:rotate(-28deg);border-radius:40px 6px 6px 40px;z-index:4;
+  background:linear-gradient(180deg,#3a3835 0%,#0b0b0b 45%,#000 60%,#2a2826 100%);
+  box-shadow:0 14px 18px -6px rgba(0,0,0,.7)}
+.pen::before{content:"";position:absolute;right:18%;top:0;bottom:0;width:2.2%;background:var(--foil)}
+.pen::after{content:"";position:absolute;right:-6%;top:22%;bottom:22%;width:7%;clip-path:polygon(0 0,100% 50%,0 100%);background:linear-gradient(180deg,#eee,#9a9a9a)}
+
+/* ---------- envelopes ---------- */
+.env{overflow:hidden}
+.env .flap{position:absolute;inset:0 0 auto 0;height:58%;clip-path:polygon(0 0,100% 0,50% 100%);filter:drop-shadow(0 2px 2px rgba(0,0,0,.4))}
+.env .back-seam{position:absolute;inset:0;background:linear-gradient(to top right,transparent 49.6%,rgba(0,0,0,.18) 50%,transparent 50.5%),linear-gradient(to top left,transparent 49.6%,rgba(0,0,0,.18) 50%,transparent 50.5%)}
+.c4{aspect-ratio:324/229;width:66%;right:6%;top:9%;transform:rotate(-4deg)}
+.c4 .flap{background:#1a1816;background-image:var(--grain)}
+.c4 .seal{position:absolute;width:12%;left:50%;top:44%;transform:translate(-50%,-50%);z-index:2}
+.c4 .back-seam{background:linear-gradient(to top right,transparent 49.7%,rgba(255,255,255,.05) 50%,transparent 50.4%),linear-gradient(to top left,transparent 49.7%,rgba(255,255,255,.05) 50%,transparent 50.4%)}
+.c5{aspect-ratio:229/162;width:48%;left:6%;bottom:8%;transform:rotate(5deg);color:var(--paper-ink)}
+.c5 .logo{position:absolute;width:10%;right:7%;top:12%}
+.c5 .to{position:absolute;left:10%;bottom:16%;width:38%}
+.c5 .to i{display:block;height:1.2cqw;background:#cfc7b6;margin-top:2.2cqw}
+.c5 .stripe{position:absolute;right:0;top:0;bottom:0;width:2.2%;background:var(--foil)}
+.c5 .addr{position:absolute;right:7%;bottom:12%;font-family:var(--f-latin);font-size:2.2cqw;color:#6d6558;direction:ltr;text-align:right;line-height:1.7}
+
+/* ---------- folder ---------- */
+.fold-closed{aspect-ratio:220/310;width:36%;right:7%;top:7%;transform:rotate(-5deg)}
+.fold-closed .logo{position:absolute;width:30%;left:50%;top:44%;transform:translate(-50%,-50%)}
+.fold-closed .sw-big{position:absolute;width:120%;right:-58%;bottom:-18%;opacity:.07}
+.fold-closed .tag{position:absolute;bottom:6%;left:0;right:0;text-align:center;font-family:var(--f-latin);letter-spacing:.4em;font-size:2.6cqw;color:var(--gold)}
+.fold-open{aspect-ratio:440/310;width:60%;left:4%;top:28%;transform:rotate(3deg);display:grid;grid-template-columns:1fr 1fr}
+.fold-open .panel{position:relative;background:#141311;background-image:var(--grain)}
+.fold-open .panel+.panel{box-shadow:inset 3px 0 6px -3px rgba(0,0,0,.8)}
+.fold-open .paper{position:absolute;width:86%;aspect-ratio:210/297;left:7%;top:5%;container-type:inline-size}
+.fold-open .paper .logo{position:absolute;width:13%;right:8%;top:5%}
+.fold-open .paper i{position:absolute;right:8%;left:8%;height:1.2cqw;background:#d9d2c3}
+.fold-open .pocket{position:absolute;inset:auto 0 0 0;height:44%;background:#1b1916;background-image:var(--grain);
+  clip-path:polygon(0 24%,62% 0,100% 0,100% 100%,0 100%);box-shadow:0 -2px 4px rgba(0,0,0,.5);z-index:2}
+.fold-open .slot{position:absolute;z-index:3;left:12%;bottom:10%;width:46%;aspect-ratio:85/55;container-type:inline-size}
+.fold-open .slot .logo{position:absolute;width:16%;left:50%;top:50%;transform:translate(-50%,-50%)}
+.fold-open .cut{position:absolute;z-index:4;left:9%;bottom:23%;width:12%;height:1.6%;border-radius:2px;background:#000;transform:rotate(-20deg)}
+.fold-open .cut.b{left:47%;bottom:7%;transform:rotate(-20deg)}
+.fold-open .panel.l .logo{position:absolute;width:20%;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.12}
+
+/* ---------- next ---------- */
+.next{border-top:1px solid var(--line);padding-top:40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.next h3{font-family:var(--f-display);font-size:28px;margin:0 0 10px;color:var(--gold-hi)}
+.next ol,.next ul{margin:0;padding-inline-start:20px;color:#d6cebf}
+.next li{margin-bottom:6px}
+.note{font-size:13px;color:var(--mute);margin-top:14px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;padding-block:40px 32px}
+  section.item{grid-template-columns:1fr}
+  .system{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .typo{grid-template-columns:1fr}
+  .next{grid-template-columns:1fr}
+}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+</style>
+
+<style>
+:root{
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --grain-light:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .38  0 0 0 0 .25  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+</style>
+
+<!-- Shared logo geometry (vector redraw of the supplied mark) -->
+<svg class="defs" aria-hidden="true">
+  <defs>
+    <linearGradient id="foil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7d5f28"/><stop offset=".25" stop-color="#d1ad66"/>
+      <stop offset=".42" stop-color="#f3dea6"/><stop offset=".6" stop-color="#b38b44"/>
+      <stop offset=".8" stop-color="#e8cd8e"/><stop offset="1" stop-color="#8a6a30"/>
+    </linearGradient>
+    <symbol id="mark" viewBox="62 0 140 252">
+      <path d="M70 4 Q146 53 178 138 Q126 70 70 4 Z"/>
+      <path d="M115 80 Q167 115 178 176 Q149 127 115 80 Z"/>
+      <path d="M115 114 Q178 166 197 249 Q158 180 115 114 Z"/>
+      <path d="M131 7 C116 0 101 9 111 15 C121 20 133 19 130 27 C127 33 114 31 106 28" fill="none" stroke="url(#foil)" stroke-width="5.5" stroke-linecap="round"/>
+      <rect x="74.5" y="46.5" width="11" height="11" transform="rotate(32 80 52)"/>
+      <rect x="81" y="63.5" width="11" height="11" transform="rotate(32 86.5 69)"/>
+      <rect x="86" y="80.5" width="11" height="11" transform="rotate(32 91.5 86)"/>
+    </symbol>
+    <symbol id="lockup" viewBox="0 0 200 256">
+      <use href="#mark" x="62" y="0" width="140" height="252"/>
+      <text class="t" x="2" y="216" font-size="31" letter-spacing="7">ATHR</text>
+      <text class="t" x="9" y="249" font-size="18.5" letter-spacing="4.4">A3R.ORG</text>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">ATHR · Visual identity · Stationery mockups v1</div>
+    <h1>أثر</h1>
+    <div style="font-family:var(--f-latin);letter-spacing:.5em;color:var(--gold);direction:ltr;text-align:right;font-weight:300">ATHR</div>
+    <p>موكاب مبدئي لاتجاه الهوية: ورق أسود مطفي مع شعار مطبوع بالذهب (Hot-foil) وورق عاجي للمراسلات اليومية. الغرض من الصفحة دي الموافقة على الاتجاه العام والخامات قبل ما نبدأ التصميمات النهائية بالمقاسات الحقيقية.</p>
+    <ul class="deliver">
+      <li>الشعار</li><li>ورق رسمي A4</li><li>كارت شخصي</li><li>ظرف A4 (C4)</li><li>ظرف A5 (C5)</li><li>فولدر خارجي</li>
+    </ul>
+  </div>
+  <div class="hero-mark"><svg class="logo foil" viewBox="0 0 200 256" role="img" aria-label="شعار أثر"><use href="#lockup"/></svg></div>
+</header>
+
+<div class="system">
+  <div class="sw"><div class="chip" style="background:#0d0c0b;border:1px solid var(--line)"></div><b>أسود الفحم</b><span>#0D0C0B · C70 M65 Y65 K90</span></div>
+  <div class="sw"><div class="chip" style="background:var(--foil)"></div><b>ذهب الطباعة</b><span>Gold foil · Pantone 871 C</span></div>
+  <div class="sw"><div class="chip" style="background:#c6a15b"></div><b>ذهب الشاشات</b><span>#C6A15B</span></div>
+  <div class="sw"><div class="chip" style="background:#f3eee3"></div><b>عاجي</b><span>#F3EEE3 · Ivory 120–350 gsm</span></div>
+  <div class="typo">
+    <div><div class="s1">أثـــر يبقى</div><small>عناوين عربية — خط رقعة (اقتراح)</small></div>
+    <div><div class="s2">ATHR</div><small>Latin — Josefin Sans Light, تباعد واسع</small></div>
+    <div><div class="s3">نص المراسلات والعقود</div><small>نص عربي — IBM Plex Sans Arabic</small></div>
+  </div>
+</div>
+
+<!-- Business cards -->
+<section class="item" id="card">
+  <div class="scene" aria-label="موكاب الكارت الشخصي">
+    <div class="stack-shadow shadow"></div>
+    <div class="sheet card front black shadow"><svg class="logo foil" viewBox="0 0 140 252"><use href="#mark"/></svg></div>
+    <div class="sheet card back ivory shadow">
+      <svg class="logo foil mk" style="position:absolute" viewBox="0 0 140 252"><use href="#mark"/></svg>
+      <div class="in">
+        <div><div class="name">اسم الموظف</div><div class="role">المسمى الوظيفي</div></div>
+        <div class="rule"></div>
+        <div class="contact">+20 100 000 0000<br>name@a3r.org<br>a3r.org</div>
+      </div>
+    </div>
+  </div>
+  <div class="spec">
+    <h2>الكارت الشخصي</h2><div class="en">Business card</div>
+    <dl>
+      <dt>المقاس</dt><dd class="num">85 × 55 mm</dd>
+      <dt>الوش</dt><dd>أسود، الرمز بالذهب في النص</dd>
+      <dt>الضهر</dt><dd>عاجي، الاسم والبيانات</dd>
+      <dt>الورق</dt><dd class="num">Cotton / Soft-touch 400–600 gsm</dd>
+      <dt>التشطيب</dt><dd>Hot-foil ذهب + بارز خفيف</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- Letterhead -->
+<section class="item" id="letterhead">
+  <div class="scene" aria-label="موكاب الورق الرسمي">
+    <div class="sheet a4 lh2 ivory shadow" style="filter:brightness(.9)"></div>
+    <div class="sheet a4 lh ivory shadow">
+      <div class="hd">
+        <div class="ref">REF : ———<br>DATE : —— / —— / 2026</div>
+        <svg class="logo foil" viewBox="0 0 200 256"><use href="#lockup"/></svg>
+      </div>
+      <div class="body">
+        <i style="width:40%;margin-right:auto;margin-left:0"></i><i style="width:30%"></i><br>
+        <i></i><i></i><i style="width:88%"></i><i></i><i style="width:72%"></i><br>
+        <i></i><i style="width:93%"></i><i style="width:60%"></i>
+      </div>
+      <svg class="logo foil wm" viewBox="0 0 140 252"><use href="#mark"/></svg>
+      <div class="ft"><span>a3r.org</span><span>info@a3r.org</span><span>+20 100 000 0000</span></div>
+    </div>
+    <div class="pen"></div>
+  </div>
+  <div class="spec">
+    <h2>الورق الرسمي</h2><div class="en">Letterhead A4</div>
+    <dl>
+      <dt>المقاس</dt><dd class="num">210 × 297 mm</dd>
+      <dt>الهيدر</dt><dd>الشعار يمين + رقم وتاريخ الخطاب</dd>
+      <dt>الفوتر</dt><dd>خط ذهبي رفيع + الموقع والإيميل والتليفون</dd>
+      <dt>العلامة المائية</dt><dd>الرمز بشفافية 7٪</dd>
+      <dt>الورق</dt><dd class="num">Ivory 120 gsm</dd>
+    </dl>
+    <p>هيتسلم كمان نسخة Word جاهزة للكتابة عليها.</p>
+  </div>
+</section>
+
+<!-- Envelopes -->
+<section class="item" id="envelopes">
+  <div class="scene" aria-label="موكاب الظروف">
+    <div class="sheet env c4 black shadow">
+      <div class="back-seam"></div>
+      <div class="flap"></div>
+      <svg class="logo foil seal" viewBox="0 0 200 256"><use href="#lockup"/></svg>
+    </div>
+    <div class="sheet env c5 ivory shadow">
+      <div class="stripe"></div>
+      <svg class="logo foil" viewBox="0 0 140 252"><use href="#mark"/></svg>
+      <div class="to"><i style="width:60%"></i><i></i><i style="width:80%"></i></div>
+      <div class="addr">ATHR · A3R.ORG<br>info@a3r.org</div>
+    </div>
+  </div>
+  <div class="spec">
+    <h2>الظروف</h2><div class="en">Envelopes · C4 &amp; C5</div>
+    <dl>
+      <dt>ظرف A4</dt><dd class="num">C4 · 229 × 324 mm</dd>
+      <dt>ظرف A5</dt><dd class="num">C5 · 162 × 229 mm</dd>
+      <dt>C4</dt><dd>أسود، الشعار ذهب على اللسان</dd>
+      <dt>C5</dt><dd>عاجي، شريط ذهبي على الحافة</dd>
+      <dt>الورق</dt><dd class="num">140–170 gsm</dd>
+    </dl>
+    <p>ظرف C4 بياخد ورقة A4 مفرودة، وظرف C5 بياخد A5 أو A4 متطبقة نصين.</p>
+  </div>
+</section>
+
+<!-- Folder -->
+<section class="item" id="folder">
+  <div class="scene" aria-label="موكاب الفولدر">
+    <div class="sheet fold-closed black shadow">
+      <svg class="logo foil sw-big" viewBox="0 0 140 252"><use href="#mark"/></svg>
+      <svg class="logo foil" viewBox="0 0 200 256"><use href="#lockup"/></svg>
+      <div class="tag">A3R.ORG</div>
+    </div>
+    <div class="sheet fold-open shadow">
+      <div class="panel l"><svg class="logo foil" viewBox="0 0 140 252"><use href="#mark"/></svg></div>
+      <div class="panel">
+        <div class="paper ivory">
+          <svg class="logo foil" viewBox="0 0 200 256"><use href="#lockup"/></svg>
+          <i style="top:28%"></i><i style="top:33%"></i><i style="top:38%;left:30%"></i>
+        </div>
+        <div class="pocket"></div>
+        <div class="cut"></div><div class="cut b"></div>
+        <div class="slot black"><svg class="logo foil" viewBox="0 0 140 252"><use href="#mark"/></svg></div>
+      </div>
+    </div>
+  </div>
+  <div class="spec">
+    <h2>الفولدر</h2><div class="en">Presentation folder</div>
+    <dl>
+      <dt>المقاس مقفول</dt><dd class="num">220 × 310 mm</dd>
+      <dt>من برّه</dt><dd>أسود مطفي، الشعار ذهب + الرمز كبير بشفافية</dd>
+      <dt>من جوه</dt><dd>جيب يمين بقصة مايلة + فتحة للكارت</dd>
+      <dt>الورق</dt><dd class="num">350 gsm + Soft-touch</dd>
+      <dt>التشطيب</dt><dd>Hot-foil + Spot UV للرمز الكبير</dd>
+    </dl>
+  </div>
+</section>
+
+<div class="next">
+  <div>
+    <h3>بعد الموافقة</h3>
+    <ol>
+      <li>تنضيف الشعار وتسليمه كملفات Vector (AI / SVG / PDF) بنسخ: ذهب، أسود، أبيض، رمز لوحده.</li>
+      <li>تصميم كل قطعة بمقاسها الحقيقي مع Bleed ‏3 مم وعلامات القص، جاهزة للمطبعة.</li>
+      <li>ملف Foil منفصل لكل قطعة فيها طباعة ذهب.</li>
+      <li>دليل استخدام مختصر للهوية: المسافات، الألوان، الخطوط.</li>
+    </ol>
+  </div>
+  <div>
+    <h3>محتاجين منكم</h3>
+    <ul>
+      <li>ملف الشعار الأصلي (AI أو SVG أو PDF). الرمز في الموكاب ده متعاد رسمه تقريبيًا من الصورة.</li>
+      <li>بيانات الكارت: الأسماء، المسميات، أرقام التليفون.</li>
+      <li>العنوان والإيميل الرسمي ورقم السجل لو هيتكتب في الفوتر.</li>
+      <li>تأكيد الاتجاه: أسود وذهب للخارجي وعاجي للمراسلات، ولا تفضلوا كل حاجة سودا؟</li>
+    </ul>
+    <p class="note">الأرقام والإيميلات في الموكاب أمثلة مؤقتة.</p>
+  </div>
+</div>
+
+</div>
