@@ -21,8 +21,9 @@ const NAVY = '#010427', GOLD = '#C9A45A', GOLD_ON_NAVY = '#D5AA5A', INK = '#1B1F
 const BLEED = 3;
 
 const CONTACT = {
-  phone: '094 521 1112',
-  phoneIntl: '+218 94 521 1112',
+  phone: '+218 94 521 1112',
+  phoneLocal: '094 521 1112',
+  website: '',            // fill in when the domain is confirmed; the card keeps a line for it
   addrAr: ['الدقادوستا، خلف مصحة بنغازي التخصصي', 'بنغازي – ليبيا'],
   addrEn: 'Al-Daqadosta, behind Benghazi Specialized Clinic, Benghazi – Libya',
 };
@@ -32,6 +33,7 @@ const svg = (logo, fill, style = '') =>
 
 const ICON = {
   phone: c => `<svg viewBox="0 0 24 24" class="ic"><path fill="${c}" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>`,
+  web: c => `<svg viewBox="0 0 24 24" class="ic"><path fill="${c}" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-3a15.7 15.7 0 0 0-1.4-3.6A8 8 0 0 1 18.9 8zM12 4.04c.8 1.2 1.5 2.5 1.9 3.96h-3.8c.4-1.4 1.1-2.8 1.9-3.96zM4.3 14a8.2 8.2 0 0 1 0-4h3.4a16.5 16.5 0 0 0 0 4zm.8 2h3a15.7 15.7 0 0 0 1.4 3.6A8 8 0 0 1 5.1 16zm3-8h-3a8 8 0 0 1 4.3-3.6C8.6 5.5 8.1 6.7 8.1 8zM12 19.96c-.8-1.2-1.5-2.5-1.9-3.96h3.8c-.4 1.4-1.1 2.8-1.9 3.96zM14.3 14H9.7a14.7 14.7 0 0 1 0-4h4.6a14.7 14.7 0 0 1 0 4zm.3 5.6c.6-1.1 1.1-2.3 1.4-3.6h3a8 8 0 0 1-4.4 3.6zm1.7-5.6a16.5 16.5 0 0 0 0-4h3.4a8.2 8.2 0 0 1 0 4z"/></svg>`,
   pin: c => `<svg viewBox="0 0 24 24" class="ic"><path fill="${c}" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>`,
 };
 

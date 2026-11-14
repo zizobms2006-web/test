@@ -15,11 +15,16 @@ const cardBack = () => `
   <div style="position:absolute;inset:auto 0 0 0;height:${BLEED + 4}mm;background:${NAVY}"></div>
   <div style="position:absolute;inset:auto 0 ${BLEED + 4}mm 0;height:.35mm;background:${GOLD}"></div>
   <div class="trim">
-    <div style="position:absolute;top:0;bottom:4mm;right:5.5mm;width:40mm;display:flex;flex-direction:column;justify-content:center;gap:3.2mm;font-size:6.6pt;line-height:1.45">
-      <div style="display:flex;gap:1.8mm;align-items:center">${ICON.phone(GOLD)}<span class="lat" style="font-size:7.6pt;letter-spacing:.04em;color:${NAVY}">${CONTACT.phone}</span></div>
+    <div style="position:absolute;top:0;bottom:4mm;right:5.5mm;width:41mm;display:flex;flex-direction:column;justify-content:center;gap:2.1mm;font-size:6.4pt;line-height:1.4">
+      <div class="lat" style="text-align:right;font-weight:600;font-size:11pt;letter-spacing:.03em;color:${NAVY};line-height:1.1">Dr. Khadija</div>
+      <div style="width:10mm;height:.3mm;background:${GOLD};margin:.6mm 0 1mm"></div>
+      <div style="display:flex;gap:1.8mm;align-items:center">${ICON.phone(GOLD)}<span class="lat" style="font-size:7.2pt;letter-spacing:.03em;color:${NAVY}">${CONTACT.phone}</span></div>
+      <div style="display:flex;gap:1.8mm;align-items:center">${ICON.web(GOLD)}${CONTACT.website
+        ? `<span class="lat" style="font-size:7pt;color:${NAVY}">${CONTACT.website}</span>`
+        : `<span style="width:28mm;height:.2mm;border-bottom:.25mm dotted #B9BCCB;align-self:center"></span>`}</div>
       <div style="display:flex;gap:1.8mm;align-items:flex-start">${ICON.pin(GOLD)}<span style="white-space:nowrap">الدقادوستا<br>خلف مصحة بنغازي التخصصي<br>بنغازي – ليبيا</span></div>
     </div>
-    <div style="position:absolute;top:11mm;bottom:15mm;left:43.5mm;width:.25mm;background:${GOLD};opacity:.7"></div>
+    <div style="position:absolute;top:9mm;bottom:13mm;left:43.5mm;width:.25mm;background:${GOLD};opacity:.7"></div>
     <div style="position:absolute;top:0;bottom:4mm;left:5mm;width:34mm;display:grid;place-items:center">${svg(LOCKUP, NAVY, 'width:100%;display:block')}</div>
   </div>
 </div>`;
@@ -62,7 +67,7 @@ const doc = body => `<!doctype html><html lang="ar"><head><meta charset="utf-8">
     await p.pdf({ path: path.join(OUT, file), width: `${wmm}mm`, height: `${hmm}mm`, printBackground: true,
       margin: { top: 0, right: 0, bottom: 0, left: 0 } });
   };
-  await make('ATHR_BusinessCard_85x55_bleed3mm.pdf', cardFront() + cardBack(), CW + 6, CH + 6);
+  await make('ATHR_BusinessCard_DrKhadija_85x55_bleed3mm.pdf', cardFront() + cardBack(), CW + 6, CH + 6);
   await make('ATHR_BusinessCard_Front_FOIL.pdf', cardFront(true), CW + 6, CH + 6);
   await make('ATHR_Letterhead_A4_bleed3mm.pdf', letterhead(), AW + 6, AH + 6);
 

@@ -4,7 +4,7 @@ All PDFs are vector, with **3 mm bleed** on every side. Keep text and logos insi
 
 | File | Trim size | Notes |
 |---|---|---|
-| `out/ATHR_BusinessCard_85x55_bleed3mm.pdf` | 85 × 55 mm (file 91 × 61) | Page 1 front (navy, gold emblem), page 2 back (white) |
+| `out/ATHR_BusinessCard_DrKhadija_85x55_bleed3mm.pdf` | 85 × 55 mm (file 91 × 61) | Page 1 front (navy, gold emblem), page 2 back (Dr. Khadija). The website row shows a dotted placeholder until `CONTACT.website` is set in `common.js` |
 | `out/ATHR_BusinessCard_Front_FOIL.pdf` | 85 × 55 mm (file 91 × 61) | Foil plate for the front emblem: black = gold hot-foil |
 | `out/ATHR_Letterhead_A4_bleed3mm.pdf` | 210 × 297 mm (file 216 × 303) | For the printer |
 | `out/ATHR_Letterhead_A4_Word.docx` | A4 | Typing template: the design sits behind the text |
