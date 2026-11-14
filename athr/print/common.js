@@ -6,14 +6,15 @@ const path = require('path');
 const HERE = __dirname;
 const OUT = path.join(HERE, 'out');
 fs.mkdirSync(OUT, { recursive: true });
-const LOGO = path.join(HERE, '..', 'logo', 'final');
+const LOGO = path.join(HERE, '..', 'logo', 'clean');
 
 const pathOf = f => {
   const t = fs.readFileSync(path.join(LOGO, f), 'utf8');
-  return { d: t.match(/<path d="([^"]+)"/)[1], vb: t.match(/viewBox="([^"]+)"/)[1] };
+  return { d: t.match(/<path[^>]*\sd="([^"]+)"/)[1], vb: t.match(/viewBox="([^"]+)"/)[1] };
 };
-const LOCKUP = pathOf('ATHR_Flat_Gold_Transparent.svg');
-const EMBLEM = pathOf('ATHR_Emblem_Icon_Gold.svg');
+const LOCKUP = pathOf('ATHR_Logo_Gold_Transparent.svg');
+const EMBLEM = pathOf('ATHR_Emblem_Gold_Transparent.svg');
+EMBLEM.vb = '296 6 728 564';
 // trim the lockup's empty margin (its artwork spans x 20–1219, y 20–785)
 LOCKUP.vb = '14 14 1212 778';
 
