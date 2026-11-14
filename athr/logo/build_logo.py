@@ -1,148 +1,173 @@
 """Builds the Athr (أثر) logo as outlined SVG files.
 
-Run:  python3 build_logo.py <path-to-JosefinSans-Light.ttf>
+The geometry is traced from the approved foil mockup photo (where the paper is
+tilted ~30.5°) and then rotated upright, so the lettering sits level.
+
+Run:  python3 build_logo.py <JosefinSans-Regular.ttf> [--overlay out.svg]
 All shapes are outlines (no live text, no strokes), so files print and scale cleanly.
 """
 import math, sys, os
 from fontTools.ttLib import TTFont
 from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
+from fontTools.pens.boundsPen import BoundsPen
 
 OUT = os.path.dirname(os.path.abspath(__file__))
 FONT = sys.argv[1]
+TILT = 30.5                      # paper tilt in the reference photo, degrees
 
-# ---------------------------------------------------------------- geometry
+# ------------------------------------------------------------------ helpers
 def bez(p0, p1, p2, p3, t):
     u = 1 - t
     return (u**3*p0[0] + 3*u*u*t*p1[0] + 3*u*t*t*p2[0] + t**3*p3[0],
             u**3*p0[1] + 3*u*u*t*p1[1] + 3*u*t*t*p2[1] + t**3*p3[1])
 
-def sample(segs, n=90):
+def blade(segs, wfn, n=120, round_head=False):
+    """Reed-pen stroke: centreline (cubic segments) + width profile -> outline points."""
     pts = []
     for i, s in enumerate(segs):
         for k in range(n + 1):
-            if i and k == 0:
+            if i and not k:
                 continue
             pts.append(bez(*s, k / n))
-    return pts
-
-def stroke(segs, width_fn, n=90, cap_round=True):
-    """Calligraphic (qalam) stroke: centreline + width profile -> closed outline."""
-    pts = sample(segs, n)
-    # arc-length param
     L = [0.0]
     for a, b in zip(pts, pts[1:]):
         L.append(L[-1] + math.dist(a, b))
-    tot = L[-1]
     left, right = [], []
     for i, p in enumerate(pts):
-        a = pts[max(i - 1, 0)]; b = pts[min(i + 1, len(pts) - 1)]
-        dx, dy = b[0] - a[0], b[1] - a[1]
-        d = math.hypot(dx, dy) or 1
-        nx, ny = -dy / d, dx / d
-        w = width_fn(L[i] / tot) / 2
+        a, b = pts[max(i - 1, 0)], pts[min(i + 1, len(pts) - 1)]
+        d = math.dist(a, b) or 1
+        nx, ny = -(b[1] - a[1]) / d, (b[0] - a[0]) / d
+        w = wfn(L[i] / L[-1]) / 2
         left.append((p[0] + nx * w, p[1] + ny * w))
         right.append((p[0] - nx * w, p[1] - ny * w))
     poly = left + right[::-1]
-    return "M" + " L".join(f"{x:.2f} {y:.2f}" for x, y in poly) + " Z"
+    if round_head:                       # semicircular cap at the start
+        p0, w0 = pts[0], wfn(0) / 2
+        a0 = math.atan2(left[0][1] - p0[1], left[0][0] - p0[0])
+        cap = [(p0[0] + w0 * math.cos(a0 + math.pi * k / 16), p0[1] + w0 * math.sin(a0 + math.pi * k / 16))
+               for k in range(1, 16)]
+        poly = poly + cap
+    return poly
 
-def swash(W, head=0.18, start=0.28, tip=0.0):
-    """Width rises fast from a blunt head and tapers long to a fine tip."""
-    def f(t):
-        rise = start + (1 - start) * math.sin(min(1, t / head) * math.pi / 2)
-        fall = 1 if t <= head else ((1 - t) / (1 - head)) ** 1.3
-        return max(W * rise * fall, tip)
-    return f
+def profile(W, peak, head=0.0, **_):
+    """Smooth belly: sin(pi * u^k), u offset so the head can start blunt; max at t = peak."""
+    off = head
+    k = math.log(.5) / math.log(off + (1 - off) * peak)
+    return lambda t: W * math.sin(math.pi * (off + (1 - off) * t) ** k)
 
-def diamond(cx, cy, s, ang):
-    r = s / math.sqrt(2)
-    pts = [(cx + r * math.cos(math.radians(ang + k * 90)), cy + r * math.sin(math.radians(ang + k * 90))) for k in range(4)]
-    return "M" + " L".join(f"{x:.2f} {y:.2f}" for x, y in pts) + " Z"
+def square(cx, cy, s):
+    h = s / 2
+    return [(cx - h, cy - h), (cx + h, cy - h), (cx + h, cy + h), (cx - h, cy + h)]
 
-def mark_paths():
+# ------------------------------------------------------------------ the mark, in photo coordinates
+def mark_polys():
     P = []
-    # 1 — alef: the long upper swash
-    P.append(stroke([((70, 3), (112, 30), (156, 76), (180, 140))], swash(19, head=.2, start=.4)))
-    # 2 — the middle swash (body of ث)
-    P.append(stroke([((114, 80), (140, 100), (168, 130), (180, 178))], swash(16.5, head=.22, start=.5)))
-    # 3 — the long lower swash (ر) sweeping to the base
-    P.append(stroke([((114, 113), (148, 140), (184, 186), (198, 250))], swash(19.5, head=.2, start=.5)))
-    # hamza (ء) above the alef
-    hz = [((133, 9), (124, 1), (106, 4), (110, 13)),
-          ((110, 13), (114, 20), (134, 17), (131, 26)),
-          ((131, 26), (129, 31), (116, 31), (106, 28))]
-    P.append(stroke(hz, lambda t: 1.6 + 4.4 * math.sin(min(t * 1.15, 1) * math.pi) ** .7, n=40))
-    # three dots of ث, set as stacked rhombi like reed-pen dots
-    for cx, cy in ((80.5, 52), (86.5, 69), (92, 86)):
-        P.append(diamond(cx, cy, 11.2, 32 + 45))
+    # 1 — upper blade: hairline point at the left, full belly, fine tip
+    P.append(blade([((42, 104), (180, 150), (390, 217), (472, 304))], profile(42, .56)))
+    # 2 — middle blade, blunt rounded head
+    P.append(blade([((254, 247), (330, 263), (452, 307), (518, 390))], profile(38, .26, head=.08)))
+    # 3 — lower blade, the longest sweep
+    P.append(blade([((294, 324), (392, 344), (562, 400), (642, 528))], profile(38, .26, head=.08)))
+    # hairline: the pen's fine exit stroke running past the dots
+    P.append(blade([((96, 150), (150, 212), (205, 276), (262, 334))], lambda t: 0.6 + 2.2 * math.sin(math.pi * t) ** .5, n=60))
+    # hamza, lifted clear of the upper blade
+    up = -30
+    hz = [((186, 44 + up), (165, 40 + up), (140, 60 + up), (160, 78 + up)),
+          ((160, 78 + up), (176, 90 + up), (214, 88 + up), (200, 108 + up)),
+          ((200, 108 + up), (192, 118 + up), (178, 120 + up), (162, 118 + up))]
+    P.append(blade(hz, lambda t: 3.2 + 16 * math.sin(math.pi * min(1, t * 1.05)) ** .75, n=50))
     return P
 
-# ---------------------------------------------------------------- lettering
+def dots():
+    """Three dots of ث, set upright: equal squares stepping down corner to corner."""
+    s = 27
+    cx, cy = rot((160, 241))
+    return [square(cx + (i - 1) * s, cy + (i - 1) * s, s) for i in range(3)]
+
+# ------------------------------------------------------------------ lettering
 font = TTFont(FONT)
 gs = font.getGlyphSet(); cmap = font.getBestCmap(); hmtx = font["hmtx"]
 CAP = font["OS/2"].sCapHeight
 
-def word(text, x, baseline, cap_h, track):
-    """Outlines `text`; 'A' is drawn as a bar-less Λ (V rotated 180°) to echo the mark's open forms."""
+def word(text, cap_h, track):
+    """Returns (list of (glyph, x-offset in font units scaled)), width, scale."""
     s = cap_h / CAP
-    out = []
+    x, items = 0.0, []
     for ch in text:
-        g = cmap[ord("V") if ch == "A" else ord(ch)]
-        adv = hmtx[g][0]
+        g = cmap[ord(ch)]
+        items.append((g, x))
+        x += hmtx[g][0] * s + track
+    return items, x - track, s
+
+def word_svg(text, cap_h, track, bx, by):
+    items, width, s = word(text, cap_h, track)
+    out, bp = [], BoundsPen(gs)
+    for g, x in items:
         pen = SVGPathPen(gs)
-        if ch == "A":   # flip V both ways -> Λ, keeping the same advance
-            t = (-s, 0, 0, s, x + adv * s, baseline - CAP * s)
-        else:
-            t = (s, 0, 0, -s, x, baseline)
-        gs[g].draw(TransformPen(pen, t))
+        t = (s, 0, 0, -s, bx + x, by)
+        gs[g].draw(TransformPen(pen, t)); gs[g].draw(TransformPen(bp, t))
         out.append(pen.getCommands())
-        x += adv * s + track
-    return out, x - track
+    return out, bp.bounds, width
 
-# ---------------------------------------------------------------- compositions
-MARK = mark_paths()
+# ------------------------------------------------------------------ rotate upright
+th = math.radians(TILT)
+def rot(p):
+    x, y = p
+    return (x * math.cos(th) - y * math.sin(th), x * math.sin(th) + y * math.cos(th))
 
-def svg(w, h, body, vb=None):
-    vb = vb or f"0 0 {w} {h}"
-    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb}" width="{w*4:.0f}" height="{h*4:.0f}">\n{body}\n</svg>\n'
+def poly_d(poly):
+    return "M" + " L".join(f"{x:.2f} {y:.2f}" for x, y in poly) + " Z"
 
-def group(paths, fill, dx=0, dy=0, sc=1):
-    tr = f' transform="translate({dx} {dy}) scale({sc})"' if (dx or dy or sc != 1) else ""
-    return f'<g fill="{fill}"{tr}>' + "".join(f'<path d="{d}"/>' for d in paths) + "</g>"
+polys_photo = mark_polys()
+polys = [[rot(p) for p in poly] for poly in polys_photo] + dots()
 
-GRAD = ('<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">'
+# Lettering: baselines traced in the photo, then rotated
+ATHR_START, A3R_START = rot((140, 700)), rot((198, 763))
+t1, b1, w1 = word_svg("ATHR", 76, 22, *ATHR_START)
+t2, b2, w2 = word_svg("A3R.ORG", 48, 12.5, *A3R_START)
+
+def bounds(polys, extra=()):
+    xs = [p[0] for poly in polys for p in poly]; ys = [p[1] for poly in polys for p in poly]
+    for b in extra:
+        xs += [b[0], b[2]]; ys += [b[1], b[3]]
+    return min(xs), min(ys), max(xs), max(ys)
+
+# ------------------------------------------------------------------ output
+GRAD = ('<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">'
         '<stop offset="0" stop-color="#8A6A30"/><stop offset=".3" stop-color="#D3AF68"/>'
         '<stop offset=".5" stop-color="#F0DBA2"/><stop offset=".72" stop-color="#B8904A"/>'
         '<stop offset="1" stop-color="#8A6A30"/></linearGradient></defs>')
-
 COLORS = {"gold": "#C6A15B", "gold-foil": "url(#g)", "black": "#0D0C0B", "white": "#FFFFFF"}
 
-# vertical lockup (as the original sketch: lettering under-left, mark sweeping right)
-t1, e1 = word("ATHR", 3, 219, 25, 8.5)
-t2, e2 = word("A3R.ORG", 5, 249, 14.5, 5.2)
-VERT = (MARK, t1 + t2)
+def svg(box, body, pad=8, px=4):
+    x0, y0, x1, y1 = box
+    x0 -= pad; y0 -= pad; w = x1 - x0 + pad; h = y1 - y0 + pad
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{x0:.1f} {y0:.1f} {w:.1f} {h:.1f}" '
+            f'width="{w*px/4:.0f}" height="{h*px/4:.0f}">\n{body}\n</svg>\n')
 
-# horizontal lockup: mark left, lettering right
-h1, he1 = word("ATHR", 0, 0, 30, 12)
-h2, he2 = word("A3R.ORG", 1, 0, 15.5, 7.4)
+def g(paths, fill, tr=""):
+    tr = f' transform="{tr}"' if tr else ""
+    return f'<g fill="{fill}"{tr}>' + "".join(f'<path d="{d}"/>' for d in paths) + "</g>"
 
-def write(name, content):
+def write(name, s):
     with open(os.path.join(OUT, name), "w") as f:
-        f.write(content)
+        f.write(s)
+
+MARK_D = [poly_d(p) for p in polys]
+VBOX = bounds(polys, (b1, b2))
+MBOX = bounds(polys)
+
+
 
 for cname, fill in COLORS.items():
-    defs = GRAD if fill.startswith("url") else ""
-    write(f"athr-logo-vertical-{cname}.svg",
-          svg(212, 258, defs + group(MARK, fill) + group(t1 + t2, fill), "0 0 212 258"))
-    write(f"athr-mark-{cname}.svg",
-          svg(140, 256, defs + group(MARK, fill), "64 0 140 256"))
-    # horizontal: mark 0..140 scaled .62 -> ~87 wide, 158 tall; text block centred vertically
-    sc = .62
-    mw = 140 * sc; mh = 256 * sc
-    tx = mw + 26
-    body = (group(MARK, fill, dx=-64 * sc, dy=0, sc=sc) +
-            group(h1, fill, dx=tx, dy=mh / 2 + 4) + group(h2, fill, dx=tx + 1, dy=mh / 2 + 34))
-    write(f"athr-logo-horizontal-{cname}.svg",
-          svg(round(tx + max(he1, he2) + 4), round(mh), defs + body))
+    d = GRAD if fill.startswith("url") else ""
+    write(f"athr-logo-vertical-{cname}.svg", svg(VBOX, d + g(MARK_D + t1 + t2, fill), pad=14))
+    write(f"athr-mark-{cname}.svg", svg(MBOX, d + g(MARK_D, fill), pad=10))
 
-print("ok", e1, e2, he1, he2)
+if "--overlay" in sys.argv:   # unrotated, for checking against the photo
+    inv = f"rotate({-TILT})"
+    body = g([poly_d(p) for p in polys_photo], "#ff2d55") + g(t1 + t2, "#ff2d55", inv)
+    write(sys.argv[sys.argv.index("--overlay") + 1],
+          f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 820" width="700" height="820">{body}</svg>')
+print("ATHR", w1, "A3R", w2)
