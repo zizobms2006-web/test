@@ -1,15 +1,14 @@
-# Athr (أثر) logo files
+# ATHR Marketing Agency — logo files
 
-Source: `source/athr-logo-final.webp` (the approved logo, supplied by the client).
-All SVGs are outlined vectors traced from it, safe to send to print.
+`final/` holds the approved vector logo supplied by the client (outlined SVG, print-safe):
 
 | File | Use |
 |---|---|
-| `athr-logo-*` | The logo: mark with ATHR / A3R.ORG underneath |
-| `athr-mark-*` | Mark alone: card fronts, folder, social avatars, favicon |
+| `ATHR_Flat_Gold_Transparent.svg` | Main logo, gold #C9A45A, no background |
+| `ATHR_Gold_on_Navy.svg` | Gold on navy (logo's own navy #07132F) |
+| `ATHR_Navy_on_White.svg` | Navy on white |
+| `ATHR_White_on_Black.svg` | White on black |
+| `ATHR_Emblem_Icon.svg` | Mark alone: card fronts, folder, avatars, favicon |
 
-Colours: `gold` #E2B24E (single flat colour), `gold-gradient` (screens only; print uses gold foil), `black` #0D0C0B, `white`.
-`png/` holds PNGs with transparent backgrounds, including `athr-logo-original-gold.png` (the supplied artwork with its gradient, trimmed).
-
-Rebuild: `python3 vectorize.py` (needs `pillow numpy opencv-python-headless potracer`).
-`old/` keeps the earlier trace script for reference.
+Identity background colour (chosen with the client): royal navy #010427.
+`old/` keeps earlier logo explorations for reference only.
