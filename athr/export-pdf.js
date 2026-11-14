@@ -4,9 +4,10 @@ const {chromium}=require('playwright');const fs=require('fs');
 let h=fs.readFileSync('/home/user/test/athr/athr-mockups.html','utf8');
 const css=`<style>
 @page{size:1280px 860px;margin:0}
-html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#0d0c0b}
+html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#010427}
 body{padding:0 48px!important;margin:0!important}
 .hero,.system,.variants,section.item{break-after:page}
+section.item:last-of-type{break-after:auto}
 .hero,.system,.variants,section.item,.next{box-sizing:border-box;height:858px;overflow:hidden;display:grid;align-content:center}
 .hero h1{background:none!important;color:#f6d27a!important;-webkit-text-fill-color:#f6d27a}
 .hero{border:0;padding-block:40px}
