@@ -8,7 +8,7 @@
 | `ATHR_Gold_on_Navy.svg` | Gold on navy (logo's own navy #07132F) |
 | `ATHR_Navy_on_White.svg` | Navy on white |
 | `ATHR_White_on_Black.svg` | White on black |
-| `ATHR_Emblem_Icon.svg` | Mark alone: card fronts, folder, avatars, favicon |
+| `ATHR_Emblem_Icon_*.svg` | Mark alone (Gold, Gold on Navy, Navy, White): card fronts, folder, avatars, favicon. Rebuilt from the main logo's own paths so the swoosh is complete; the supplied emblem file had its bottom cut off and is kept in `old/`. |
 
 Identity background colour (chosen with the client): royal navy #010427.
 `old/` keeps earlier logo explorations for reference only.
