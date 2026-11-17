@@ -2,26 +2,42 @@
    Shared lists use [arabic, english] pairs; services/faq/demoChat have one block per language. */
 window.SITE = {
   clients: [
-    { n: "Velora Kiss", f: "velora", s: ["تجميل وعناية", "Beauty & care"] },
-    { n: "The Guarobow", f: "guarobow", s: ["منتجات", "Products"] },
-    { n: "GANGA", f: "ganga", s: ["أزياء", "Fashion"] },
-    { n: "Gena Store", f: "gena", s: ["تجارة إلكترونية", "E-commerce"] },
-    { n: "Smart Steps", f: "smartsteps", s: ["تعليم", "Education"] },
-    { n: "L'Appetito", f: "lappetito", s: ["مطاعم", "Restaurants"] },
-    { n: "Wataneya Group", f: "wataneya", s: ["مصانع", "Manufacturing"] },
-    { n: "Edu Power", f: "edupower", s: ["تعليم", "Education"] },
-    { n: "El-Nada Real Estate", f: "elnada", s: ["عقارات", "Real estate"] },
-    { n: ["شركة الرحمن", "El Rahman"], f: "elrahman", s: ["مقاولات", "Construction"] },
-    { n: "Enwan Construction", f: "enwan", s: ["مقاولات", "Construction"] },
-    { n: "All In One", f: "allinone", s: ["أثاث", "Furniture"] },
-    { n: "Awany", f: "awany", s: ["منتجات منزلية", "Home goods"] },
-    { n: "Horus Handmade", f: "horus", s: ["هاند ميد", "Handmade"] },
-    { n: "Mubarmij", f: "mubarmij", s: ["تكنولوجيا", "Technology"] },
-    { n: "Afiedah Tours", f: "afiedah", s: ["سياحة", "Tourism"] },
-    { n: "Yum Yum", f: "yumyum", s: ["مطاعم", "Restaurants"] },
-    { n: "Lami Brand", f: "lami", s: ["أزياء", "Fashion"] },
-    { n: "D Store", f: "dstore", s: ["أزياء", "Fashion"] },
-    { n: "RA' Designs", f: "raa", s: ["تصميم", "Design"] }
+    { n: "Velora Kiss", f: "velora", i: "beauty", s: ["تجميل وعناية", "Beauty & care"] },
+    { n: "The Guarobow", f: "guarobow", i: "home", s: ["منتجات", "Products"] },
+    { n: "GANGA", f: "ganga", i: "fashion", s: ["أزياء", "Fashion"] },
+    { n: "Gena Store", f: "gena", i: "ecommerce", s: ["تجارة إلكترونية", "E-commerce"] },
+    { n: "Smart Steps", f: "smartsteps", i: "education", s: ["تعليم", "Education"] },
+    { n: "L'Appetito", f: "lappetito", i: "food", s: ["مطاعم", "Restaurants"] },
+    { n: "Wataneya Group", f: "wataneya", i: "industry", s: ["مصانع", "Manufacturing"] },
+    { n: "Edu Power", f: "edupower", i: "training", s: ["تعليم", "Education"] },
+    { n: "El-Nada Real Estate", f: "elnada", i: "realestate", s: ["عقارات", "Real estate"] },
+    { n: ["شركة الرحمن", "El Rahman"], f: "elrahman", i: "realestate", s: ["مقاولات", "Construction"] },
+    { n: "Enwan Construction", f: "enwan", i: "realestate", s: ["مقاولات", "Construction"] },
+    { n: "All In One", f: "allinone", i: "furniture", s: ["أثاث", "Furniture"] },
+    { n: "Awany", f: "awany", i: "home", s: ["منتجات منزلية", "Home goods"] },
+    { n: "Horus Handmade", f: "horus", i: "furniture", s: ["هاند ميد", "Handmade"] },
+    { n: "Mubarmij", f: "mubarmij", i: "tech", s: ["تكنولوجيا", "Technology"] },
+    { n: "Afiedah Tours", f: "afiedah", i: "tourism", s: ["سياحة", "Tourism"] },
+    { n: "Yum Yum", f: "yumyum", i: "food", s: ["مطاعم", "Restaurants"] },
+    { n: "Lami Brand", f: "lami", i: "fashion", s: ["أزياء", "Fashion"] },
+    { n: "D Store", f: "dstore", i: "fashion", s: ["أزياء", "Fashion"] },
+    { n: "RA' Designs", f: "raa", i: "tech", s: ["تصميم", "Design"] }
+  ],
+
+  // industries we work in (clients link to one with `i`); the first eight lead the grid
+  industries: [
+    { k: "beauty", icon: "fa-spray-can-sparkles", n: ["مستحضرات التجميل والعناية", "Cosmetics & personal care"] },
+    { k: "furniture", icon: "fa-couch", n: ["الأثاث والديكور", "Furniture & décor"] },
+    { k: "tourism", icon: "fa-plane-departure", n: ["السياحة والسفر", "Tourism & travel"] },
+    { k: "education", icon: "fa-graduation-cap", n: ["التعليم", "Education"] },
+    { k: "industry", icon: "fa-industry", n: ["الصناعة والمصانع", "Manufacturing"] },
+    { k: "training", icon: "fa-chalkboard-user", n: ["التدريب والكورسات", "Training & courses"] },
+    { k: "home", icon: "fa-blender", n: ["الأدوات المنزلية", "Home goods"] },
+    { k: "food", icon: "fa-utensils", n: ["المطاعم والأكل", "Restaurants & food"] },
+    { k: "fashion", icon: "fa-shirt", n: ["الأزياء والملابس", "Fashion & apparel"] },
+    { k: "realestate", icon: "fa-building", n: ["العقارات والمقاولات", "Real estate & construction"] },
+    { k: "ecommerce", icon: "fa-cart-shopping", n: ["التجارة الإلكترونية", "E-commerce"] },
+    { k: "tech", icon: "fa-microchip", n: ["التكنولوجيا والتصميم", "Technology & design"] }
   ],
 
   projects: [

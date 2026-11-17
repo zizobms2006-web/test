@@ -7,17 +7,17 @@ Home (`index.html`), About (`about.html`), Services (`services.html`), Projects 
 Project detail (`project.html?id=<project id>`), Clients (`clients.html`), Contact (`contact.html`).
 
 ## Editing
-- **Content** (services, clients, projects, FAQ, in Arabic and English): `data.js`. A new project only needs an entry in `projects` with a unique `id`, and its images in `assets/work/`; it then appears on the Projects page and gets its own page at `project.html?id=<id>`.
+- **Content** (services, clients, industries, projects, FAQ, in Arabic and English): `data.js`. Each client's `i` names its industry; the industries grid (home) and the clients-page filter are built from `industries`. A new project only needs an entry in `projects` with a unique `id`, and its images in `assets/work/`; it then appears on the Projects page and gets its own page at `project.html?id=<id>`.
 - **Page text / layout**: edit `_src/pages/<page>.html` (or the shared `_src/layout.html`, `_src/partials/`), then run `python3 _src/build.py` to regenerate the `.html` files. Do not edit the generated `.html` files directly.
 - **English text** for anything marked `data-i18n`: `i18n.js`.
-- Styles: `style.css` · behaviour and animations: `main.js` (page-aware) · 3D hero: `three-scene.js` (home only).
+- Styles: `style.css` · behaviour and animations: `main.js` (page-aware) · 3D hero: `three-scene.js` (home only) · floating 3D objects in page headers and the industries section: `objects3d.js` (one preset per page).
 
 ## Languages
 Arabic is the default. `?lang=en` opens the English version, and the EN/ع button in the nav switches between them. The visitor's choice is remembered.
 
 ## Adding a client
 1. Put the logo at `assets/clients/<name>.webp`.
-2. Add `{ n: "Name", f: "<name>", s: ["القطاع", "Sector"] }` to `clients` in `data.js`.
+2. Add `{ n: "Name", f: "<name>", i: "<industry key>", s: ["القطاع", "Sector"] }` to `clients` in `data.js`.
 
 ## Live setup
 - Served from `/var/www/site` on the Contabo VPS by Caddy (`elmat7oon-agency.com`, with `www` redirecting to it). Client dashboards stay at `/agency`, `/kmq`, `/watania`, `/smartsteps` and `/guarobow`.

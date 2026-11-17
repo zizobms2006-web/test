@@ -139,6 +139,10 @@
     'contact.areaTitle': 'Where we work',
     'contact.areaText': 'Egypt · Libya · Saudi Arabia & the Gulf — everything runs online and you send us the materials.',
 
+    'ind.kicker': 'Industries we work in',
+    'ind.title': 'We’ve grown brands across many industries',
+    'ind.lead': 'From cosmetics and furniture to tourism, education and manufacturing — we learn each market and speak to its customers in their language.',
+
     'lb.close': 'Close',
     'lb.prev': 'Previous',
     'lb.next': 'Next'

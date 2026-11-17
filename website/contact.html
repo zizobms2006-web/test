@@ -93,7 +93,7 @@ fbq('init','3561579477337173');fbq('track','PageView');
 
 <main id="top">
 <section class="page-hero">
-  <div class="ph-bg" aria-hidden="true"><span class="ph-orb a"></span><span class="ph-orb b"></span><span class="ph-ring"></span><i class="ph-icon fa-solid fa-paper-plane"></i></div>
+  <div class="ph-bg" aria-hidden="true"><span class="ph-orb a"></span><span class="ph-orb b"></span><span class="ph-ring"></span><canvas class="obj3d ph-3d" data-objects="contact"></canvas></div>
   <div class="container">
     <nav class="crumbs" aria-label="breadcrumb"><a href="index.html" data-i18n="nav.home">الرئيسية</a><i class="fa-solid fa-chevron-left flip"></i><span data-i18n="nav.contact">تواصل معنا</span></nav>
     <h1 data-i18n="ph.contact.t">خلّينا نبدأ</h1>
@@ -198,7 +198,11 @@ fbq('init','3561579477337173');fbq('track','PageView');
 <script src="i18n.js?v=dev"></script>
 <script src="data.js?v=dev"></script>
 <script src="main.js?v=dev"></script>
-
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module" src="objects3d.js?v=dev"></script>
 
 <!-- n8n chat (same webhook as the landing page) -->
 <script type="module">

@@ -93,7 +93,7 @@ fbq('init','3561579477337173');fbq('track','PageView');
 
 <main id="top">
 <section class="page-hero">
-  <div class="ph-bg" aria-hidden="true"><span class="ph-orb a"></span><span class="ph-orb b"></span><span class="ph-ring"></span><i class="ph-icon fa-solid fa-handshake"></i></div>
+  <div class="ph-bg" aria-hidden="true"><span class="ph-orb a"></span><span class="ph-orb b"></span><span class="ph-ring"></span><canvas class="obj3d ph-3d" data-objects="clients"></canvas></div>
   <div class="container">
     <nav class="crumbs" aria-label="breadcrumb"><a href="index.html" data-i18n="nav.home">الرئيسية</a><i class="fa-solid fa-chevron-left flip"></i><span data-i18n="nav.clients">عملاؤنا</span></nav>
     <h1 data-i18n="ph.clients.t">براندات اختارت تكبر معانا</h1>
@@ -108,8 +108,9 @@ fbq('init','3561579477337173');fbq('track','PageView');
 </section>
 
 <!-- CLIENTS -->
-<section class="section clients">
+<section class="section clients" id="all-clients">
   <div class="container">
+    <div class="filters" id="indFilters" role="group" data-i18n-aria="ind.kicker" aria-label="مجالات شغلنا"></div>
     <div class="clients-grid" id="clientsGrid"></div>
   </div>
 </section>
@@ -192,7 +193,11 @@ fbq('init','3561579477337173');fbq('track','PageView');
 <script src="i18n.js?v=dev"></script>
 <script src="data.js?v=dev"></script>
 <script src="main.js?v=dev"></script>
-
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module" src="objects3d.js?v=dev"></script>
 
 <!-- n8n chat (same webhook as the landing page) -->
 <script type="module">

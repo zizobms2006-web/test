@@ -56,7 +56,7 @@
   if (slot('projectsGrid')) slot('projectsGrid').innerHTML = P.map(projectCard).join('');
 
   if (slot('clientsGrid')) slot('clientsGrid').innerHTML = D.clients.map(c => { const pr = projOf(c.f); return `
-    <figure class="client tilt" data-tilt="10" tabindex="0">
+    <figure class="client tilt" data-tilt="10" tabindex="0" data-ind="${c.i}">
       <div class="client-card">
         <div class="client-face client-front"><img src="assets/clients/${c.f}.webp" alt="${L(c.n)}" loading="lazy" width="360" height="360"><span class="shine"></span></div>
         <div class="client-face client-back">
@@ -81,6 +81,24 @@
     slot('marqueeA').innerHTML = rowA + rowA + rowA;
     slot('marqueeB').innerHTML = rowB + rowB + rowB;
   }
+
+  // industries: cards on the home page open the clients page filtered to that industry
+  const clientsIn = k => D.clients.filter(c => c.i === k);
+  const countLabel = n => en ? `${n} client${n > 1 ? 's' : ''}` : `${n} ${n === 1 ? 'عميل' : n === 2 ? 'عميلين' : 'عملاء'}`;
+  if (slot('indGrid')) slot('indGrid').innerHTML = D.industries.map(x => {
+    const cs = clientsIn(x.k);
+    return `
+    <a class="ind tilt" data-tilt="8" href="clients.html?ind=${x.k}#all-clients">
+      <span class="ind-icon"><i class="fa-solid ${x.icon}"></i></span>
+      <b>${L(x.n)}</b>
+      <span class="ind-foot">
+        <span class="ind-logos">${cs.slice(0, 3).map(c => `<img src="assets/clients/${c.f}.webp" alt="" loading="lazy">`).join('')}</span>
+        <small>${countLabel(cs.length)}</small>
+      </span>
+    </a>`;
+  }).join('');
+  if (slot('indFilters')) slot('indFilters').innerHTML = `<button class="chip active" data-f="all">${en ? 'All' : 'الكل'}</button>` +
+    D.industries.filter(x => clientsIn(x.k).length).map(x => `<button class="chip" data-f="${x.k}"><i class="fa-solid ${x.icon}"></i> ${L(x.n)}</button>`).join('');
 
   if (slot('faqList')) slot('faqList').innerHTML = D.faq.map((f, i) => `
     <div class="faq-item${i === 0 ? ' open' : ''}">
@@ -107,6 +125,9 @@
     slot('pdMore').innerHTML = P.filter(x => x !== p).slice(0, 3).map(projectCard).join('');
     document.title = `${p.name} — ${L(p.title)} | ${en ? 'El Mat7oon Agency' : 'المسوق المطحون'}`;
   }
+
+  $$('.svc-icon, .tile-icon, .ind-icon, .why > i, .contact-card > i, .ce-card > i, .portrait-card > i')
+    .forEach((el, i) => el.style.setProperty('--d', `${-(i % 7) * .7}s`));
 
   /* ================= Page-to-page transition ================= */
   const leave = href => {
@@ -325,6 +346,22 @@
     $$('#projectsGrid .pcard').forEach(c => c.classList.toggle('hidden', c.dataset.c !== wantC));
   }
 
+  // clients page: filter by industry (chips, or ?ind=<key> from the home page)
+  const filterClients = f => {
+    $$('#indFilters .chip').forEach(c => c.classList.toggle('active', c.dataset.f === f));
+    const cards = $$('#clientsGrid .client');
+    cards.forEach(c => c.classList.toggle('hidden', f !== 'all' && c.dataset.ind !== f));
+    if (hasGsap && !reduced) gsap.fromTo(cards.filter(c => !c.classList.contains('hidden')), { opacity: 0, y: 24, scale: .94 }, { opacity: 1, y: 0, scale: 1, duration: .55, stagger: .05, ease: 'power3.out', clearProps: 'transform' });
+  };
+  $$('#indFilters .chip').forEach(ch => ch.addEventListener('click', () => {
+    filterClients(ch.dataset.f);
+    const q = new URLSearchParams(location.search);
+    if (ch.dataset.f === 'all') q.delete('ind'); else q.set('ind', ch.dataset.f);
+    history.replaceState(null, '', (q.toString() ? '?' + q : location.pathname) + location.hash);
+  }));
+  const wantInd = new URLSearchParams(location.search).get('ind');
+  if (wantInd && $(`#indFilters .chip[data-f="${CSS.escape(wantInd)}"]`)) filterClients(wantInd);
+
   /* ================= Lightbox (project gallery) ================= */
   const lb = $('#lightbox'), lbImg = $('#lbImg'), lbCap = $('#lbCap');
   let gal = [], cur = 0;
@@ -445,6 +482,7 @@
     });
     cardsIn('.svc', '#servicesGrid');
     cardsIn('.tile', '#serviceTiles', { stagger: .05 });
+    cardsIn('.ind', '#indGrid', { stagger: .05 });
     cardsIn('#featuredProjects .pcard', '#featuredProjects');
     cardsIn('#projectsGrid .pcard', '#projectsGrid');
     cardsIn('#pdMore .pcard', '#pdMore');

@@ -35,7 +35,8 @@ PAGES = {
                      desc_en='Reach El Mat7oon Agency on WhatsApp, phone or email, or book a call.'),
 }
 
-# internal page headers: (icon, kicker, title, lead) in Arabic; English via i18n keys ph.<page>.k/t/l
+# internal page headers: (icon, kicker, title, lead) in Arabic; English via i18n keys ph.<page>.k/t/l.
+# The 3D objects beside each header come from the preset of the same name in objects3d.js.
 HEROES = {
     'about':    ('fa-users', 'مين إحنا', 'فريق كامل بيشتغل على نمو مشروعك', 'وكالة تسويق متكاملة بقيادة د. محمد حسين وخبرة أكتر من 26 سنة في مصر والخليج.'),
     'services': ('fa-layer-group', 'خدماتنا', 'كل اللي مشروعك محتاجه — تحت سقف واحد', 'مش هتحتاج تتعامل مع 5 جهات. فريق واحد، خطة واحدة، وكل الأدوات بتشتغل مع بعض.'),
@@ -64,16 +65,19 @@ setTimeout(function () {
 }, 6000);
 </script>'''
 
+# Three.js on every page: the 3D objects (objects3d.js) everywhere, the hero scene (three-scene.js) on the home page only
 THREE = '''<script type="importmap">
-{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
 </script>
-<script type="module" src="three-scene.js?v=dev"></script>'''
+<script type="module" src="objects3d.js?v=dev"></script>'''
+HOME_3D = '<script type="module" src="three-scene.js?v=dev"></script>'
 
 
 def page_hero(page):
-    icon, k, t, l = HEROES[page]
+    _, k, t, l = HEROES[page]
     return f'''<section class="page-hero">
-  <div class="ph-bg" aria-hidden="true"><span class="ph-orb a"></span><span class="ph-orb b"></span><span class="ph-ring"></span><i class="ph-icon fa-solid {icon}"></i></div>
+  <div class="ph-bg" aria-hidden="true"><span class="ph-orb a"></span><span class="ph-orb b"></span><span class="ph-ring"></span><canvas class="obj3d ph-3d" data-objects="{page}"></canvas></div>
   <div class="container">
     <nav class="crumbs" aria-label="breadcrumb"><a href="index.html" data-i18n="nav.home">الرئيسية</a><i class="fa-solid fa-chevron-left flip"></i><span data-i18n="{NAV_KEY[page]}">{k}</span></nav>
     <h1 data-i18n="ph.{page}.t">{t}</h1>
@@ -94,7 +98,7 @@ def build():
             '{{DESC}}': meta['desc'], '{{DESC_EN}}': meta['desc_en'],
             '{{PAGE}}': name,
             '{{LOADER}}': LOADER if name == 'index' else '',
-            '{{EXTRA_SCRIPTS}}': THREE if name == 'index' else '',
+            '{{EXTRA_SCRIPTS}}': THREE + ('\n' + HOME_3D if name == 'index' else ''),
             '{{BODY}}': body.strip(),
         }.items():
             html = html.replace(key, val)

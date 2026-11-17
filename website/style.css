@@ -848,3 +848,96 @@ a.m-logo:hover{box-shadow:0 12px 26px -10px rgba(39,149,150,.55)}
 .clients-grid figcaption a:hover b{color:var(--brand)}
 #pdSector a{color:var(--brand-dark);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(39,149,150,.35)}
 #pdSector a:hover{color:var(--accent)}
+
+/* ===== 3D icons: bevelled, extruded tiles that float and turn; spin once on hover ===== */
+.svc-icon,.tile-icon,.ind-icon,.why>i,.contact-card>i,.ce-card>i,.portrait-card>i{
+  --z:0px;position:relative;display:grid;place-items:center;color:#fff;
+  background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.6),transparent 40%),linear-gradient(150deg,var(--brand-light),var(--brand) 52%,var(--brand-dark));
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.6),inset 0 -5px 8px rgba(6,50,55,.28),
+    0 1px 0 #20898a,0 2px 0 #1d7f80,0 3px 0 #1a7476,0 4px 0 #17696c,0 5px 0 #135e62,0 6px 0 #105459,
+    0 18px 26px -8px rgba(16,96,103,.55);
+  text-shadow:0 1px 0 #0f5a5f,0 2px 0 #0d5055,0 3px 0 #0b464b,0 6px 8px rgba(0,0,0,.28);
+  transform:perspective(420px) translateZ(var(--z)) rotateX(12deg) rotateY(-14deg);
+  animation:ico-float 5.5s ease-in-out var(--d,0s) infinite;transform-style:preserve-3d;will-change:transform}
+.svc-icon::after,.tile-icon::after,.ind-icon::after,.why>i::after,.contact-card>i::after,.ce-card>i::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 48%,transparent 60%) no-repeat;background-size:260% 100%;
+  animation:ico-shine 6s ease-in-out var(--d,0s) infinite}
+@keyframes ico-float{
+  0%,100%{transform:perspective(420px) translateZ(var(--z)) translateY(0) rotateX(14deg) rotateY(-16deg)}
+  50%{transform:perspective(420px) translateZ(var(--z)) translateY(-7px) rotateX(-8deg) rotateY(16deg)}}
+@keyframes ico-spin{
+  from{transform:perspective(420px) translateZ(var(--z)) translateY(0) rotateY(0)}
+  50%{transform:perspective(420px) translateZ(var(--z)) translateY(-12px) rotateY(200deg) scale(1.08)}
+  to{transform:perspective(420px) translateZ(var(--z)) translateY(0) rotateY(360deg)}}
+@keyframes ico-shine{0%,70%{background-position:130% 0}100%{background-position:-60% 0}}
+.svc:hover .svc-icon,.tile:hover .tile-icon,.ind:hover .ind-icon,.why:hover>i,.contact-card:hover>i,.ce-card:hover>i,.portrait-card:hover>i{
+  animation:ico-spin .95s var(--ease) both}
+.svc-icon{--z:40px}
+.why>i{width:52px;height:52px;border-radius:15px;font-size:1.2rem;margin-bottom:16px;color:#fff}
+.contact-card>i{width:62px;height:62px;border-radius:18px;font-size:1.55rem;margin-bottom:12px;color:#fff}
+.ce-card>i{width:52px;height:52px;border-radius:15px;font-size:1.2rem;color:#fff}
+.portrait-card>i{border-radius:12px;color:#fff;font-size:1rem}
+/* orange touch: the WhatsApp card and the "book a call" card */
+.contact-card:first-child>i,.ce-card:nth-child(2)>i{
+  background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.6),transparent 40%),linear-gradient(150deg,#FF9A5C,var(--accent) 55%,#D9430F);
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.6),inset 0 -5px 8px rgba(90,25,0,.25),
+    0 1px 0 #e9531c,0 2px 0 #dc4d19,0 3px 0 #cf4716,0 4px 0 #c24113,0 5px 0 #b53b10,0 6px 0 #a8350d,0 18px 26px -8px rgba(255,90,31,.5);
+  text-shadow:0 1px 0 #b23a0f,0 2px 0 #a3340c,0 3px 0 #942e0a,0 6px 8px rgba(0,0,0,.25)}
+
+/* ===== 3D objects (objects3d.js) ===== */
+.obj3d{display:block;pointer-events:none}
+.ph-3d{position:absolute;top:0;bottom:0;inset-inline-end:0;width:min(46%,620px);height:100%}
+.ph-ring{opacity:.7}
+.industries{position:relative;overflow:hidden}
+.ind-3d{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.industries .container{position:relative;z-index:1}
+
+/* ===== Industries ===== */
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;perspective:1200px}
+.ind{position:relative;display:flex;flex-direction:column;gap:14px;padding:24px 22px 20px;border-radius:var(--radius-md);
+  background:#fff;border:1px solid var(--line);color:inherit;
+  box-shadow:0 18px 40px -34px rgba(30,51,55,.45);transition:transform .5s var(--ease),border-color .4s,box-shadow .4s}
+.ind:hover{transform:translateY(-6px);border-color:rgba(39,149,150,.4);box-shadow:0 30px 50px -30px var(--brand-glow)}
+.ind-icon{width:54px;height:54px;border-radius:16px;font-size:1.3rem}
+.ind:nth-child(5n+3) .ind-icon{
+  background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.6),transparent 40%),linear-gradient(150deg,#FF9A5C,var(--accent) 55%,#D9430F);
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.6),inset 0 -5px 8px rgba(90,25,0,.25),
+    0 1px 0 #e9531c,0 2px 0 #dc4d19,0 3px 0 #cf4716,0 4px 0 #c24113,0 5px 0 #b53b10,0 6px 0 #a8350d,0 18px 26px -8px rgba(255,90,31,.5);
+  text-shadow:0 1px 0 #b23a0f,0 2px 0 #a3340c,0 3px 0 #942e0a,0 6px 8px rgba(0,0,0,.25)}
+.ind>b{font-family:var(--font-display);font-size:1.05rem;line-height:1.35}
+.ind-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}
+.ind-logos{display:flex}
+.ind-logos img{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#fff;border:2px solid #fff;box-shadow:0 4px 10px -4px rgba(30,51,55,.35)}
+.ind-logos img+img{margin-inline-start:-9px}
+.ind small{color:var(--ink-faint);font-size:.8rem;white-space:nowrap}
+.client.hidden{display:none}
+#indFilters .chip i{font-size:.85em;margin-inline-end:4px;opacity:.8}
+
+@media (max-width:1100px){ .ind-grid{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:960px){
+  .ph-3d{width:62%;opacity:.55}
+  .ind-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .ph-3d{width:70%;height:60%;top:auto;bottom:0;opacity:.45}
+  .ind{padding:18px 16px 16px;gap:12px}
+  .ind-icon{width:46px;height:46px;font-size:1.1rem;border-radius:14px}
+  .ind>b{font-size:.95rem}
+  .contact-card>i{width:54px;height:54px;font-size:1.35rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .svc-icon,.tile-icon,.ind-icon,.why>i,.contact-card>i,.ce-card>i,.portrait-card>i,
+  .svc-icon::after,.tile-icon::after,.ind-icon::after,.why>i::after,.contact-card>i::after,.ce-card>i::after{animation:none!important}
+}
+@media (max-width:640px){
+  /* the 3D objects get their own strip under the heading instead of covering the text */
+  .page-hero{padding-bottom:210px}
+  .ph-3d{width:100%;height:220px;top:auto;bottom:0;opacity:1}
+  /* industry chips: one row you swipe sideways */
+  #indFilters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:2px 16px 6px}
+  #indFilters::-webkit-scrollbar{display:none}
+  #indFilters .chip{white-space:nowrap;flex:none}
+}
+.contact-card>i.fa-whatsapp{color:#fff}
+@media (max-width:640px){ .ind-3d{display:none} }
