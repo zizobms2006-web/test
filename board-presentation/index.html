@@ -850,7 +850,7 @@ function go(n,dirHint){n=Math.max(1,Math.min(90,n|0));if(n===cur)return;const di
  el.classList.add('enter-'+dir);stage.append(el);
  cur=n;curObj=obj;requestAnimationFrame(()=>{el.classList.add('on');runCounts(el);obj.enter&&obj.enter();$$('[data-tilt]',el).forEach(bindTilt)});
  $('#progress').style.width=(n/90*100)+'%';$('#cnt').textContent=`${n} / 90`;
- history.replaceState(null,'','#'+n);updateRail();closeDrawer();tip(null)}
+ try{history.replaceState(null,'','#'+n)}catch(e){}updateRail();closeDrawer();tip(null)}
 const next=()=>go(cur+1,'next'),prev=()=>go(cur-1,'prev');
 function bindTilt(el){const max=+el.dataset.tilt||8;el.style.transition='transform .3s ease-out';const p=el.closest('.slide');
  const mv=e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;if(Math.abs(x)>1.2||Math.abs(y)>1.2){el.style.transform='';return}el.style.transform=`perspective(1200px) rotateY(${x*max}deg) rotateX(${-y*max}deg)`};
