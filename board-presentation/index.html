@@ -600,7 +600,7 @@ function tableView(spec,{n,height,showFilter=true}){
    const tr=h('tr',{style:{'--i':shown},onclick:()=>openDrawer(spec,o.r,n)},o.r.map((v,i)=>cell(v,kinds[i])));tr.dataset.ri=o.i;tbody.append(tr)});
   if(!shown)tbody.append(h('tr',null,h('td',{colspan:cols.length,style:{textAlign:'center',padding:'40px',color:'#8a9a93'}},'لا توجد نتائج مطابقة')));
   count.textContent=`عرض ${shown} من ${rows.length}`;if(!anim)wrap.classList.remove('rowsin');requestAnimationFrame(fit)}
- function fit(){if(!wrap.clientHeight)return;let f=21;wrap.classList.remove('scroll');wrap.style.setProperty('--tf',f+'px');let guard=0;while(wrap.scrollHeight>wrap.clientHeight+2&&f>17&&guard++<10){f-=1;wrap.style.setProperty('--tf',f+'px')}if(wrap.scrollHeight>wrap.clientHeight+2)wrap.classList.add('scroll')}
+ function fit(){if(!wrap.clientHeight)return;let f=21;wrap.classList.remove('scroll');wrap.style.setProperty('--tf',f+'px');let guard=0;while(wrap.scrollHeight>wrap.clientHeight+2&&f>(window.__EXPORT?12:17)&&guard++<14){f-=1;wrap.style.setProperty('--tf',f+'px')}if(wrap.scrollHeight>wrap.clientHeight+2)wrap.classList.add('scroll')}
  const bar=h('div',{class:'tbar'});
  const inp=h('input',{placeholder:'بحث في الجدول…',oninput:e=>{q=normAr(e.target.value.trim());render()}});
  bar.append(h('label',{class:'tsearch'},ico('search'),inp));
