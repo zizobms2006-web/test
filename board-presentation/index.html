@@ -928,7 +928,7 @@ addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==
 let tx=null;stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});stage.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>60)dx>0?next():prev();tx=null});
 document.addEventListener('click',e=>{if(drawer.classList.contains('show')&&!drawer.contains(e.target)&&!e.target.closest('tr')&&!e.target.closest('.sr-it')&&!e.target.closest('.card[style*="cursor"]'))closeDrawer()});
 
-fitStage();document.fonts&&document.fonts.ready.then(fitStage);
+document.body.classList.add("rail-off");fitStage();document.fonts&&document.fonts.ready.then(fitStage);
 go(+(location.hash.slice(1))||1,'next');
 
 </script>
