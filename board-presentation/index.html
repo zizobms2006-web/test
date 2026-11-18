@@ -320,6 +320,9 @@ body.rail-off #eR{right:10px}
 #help kbd{font-family:inherit;font-size:16px;font-weight:900;background:#fff;border:1.5px solid var(--line);border-bottom-width:3px;border-radius:8px;padding:2px 10px;direction:ltr;display:inline-block;white-space:nowrap}
 #goto{position:fixed;top:30px;left:50%;transform:translateX(-50%);z-index:99;background:var(--gold);color:var(--g950);font-size:40px;font-weight:900;padding:6px 30px;border-radius:16px;display:none;direction:ltr}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important}}
+/* website frame */
+html,body{background:radial-gradient(1400px 900px at 70% 0%,#064a36,#01231a 70%)}
+body:not(.rail-off) #stage{border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06)}
 </style>
 </head>
 <body>
@@ -842,7 +845,7 @@ const SHORT={1:'الغلاف',2:'الهيكلية التنظيمية',3:'تعد�
 function shortTitle(n){if(SHORT[n])return SHORT[n];const t=TABLES[n];if(!t)return'شريحة '+n;let s=t.title.replace('طلبيات تنفيذ ','').replace('طلبيات إدارة ','').replace('طلبيات ','').replace('وضعية الطلبيات المتابَعة أسبوعياً','الطلبيات المتابَعة');if(t.types&&t.types.length)s+=' · '+t.types.join('/');if(t.page&&t.page[1]>1)s+=` (${t.page[0]}/${t.page[1]})`;return s}
 
 const stage=$('#stage'),viewport=$('#viewport');let cur=0,curObj=null,busy=false;
-function fitStage(){const r=viewport.getBoundingClientRect();const sc=Math.min(r.width/1920,r.height/1080);stage.style.transform=`translate(-50%,-50%) scale(${sc})`;stage._sc=sc}
+function fitStage(){const r=viewport.getBoundingClientRect();const pad=document.body.classList.contains("rail-off")?0:24;const sc=Math.min((r.width-pad*2)/1920,(r.height-pad*2)/1080);stage.style.transform=`translate(-50%,-50%) scale(${sc})`;stage._sc=sc}
 addEventListener('resize',fitStage);
 function go(n,dirHint){n=Math.max(1,Math.min(90,n|0));if(n===cur)return;const dir=dirHint||(n>cur?'next':'prev');
  const obj=(B[n]||tableSlide)(n);const el=obj.el;el.dataset.n=n;
@@ -928,7 +931,7 @@ addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==
 let tx=null;stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});stage.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>60)dx>0?next():prev();tx=null});
 document.addEventListener('click',e=>{if(drawer.classList.contains('show')&&!drawer.contains(e.target)&&!e.target.closest('tr')&&!e.target.closest('.sr-it')&&!e.target.closest('.card[style*="cursor"]'))closeDrawer()});
 
-document.body.classList.add("rail-off");fitStage();document.fonts&&document.fonts.ready.then(fitStage);
+fitStage();document.fonts&&document.fonts.ready.then(fitStage);
 go(+(location.hash.slice(1))||1,'next');
 
 </script>
