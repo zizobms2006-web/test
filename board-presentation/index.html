@@ -327,7 +327,8 @@ body:not(.rail-off) #stage{border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,
 /* ================= mobile (portrait phone) ================= */
 body.mobile{--rail:0px}
 body.mobile #viewport{position:fixed;inset:0 0 64px 0;right:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
-body.mobile #stage{position:relative;left:0;top:0;width:640px;height:auto;min-height:var(--mh);transform:none!important;border-radius:0!important;box-shadow:none!important;overflow:hidden}
+body.mobile #stage{position:absolute;left:auto;right:0;top:0;width:640px;height:auto;min-height:var(--mh);transform-origin:top right;border-radius:0!important;box-shadow:none!important;overflow:hidden}
+#spacer{width:1px;pointer-events:none}
 body.mobile #progress{position:sticky}
 body.mobile .slide{position:relative;inset:auto;min-height:var(--mh);padding-bottom:110px}
 body.mobile .slide.leave-next,body.mobile .slide.leave-prev{position:absolute;top:0;left:0;right:0}
@@ -357,8 +358,8 @@ body.mobile .hb-lbl{font-size:19px!important}
 body.mobile .hb-val{font-size:22px!important}
 body.mobile .legend{font-size:18px}
 body.mobile .tabs button{font-size:17px;padding:6px 12px}
-body.mobile .tmbox{zoom:.5}
-body.mobile .org{position:relative;width:1760px;height:798px;zoom:.34;margin:20px 0}
+body.mobile .tmbox{transform:scale(.5);transform-origin:top right;margin-bottom:-365px}
+body.mobile .org{position:relative;inset:auto;width:1760px;height:798px;transform:scale(.338);transform-origin:top right;margin:20px 0 -508px}
 body.mobile .onode .on-t{font-size:30px}
 /* tables become cards */
 body.mobile .tcard{position:relative!important;inset:auto!important;height:auto!important;padding:16px}
@@ -395,7 +396,7 @@ body.mobile .divider .dv-center{position:relative;min-height:var(--mh);padding:1
 body.mobile .divider h1{font-size:76px;padding:0}
 body.mobile .divider .dv-tag{font-size:24px;flex-wrap:wrap;justify-content:center}
 body.mobile .divider .dv-icon{width:120px;height:120px;font-size:64px}
-body.mobile .box3d-scene{height:260px!important;zoom:.5;margin:10px auto 20px}
+body.mobile .box3d-scene{height:300px!important;transform:scale(.6);margin:-40px auto -40px}
 /* bottom bar + flyout sheet */
 body.mobile #rail{top:auto;left:0;right:0;bottom:0;width:auto;height:64px;flex-direction:row;padding:4px 6px;gap:2px;border-left:0;border-top:1px solid rgba(255,255,255,.12);transform:none!important;overflow-x:auto}
 body.mobile #rail .r-logo{display:none}
@@ -932,7 +933,10 @@ function shortTitle(n){if(SHORT[n])return SHORT[n];const t=TABLES[n];if(!t)retur
 
 const stage=$('#stage'),viewport=$('#viewport');let cur=0,curObj=null,busy=false;
 const MW=640;const mq=matchMedia('(max-width: 820px) and (orientation: portrait)');const isM=()=>document.body.classList.contains('mobile');
-function fitStage(){if(isM()){const z=innerWidth/MW;stage.style.transform='none';stage.style.zoom=z;stage.style.setProperty('--mh',((innerHeight-64)/z)+'px');return}stage.style.zoom='';const r=viewport.getBoundingClientRect();const pad=document.body.classList.contains("rail-off")?0:24;const sc=Math.min((r.width-pad*2)/1920,(r.height-pad*2)/1080);stage.style.transform=`translate(-50%,-50%) scale(${sc})`;stage._sc=sc}
+const spacer=document.createElement('div');spacer.id='spacer';viewport.append(spacer);
+function syncSpacer(){spacer.style.height=isM()?(stage.offsetHeight*(stage._sc||1))+'px':'0px'}
+if(window.ResizeObserver)new ResizeObserver(syncSpacer).observe(stage);
+function fitStage(){if(isM()){const w=document.documentElement.clientWidth||innerWidth;const z=w/MW;stage._sc=z;stage.style.transform=`scale(${z})`;stage.style.setProperty('--mh',((innerHeight-64)/z)+'px');syncSpacer();return}const r=viewport.getBoundingClientRect();const pad=document.body.classList.contains("rail-off")?0:24;const sc=Math.min((r.width-pad*2)/1920,(r.height-pad*2)/1080);stage.style.transform=`translate(-50%,-50%) scale(${sc})`;stage._sc=sc}
 addEventListener('resize',fitStage);
 function go(n,dirHint){n=Math.max(1,Math.min(90,n|0));if(n===cur)return;const dir=dirHint||(n>cur?'next':'prev');
  const obj=(B[n]||tableSlide)(n);const el=obj.el;el.dataset.n=n;
